@@ -12,7 +12,11 @@ const urlParams = new URLSearchParams(location.search);
 if (urlParams.get("region") === "jeju") state.regionId = "jeju";
 if (urlParams.get("day")) state.dayIndex = Math.max(0, parseInt(urlParams.get("day"), 10) - 1);
 if (urlParams.get("lang") === "en") state.lang = "en";
-else if (localStorage.getItem("trip-lang") === "en") state.lang = "en";
+else {
+  try {
+    if (localStorage.getItem("trip-lang") === "en") state.lang = "en";
+  } catch (_) { /* private browsing */ }
+}
 
 function isEn() {
   return state.lang === "en";
@@ -267,9 +271,12 @@ function renderHeader() {
 function renderSetupPanel() {
   const setup = document.getElementById("map-setup");
   if (!setup) return;
-  setup.querySelector("h3").textContent = ui("setupTitle");
-  setup.querySelector(".setup-intro").textContent = ui("setupIntro");
-  setup.querySelector(".setup-note").textContent = ui("setupNote");
+  const h3 = setup.querySelector("h3");
+  const intro = setup.querySelector(".setup-intro");
+  const note = setup.querySelector(".setup-note");
+  if (h3) h3.textContent = ui("setupTitle");
+  if (intro) intro.textContent = ui("setupIntro");
+  if (note) note.textContent = ui("setupNote");
 }
 
 function renderAll() {
@@ -291,7 +298,9 @@ function updateUrl() {
 
 function setLang(lang) {
   state.lang = lang === "en" ? "en" : "zh";
-  localStorage.setItem("trip-lang", state.lang);
+  try {
+    localStorage.setItem("trip-lang", state.lang);
+  } catch (_) { /* Safari private mode */ }
   updateUrl();
   renderAll();
 }
@@ -304,22 +313,29 @@ function boot() {
     renderSidebar();
   });
 
-  document.querySelectorAll(".region-tabs button[data-region]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      state.regionId = btn.dataset.region;
+  document.querySelector(".header-actions")?.addEventListener("click", (e) => {
+    const langBtn = e.target.closest(".lang-tabs button[data-lang]");
+    if (langBtn) {
+      e.preventDefault();
+      setLang(langBtn.dataset.lang);
+      return;
+    }
+    const regionBtn = e.target.closest(".region-tabs button[data-region]");
+    if (regionBtn) {
+      state.regionId = regionBtn.dataset.region;
       state.dayIndex = 0;
       state.activeStopId = null;
       state.mapFocused = false;
       updateUrl();
       renderAll();
-    });
+    }
   });
 
-  document.querySelectorAll(".lang-tabs button").forEach((btn) => {
-    btn.addEventListener("click", () => setLang(btn.dataset.lang));
-  });
-
-  renderAll();
+  try {
+    renderAll();
+  } catch (err) {
+    console.error(err);
+  }
 }
 
 boot();
