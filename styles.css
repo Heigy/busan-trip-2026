@@ -9,6 +9,50 @@
   --muted: #6b7280;
   --accent: #2563eb;
   --border: #e5e7eb;
+  --pill-bg: #f3f4f6;
+  --stop-hover: #f0f4ff;
+  --stop-active: #eff6ff;
+  --stop-active-border: #93c5fd;
+  --desc: #374151;
+  --flights-bg: #fefce8;
+  --flights-border: #fde68a;
+  --flights-chip-bg: #fff;
+  --map-wrap-bg: #e8eaed;
+  --map-btn-bg: #f9fafb;
+  --map-btn-hover: #eff6ff;
+  --setup-bg: rgba(255, 255, 255, 0.97);
+  --code-bg: #f3f4f6;
+  --hint: #2563eb;
+  --setup-note-bg: #eff6ff;
+  --setup-note-text: #1e40af;
+  --shadow: rgba(0, 0, 0, 0.08);
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0f1419;
+  --card: #1a2332;
+  --text: #e8eaed;
+  --muted: #9aa0a6;
+  --accent: #60a5fa;
+  --border: #2d3748;
+  --pill-bg: #252f3f;
+  --stop-hover: rgba(96, 165, 250, 0.1);
+  --stop-active: rgba(96, 165, 250, 0.16);
+  --stop-active-border: #3b82f6;
+  --desc: #cbd5e1;
+  --flights-bg: #2a2410;
+  --flights-border: #4a4020;
+  --flights-chip-bg: #1a2332;
+  --map-wrap-bg: #111820;
+  --map-btn-bg: #252f3f;
+  --map-btn-hover: rgba(96, 165, 250, 0.12);
+  --setup-bg: rgba(26, 35, 50, 0.97);
+  --code-bg: #252f3f;
+  --hint: #60a5fa;
+  --setup-note-bg: rgba(37, 99, 235, 0.15);
+  --setup-note-text: #93c5fd;
+  --shadow: rgba(0, 0, 0, 0.35);
 }
 
 html, body {
@@ -17,6 +61,7 @@ html, body {
   color: var(--text);
   background: var(--bg);
   overflow: hidden;
+  transition: background 0.2s, color 0.2s;
 }
 
 #app {
@@ -36,6 +81,7 @@ header {
   border-bottom: 1px solid var(--border);
   z-index: 100;
   position: relative;
+  transition: background 0.2s, border-color 0.2s;
 }
 
 header h1 {
@@ -65,10 +111,31 @@ header .subtitle {
   flex-shrink: 0;
 }
 
+.theme-toggle {
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--border);
+  background: var(--map-btn-bg);
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.theme-toggle:hover {
+  background: var(--map-btn-hover);
+  border-color: var(--stop-active-border);
+}
+
 .lang-tabs {
   display: flex;
   gap: 2px;
-  background: #f3f4f6;
+  background: var(--pill-bg);
   padding: 2px;
   border-radius: 999px;
 }
@@ -89,7 +156,7 @@ header .subtitle {
 .lang-tabs button.active {
   background: var(--card);
   color: var(--text);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 1px 3px var(--shadow);
 }
 
 .region-tabs button,
@@ -118,11 +185,6 @@ header .subtitle {
   min-height: 0;
 }
 
-#map {
-  flex: 1;
-  min-width: 0;
-}
-
 .sidebar {
   width: var(--sidebar-w);
   flex-shrink: 0;
@@ -131,6 +193,7 @@ header .subtitle {
   display: flex;
   flex-direction: column;
   min-height: 0;
+  transition: background 0.2s, border-color 0.2s;
 }
 
 .sidebar-head {
@@ -205,12 +268,12 @@ header .subtitle {
 }
 
 .stop-item:hover {
-  background: #f0f4ff;
+  background: var(--stop-hover);
 }
 
 .stop-item.active {
-  background: #eff6ff;
-  border-color: #93c5fd;
+  background: var(--stop-active);
+  border-color: var(--stop-active-border);
 }
 
 .stop-num {
@@ -249,7 +312,7 @@ header .subtitle {
 
 .stop-desc {
   font-size: 0.72rem;
-  color: #374151;
+  color: var(--desc);
   line-height: 1.45;
   margin-top: 3px;
 }
@@ -263,6 +326,7 @@ header .subtitle {
 .stop-actions {
   margin-top: 6px;
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
 }
 
@@ -280,15 +344,17 @@ header .subtitle {
   gap: 6px;
   padding: 6px 14px;
   font-size: 0.68rem;
-  background: #fefce8;
-  border-bottom: 1px solid #fde68a;
+  background: var(--flights-bg);
+  border-bottom: 1px solid var(--flights-border);
+  transition: background 0.2s, border-color 0.2s;
 }
 
 .flights-bar span {
-  background: #fff;
-  border: 1px solid #fde68a;
+  background: var(--flights-chip-bg);
+  border: 1px solid var(--flights-border);
   padding: 2px 8px;
   border-radius: 6px;
+  color: var(--text);
 }
 
 .map-wrap {
@@ -297,7 +363,8 @@ header .subtitle {
   min-width: 0;
   display: flex;
   flex-direction: column;
-  background: #e8eaed;
+  background: var(--map-wrap-bg);
+  transition: background 0.2s;
 }
 
 .map-toolbar {
@@ -331,18 +398,19 @@ header .subtitle {
   padding: 4px 10px;
   border-radius: 6px;
   border: 1px solid var(--border);
-  background: #f9fafb;
+  background: var(--map-btn-bg);
   color: var(--text);
   cursor: pointer;
   font-family: inherit;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
+  transition: background 0.15s, border-color 0.15s;
 }
 
 .map-btn:hover {
-  background: #eff6ff;
-  border-color: #93c5fd;
+  background: var(--map-btn-hover);
+  border-color: var(--stop-active-border);
 }
 
 .map-btn-link {
@@ -360,7 +428,7 @@ header .subtitle {
   display: none;
   position: absolute;
   inset: 36px 0 0;
-  background: rgba(255, 255, 255, 0.97);
+  background: var(--setup-bg);
   z-index: 5;
   padding: 24px 28px;
   overflow-y: auto;
@@ -373,6 +441,7 @@ header .subtitle {
 .map-setup h3 {
   margin-bottom: 10px;
   font-size: 1rem;
+  color: var(--text);
 }
 
 .map-setup p,
@@ -391,56 +460,26 @@ header .subtitle {
 }
 
 .map-setup code {
-  background: #f3f4f6;
+  background: var(--code-bg);
   padding: 2px 6px;
   border-radius: 4px;
   font-size: 0.78rem;
+  color: var(--text);
 }
 
 .map-setup-note {
   margin-top: 12px;
   padding: 10px 12px;
-  background: #eff6ff;
+  background: var(--setup-note-bg);
   border-radius: 8px;
-  color: #1e40af !important;
+  color: var(--setup-note-text) !important;
 }
 
 .day-hint {
   font-size: 0.72rem;
-  color: #2563eb;
+  color: var(--hint);
   margin-top: 6px;
   line-height: 1.45;
-}
-
-#map-error {
-  display: none;
-  position: absolute;
-  inset: 0;
-  background: rgba(255,255,255,0.95);
-  z-index: 5;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-  text-align: center;
-}
-
-#map-error.visible { display: flex; }
-
-#map-error h3 { margin-bottom: 8px; }
-
-#map-error p {
-  font-size: 0.85rem;
-  color: var(--muted);
-  max-width: 420px;
-  line-height: 1.6;
-}
-
-#map-error code {
-  background: #f3f4f6;
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-size: 0.8rem;
 }
 
 @media (max-width: 768px) {
@@ -454,6 +493,7 @@ header .subtitle {
   #map-frame { min-height: 55vh; }
   header .subtitle { display: none; }
   .header-actions { gap: 4px; }
-  .lang-tabs button { padding: 4px 8px; }
+  .lang-tabs button { padding: 4px 8px; font-size: 0.62rem; }
   .region-tabs button { padding: 5px 8px; font-size: 0.72rem; }
+  .theme-toggle { width: 28px; height: 28px; font-size: 0.85rem; }
 }

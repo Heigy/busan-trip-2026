@@ -6,7 +6,18 @@ const state = {
   activeStopId: null,
   mapFocused: false,
   lang: "zh",
+  theme: "light",
 };
+
+function readStoredTheme() {
+  try {
+    const saved = localStorage.getItem("trip-theme");
+    if (saved === "dark" || saved === "light") return saved;
+  } catch (_) {}
+  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+}
+
+state.theme = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : readStoredTheme();
 
 const urlParams = new URLSearchParams(location.search);
 if (urlParams.get("region") === "jeju") state.regionId = "jeju";
@@ -16,6 +27,27 @@ else {
   try {
     if (localStorage.getItem("trip-lang") === "en") state.lang = "en";
   } catch (_) { /* private browsing */ }
+}
+
+function isDark() {
+  return state.theme === "dark";
+}
+
+function applyTheme() {
+  document.documentElement.setAttribute("data-theme", isDark() ? "dark" : "light");
+  const btn = document.getElementById("theme-toggle");
+  if (btn) {
+    btn.textContent = isDark() ? "☀️" : "🌙";
+    btn.setAttribute("aria-label", ui(isDark() ? "themeLight" : "themeDark"));
+  }
+}
+
+function toggleTheme() {
+  state.theme = isDark() ? "light" : "dark";
+  try {
+    localStorage.setItem("trip-theme", state.theme);
+  } catch (_) {}
+  applyTheme();
 }
 
 function isEn() {
@@ -112,6 +144,7 @@ function setMapFrameSrc(src) {
 }
 
 function applyStaticUi() {
+  applyTheme();
   document.documentElement.lang = isEn() ? "en" : "zh-Hant";
   document.title = isEn()
     ? "Busan + Jeju 2026 · Interactive Trip Map"
@@ -314,6 +347,11 @@ function boot() {
   });
 
   document.querySelector(".header-actions")?.addEventListener("click", (e) => {
+    if (e.target.closest("#theme-toggle")) {
+      e.preventDefault();
+      toggleTheme();
+      return;
+    }
     const langBtn = e.target.closest(".lang-tabs button[data-lang]");
     if (langBtn) {
       e.preventDefault();

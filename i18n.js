@@ -25,6 +25,8 @@ window.I18N = {
       en: "Refresh after setup — map on the left, itinerary on the right.",
     },
     iframeTitle: { zh: "行程地圖", en: "Trip map" },
+    themeDark: { zh: "切換深色模式", en: "Switch to dark mode" },
+    themeLight: { zh: "切換淺色模式", en: "Switch to light mode" },
   },
   meta: {
     en: {
