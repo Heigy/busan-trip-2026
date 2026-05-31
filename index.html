@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="styles.css" />
   <script src="config.js"></script>
   <script src="trip-data.js"></script>
+  <script src="i18n.js"></script>
 </head>
 <body>
   <div id="app">
@@ -17,9 +18,15 @@
         <h1 id="page-title">釜山 + 濟州島 7日6夜</h1>
         <p class="subtitle" id="page-subtitle">2026年8月 · 5人 · 無自駕</p>
       </div>
-      <div class="region-tabs">
-        <button type="button" data-region="busan" class="active">釜山</button>
-        <button type="button" data-region="jeju">濟州島</button>
+      <div class="header-actions">
+        <div class="lang-tabs">
+          <button type="button" data-lang="zh" class="active" title="繁體中文">中</button>
+          <button type="button" data-lang="en" title="English">EN</button>
+        </div>
+        <div class="region-tabs">
+          <button type="button" data-region="busan" class="active">釜山</button>
+          <button type="button" data-region="jeju">濟州島</button>
+        </div>
       </div>
     </header>
 
@@ -43,7 +50,7 @@
         ></iframe>
         <div id="map-setup" class="map-setup">
           <h3>📍 嵌入 Google My Maps</h3>
-          <p>網站使用 <strong>Google My Maps</strong>（免費，無需 API Key）。請先建立地圖並把連結填入 <code>config.js</code>。</p>
+          <p class="setup-intro">網站使用 <strong>Google My Maps</strong>（免費，無需 API Key）。請先建立地圖並把連結填入 <code>config.js</code>。</p>
           <ol>
             <li>打開 <a href="https://www.google.com/maps/d/" target="_blank" rel="noopener">Google My Maps</a></li>
             <li>建立新地圖 → <strong>匯入</strong> → 上傳 <code>busan-locations.kml</code> / <code>jeju-locations.kml</code></li>
@@ -52,7 +59,7 @@
             <li>貼到 <code>config.js</code> 的 <code>embedUrl</code>，分享連結貼到 <code>viewUrl</code></li>
             <li><code>git push</code> 重新部署</li>
           </ol>
-          <p class="map-setup-note">完成後刷新此頁，左側會顯示 My Maps，右側為行程列表。</p>
+          <p class="map-setup-note setup-note">完成後刷新此頁，左側會顯示 My Maps，右側為行程列表。</p>
         </div>
       </div>
 

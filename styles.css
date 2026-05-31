@@ -54,7 +54,40 @@ header .subtitle {
 .region-tabs {
   display: flex;
   gap: 4px;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   margin-left: auto;
+  flex-shrink: 0;
+}
+
+.lang-tabs {
+  display: flex;
+  gap: 2px;
+  background: #f3f4f6;
+  padding: 2px;
+  border-radius: 999px;
+}
+
+.lang-tabs button {
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.lang-tabs button.active {
+  background: var(--card);
+  color: var(--text);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 .region-tabs button,
@@ -418,4 +451,7 @@ header .subtitle {
   }
   #map-frame { min-height: 55vh; }
   header .subtitle { display: none; }
+  .header-actions { gap: 4px; }
+  .lang-tabs button { padding: 4px 8px; }
+  .region-tabs button { padding: 5px 8px; font-size: 0.72rem; }
 }

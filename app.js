@@ -1,39 +1,85 @@
-/* global TRIP_DATA, MYMAPS_CONFIG */
+/* global TRIP_DATA, MYMAPS_CONFIG, I18N */
 
 const state = {
   regionId: "busan",
   dayIndex: 0,
   activeStopId: null,
   mapFocused: false,
+  lang: "zh",
 };
 
 const urlParams = new URLSearchParams(location.search);
 if (urlParams.get("region") === "jeju") state.regionId = "jeju";
 if (urlParams.get("day")) state.dayIndex = Math.max(0, parseInt(urlParams.get("day"), 10) - 1);
+if (urlParams.get("lang") === "en") state.lang = "en";
+else if (localStorage.getItem("trip-lang") === "en") state.lang = "en";
+
+function isEn() {
+  return state.lang === "en";
+}
+
+function ui(key) {
+  const item = I18N.ui[key];
+  if (!item) return key;
+  if (typeof item === "function") return item;
+  return isEn() ? item.en : item.zh;
+}
+
+function uiFn(key, arg) {
+  const item = I18N.ui[key];
+  const fn = isEn() ? item.en : item.zh;
+  return typeof fn === "function" ? fn(arg) : fn;
+}
+
+function getMeta() {
+  const base = TRIP_DATA.meta;
+  if (!isEn() || !I18N.meta.en) return base;
+  return { ...base, ...I18N.meta.en };
+}
 
 function getRegion() {
-  return TRIP_DATA.regions.find((r) => r.id === state.regionId);
+  const region = TRIP_DATA.regions.find((r) => r.id === state.regionId);
+  if (!isEn()) return region;
+  const en = I18N.regions[region.id]?.en;
+  return en ? { ...region, ...en } : region;
+}
+
+function getDayRaw() {
+  return TRIP_DATA.regions.find((r) => r.id === state.regionId).days[state.dayIndex];
 }
 
 function getDay() {
-  return getRegion().days[state.dayIndex];
+  const day = getDayRaw();
+  if (!isEn()) return day;
+  const en = I18N.days[day.id]?.en;
+  return en ? { ...day, ...en } : day;
+}
+
+function localizeStop(stop) {
+  if (!isEn()) return stop;
+  const en = I18N.stops[stop.id]?.en;
+  return en ? { ...stop, ...en } : stop;
 }
 
 function getMyMapsConfig(regionId) {
-  const cfg = window.MYMAPS_CONFIG || {};
-  return cfg[regionId] || {};
+  return (window.MYMAPS_CONFIG || {})[regionId] || {};
 }
 
 function isConfigured(url) {
   return url && !url.includes("YOUR_") && url.startsWith("http");
 }
 
+function mapsHl() {
+  return isEn() ? "en" : "zh-TW";
+}
+
 function placeEmbedUrl(stop) {
+  const s = localizeStop(stop);
   if (stop.cid) {
-    return `https://maps.google.com/maps?cid=${stop.cid}&hl=zh-TW&output=embed`;
+    return `https://maps.google.com/maps?cid=${stop.cid}&hl=${mapsHl()}&output=embed`;
   }
-  const q = encodeURIComponent(`${stop.name} ${stop.lat},${stop.lng}`);
-  return `https://maps.google.com/maps?q=${q}&ll=${stop.lat},${stop.lng}&z=16&hl=zh-TW&output=embed`;
+  const q = encodeURIComponent(`${s.name} ${stop.lat},${stop.lng}`);
+  return `https://maps.google.com/maps?q=${q}&ll=${stop.lat},${stop.lng}&z=16&hl=${mapsHl()}&output=embed`;
 }
 
 function stopMapsUrl(stop) {
@@ -42,9 +88,6 @@ function stopMapsUrl(stop) {
 }
 
 function stopDirectionsUrl(stop) {
-  if (stop.cid) {
-    return `https://www.google.com/maps/dir/?api=1&destination=${stop.lat},${stop.lng}&travelmode=driving`;
-  }
   return `https://www.google.com/maps/dir/?api=1&destination=${stop.lat},${stop.lng}&travelmode=driving`;
 }
 
@@ -64,13 +107,32 @@ function setMapFrameSrc(src) {
   if (frame.src !== src) frame.src = src;
 }
 
+function applyStaticUi() {
+  document.documentElement.lang = isEn() ? "en" : "zh-Hant";
+  document.title = isEn()
+    ? "Busan + Jeju 2026 · Interactive Trip Map"
+    : "釜山 + 濟州島 2026 · 互動行程地圖";
+
+  document.getElementById("map-restore").textContent = ui("mapRestore");
+  document.getElementById("map-open-mymaps").textContent = ui("mapFullscreen");
+  document.getElementById("day-directions").textContent = ui("dayRoute");
+  document.getElementById("map-frame").title = ui("iframeTitle");
+
+  document.querySelector('[data-region="busan"]').textContent = ui("regionBusan");
+  document.querySelector('[data-region="jeju"]').textContent = ui("regionJeju");
+
+  document.querySelectorAll(".lang-tabs button").forEach((btn) => {
+    btn.classList.toggle("active", btn.dataset.lang === state.lang);
+  });
+}
+
 function showMyMapsOverview() {
   const cfg = getMyMapsConfig(state.regionId);
   state.mapFocused = false;
   state.activeStopId = null;
 
   document.getElementById("map-restore").hidden = true;
-  document.getElementById("map-mode-label").textContent = "My Maps 總覽";
+  document.getElementById("map-mode-label").textContent = ui("mapOverview");
 
   const setup = document.getElementById("map-setup");
   const frame = document.getElementById("map-frame");
@@ -96,42 +158,31 @@ function renderSidebar() {
 
   document.getElementById("sidebar-title").textContent = `${region.name} · ${day.label}`;
   document.getElementById("sidebar-theme").textContent = day.theme;
-  document.getElementById("stat-stops").textContent = `${visibleStops.length} 個站點`;
+  document.getElementById("stat-stops").textContent = `${visibleStops.length}${ui("stops")}`;
   document.getElementById("stat-region").textContent = region.dates;
 
   const dayHint = document.getElementById("day-hint");
   if (isConfigured(myMaps.embedUrl)) {
-    const dayFolder = day.label.split(" · ")[0];
-    dayHint.textContent = `💡 左側 My Maps 圖層欄勾選「${dayFolder}」查看當日標記`;
+    dayHint.textContent = uiFn("dayHint", day.label.split(" · ")[0]);
   } else {
     dayHint.textContent = "";
   }
 
   const openLink = document.getElementById("map-open-mymaps");
-  if (isConfigured(myMaps.viewUrl)) {
-    openLink.href = myMaps.viewUrl;
-    openLink.style.display = "inline-flex";
-  } else {
-    openLink.href = "https://www.google.com/maps/d/";
-    openLink.style.display = "inline-flex";
-  }
+  openLink.href = isConfigured(myMaps.viewUrl) ? myMaps.viewUrl : "https://www.google.com/maps/d/";
 
-  const dirLink = directionsUrl(day.stops);
   const dirEl = document.getElementById("day-directions");
-  if (dirLink) {
-    dirEl.href = dirLink;
-    dirEl.style.display = "inline";
-  } else {
-    dirEl.style.display = "none";
-  }
+  const dirLink = directionsUrl(day.stops);
+  dirEl.href = dirLink || "#";
+  dirEl.style.display = dirLink ? "inline" : "none";
 
-  document.querySelectorAll(".region-tabs button").forEach((btn) => {
+  document.querySelectorAll(".region-tabs button[data-region]").forEach((btn) => {
     btn.classList.toggle("active", btn.dataset.region === state.regionId);
   });
 
   const dayTabs = document.getElementById("day-tabs");
   dayTabs.innerHTML = "";
-  region.days.forEach((d, i) => {
+  TRIP_DATA.regions.find((r) => r.id === state.regionId).days.forEach((d, i) => {
     const btn = document.createElement("button");
     btn.textContent = d.label.replace(/ · .*/, "");
     btn.classList.toggle("active", i === state.dayIndex);
@@ -145,9 +196,8 @@ function renderSidebar() {
     dayTabs.appendChild(btn);
   });
 
-  const legend = document.getElementById("legend");
-  legend.innerHTML = region.days
-    .map(
+  document.getElementById("legend").innerHTML = getRegion()
+    .days.map(
       (d, i) =>
         `<span class="legend-item"><span class="legend-dot" style="background:${region.dayColors[i]}"></span>${d.label.split(" · ")[0]}</span>`
     )
@@ -156,8 +206,9 @@ function renderSidebar() {
   const list = document.getElementById("itinerary");
   list.innerHTML = "";
   let num = 0;
-  day.stops.forEach((stop) => {
-    if (stop.skipMarker) return;
+  day.stops.forEach((rawStop) => {
+    if (rawStop.skipMarker) return;
+    const stop = localizeStop(rawStop);
     num += 1;
     const el = document.createElement("div");
     el.className = "stop-item" + (state.activeStopId === stop.id ? " active" : "");
@@ -167,13 +218,13 @@ function renderSidebar() {
       <div class="stop-body">
         <div class="stop-time">${stop.time}</div>
         <div class="stop-name">${stop.name}</div>
-        ${stop.nameKo ? `<div class="stop-ko">${stop.nameKo}</div>` : ""}
+        ${rawStop.nameKo ? `<div class="stop-ko">${rawStop.nameKo}</div>` : ""}
         <div class="stop-desc">${stop.desc}</div>
         ${stop.transport && stop.transport !== "—" ? `<div class="stop-transport">${stop.transport}</div>` : ""}
         <div class="stop-actions">
-          <a href="#" class="stop-focus" data-id="${stop.id}">🗺️ 地圖定位</a>
-          <a href="${stopMapsUrl(stop)}" target="_blank" rel="noopener">📍 Google Maps</a>
-          <a href="${stopDirectionsUrl(stop)}" target="_blank" rel="noopener">🧭 導航</a>
+          <a href="#" class="stop-focus">${ui("mapLocate")}</a>
+          <a href="${stopMapsUrl(rawStop)}" target="_blank" rel="noopener">${ui("googleMaps")}</a>
+          <a href="${stopDirectionsUrl(rawStop)}" target="_blank" rel="noopener">${ui("navigate")}</a>
         </div>
       </div>`;
     el.addEventListener("click", (e) => {
@@ -186,26 +237,45 @@ function renderSidebar() {
 }
 
 function focusStop(stopId) {
-  const stop = getDay().stops.find((s) => s.id === stopId);
-  if (!stop) return;
+  const rawStop = getDayRaw().stops.find((s) => s.id === stopId);
+  if (!rawStop) return;
+  const stop = localizeStop(rawStop);
 
   state.activeStopId = stopId;
   state.mapFocused = true;
 
   document.getElementById("map-setup").classList.remove("visible");
-  const frame = document.getElementById("map-frame");
-  frame.style.visibility = "visible";
-  setMapFrameSrc(placeEmbedUrl(stop));
+  document.getElementById("map-frame").style.visibility = "visible";
+  setMapFrameSrc(placeEmbedUrl(rawStop));
 
   document.getElementById("map-restore").hidden = false;
-  document.getElementById("map-mode-label").textContent = `定位：${stop.name}`;
+  document.getElementById("map-mode-label").textContent = `${ui("mapFocus")}${stop.name}`;
 
   renderSidebar();
-  const activeEl = document.querySelector(`.stop-item[data-id="${stopId}"]`);
-  if (activeEl) activeEl.scrollIntoView({ block: "nearest", behavior: "smooth" });
+  document.querySelector(`.stop-item[data-id="${stopId}"]`)?.scrollIntoView({ block: "nearest", behavior: "smooth" });
+}
+
+function renderHeader() {
+  const meta = getMeta();
+  document.getElementById("page-title").textContent = meta.title;
+  document.getElementById("page-subtitle").textContent = meta.subtitle;
+  document.getElementById("flights-bar").innerHTML = meta.flights
+    .map((f) => `<span>✈️ ${f.date} ${f.code} ${f.route}</span>`)
+    .join("");
+}
+
+function renderSetupPanel() {
+  const setup = document.getElementById("map-setup");
+  if (!setup) return;
+  setup.querySelector("h3").textContent = ui("setupTitle");
+  setup.querySelector(".setup-intro").textContent = ui("setupIntro");
+  setup.querySelector(".setup-note").textContent = ui("setupNote");
 }
 
 function renderAll() {
+  applyStaticUi();
+  renderHeader();
+  renderSetupPanel();
   if (!state.mapFocused) showMyMapsOverview();
   renderSidebar();
 }
@@ -214,17 +284,19 @@ function updateUrl() {
   const url = new URL(location.href);
   url.searchParams.set("region", state.regionId);
   url.searchParams.set("day", String(state.dayIndex + 1));
+  if (state.lang === "en") url.searchParams.set("lang", "en");
+  else url.searchParams.delete("lang");
   history.replaceState(null, "", url);
 }
 
+function setLang(lang) {
+  state.lang = lang === "en" ? "en" : "zh";
+  localStorage.setItem("trip-lang", state.lang);
+  updateUrl();
+  renderAll();
+}
+
 function boot() {
-  document.getElementById("flights-bar").innerHTML = TRIP_DATA.meta.flights
-    .map((f) => `<span>✈️ ${f.date} ${f.code} ${f.route}</span>`)
-    .join("");
-
-  document.getElementById("page-title").textContent = TRIP_DATA.meta.title;
-  document.getElementById("page-subtitle").textContent = TRIP_DATA.meta.subtitle;
-
   document.getElementById("map-restore").addEventListener("click", () => {
     state.mapFocused = false;
     state.activeStopId = null;
@@ -232,7 +304,7 @@ function boot() {
     renderSidebar();
   });
 
-  document.querySelectorAll(".region-tabs button").forEach((btn) => {
+  document.querySelectorAll(".region-tabs button[data-region]").forEach((btn) => {
     btn.addEventListener("click", () => {
       state.regionId = btn.dataset.region;
       state.dayIndex = 0;
@@ -241,6 +313,10 @@ function boot() {
       updateUrl();
       renderAll();
     });
+  });
+
+  document.querySelectorAll(".lang-tabs button").forEach((btn) => {
+    btn.addEventListener("click", () => setLang(btn.dataset.lang));
   });
 
   renderAll();
