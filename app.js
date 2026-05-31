@@ -1,13 +1,10 @@
-/* global google, TRIP_DATA, GMAPS_API_KEY */
+/* global TRIP_DATA, MYMAPS_CONFIG */
 
-let map;
-let markers = [];
-let polylines = [];
-let infoWindow;
-let state = {
+const state = {
   regionId: "busan",
   dayIndex: 0,
   activeStopId: null,
+  mapFocused: false,
 };
 
 const urlParams = new URLSearchParams(location.search);
@@ -20,6 +17,20 @@ function getRegion() {
 
 function getDay() {
   return getRegion().days[state.dayIndex];
+}
+
+function getMyMapsConfig(regionId) {
+  const cfg = window.MYMAPS_CONFIG || {};
+  return cfg[regionId] || {};
+}
+
+function isConfigured(url) {
+  return url && !url.includes("YOUR_") && url.startsWith("http");
+}
+
+function placeEmbedUrl(stop) {
+  const q = encodeURIComponent(`${stop.name} ${stop.lat},${stop.lng}`);
+  return `https://maps.google.com/maps?q=${q}&ll=${stop.lat},${stop.lng}&z=16&hl=zh-TW&output=embed`;
 }
 
 function mapsUrl(lat, lng, name) {
@@ -37,11 +48,32 @@ function directionsUrl(stops) {
   return url;
 }
 
-function clearMapOverlays() {
-  markers.forEach((m) => m.setMap(null));
-  polylines.forEach((p) => p.setMap(null));
-  markers = [];
-  polylines = [];
+function setMapFrameSrc(src) {
+  const frame = document.getElementById("map-frame");
+  if (frame.src !== src) frame.src = src;
+}
+
+function showMyMapsOverview() {
+  const cfg = getMyMapsConfig(state.regionId);
+  state.mapFocused = false;
+  state.activeStopId = null;
+
+  document.getElementById("map-restore").hidden = true;
+  document.getElementById("map-mode-label").textContent = "My Maps 總覽";
+
+  const setup = document.getElementById("map-setup");
+  const frame = document.getElementById("map-frame");
+
+  if (!isConfigured(cfg.embedUrl)) {
+    setup.classList.add("visible");
+    frame.style.visibility = "hidden";
+    frame.removeAttribute("src");
+    return;
+  }
+
+  setup.classList.remove("visible");
+  frame.style.visibility = "visible";
+  setMapFrameSrc(cfg.embedUrl);
 }
 
 function renderSidebar() {
@@ -49,11 +81,29 @@ function renderSidebar() {
   const day = getDay();
   const visibleStops = day.stops.filter((s) => !s.skipMarker);
   const color = region.dayColors[state.dayIndex];
+  const myMaps = getMyMapsConfig(state.regionId);
 
   document.getElementById("sidebar-title").textContent = `${region.name} · ${day.label}`;
   document.getElementById("sidebar-theme").textContent = day.theme;
   document.getElementById("stat-stops").textContent = `${visibleStops.length} 個站點`;
   document.getElementById("stat-region").textContent = region.dates;
+
+  const dayHint = document.getElementById("day-hint");
+  if (isConfigured(myMaps.embedUrl)) {
+    const dayFolder = day.label.split(" · ")[0];
+    dayHint.textContent = `💡 左側 My Maps 圖層欄勾選「${dayFolder}」查看當日標記`;
+  } else {
+    dayHint.textContent = "";
+  }
+
+  const openLink = document.getElementById("map-open-mymaps");
+  if (isConfigured(myMaps.viewUrl)) {
+    openLink.href = myMaps.viewUrl;
+    openLink.style.display = "inline-flex";
+  } else {
+    openLink.href = "https://www.google.com/maps/d/";
+    openLink.style.display = "inline-flex";
+  }
 
   const dirLink = directionsUrl(day.stops);
   const dirEl = document.getElementById("day-directions");
@@ -77,6 +127,7 @@ function renderSidebar() {
     btn.addEventListener("click", () => {
       state.dayIndex = i;
       state.activeStopId = null;
+      state.mapFocused = false;
       updateUrl();
       renderAll();
     });
@@ -109,99 +160,43 @@ function renderSidebar() {
         <div class="stop-desc">${stop.desc}</div>
         ${stop.transport && stop.transport !== "—" ? `<div class="stop-transport">${stop.transport}</div>` : ""}
         <div class="stop-actions">
+          <a href="#" class="stop-focus" data-id="${stop.id}">🗺️ 地圖定位</a>
           <a href="${mapsUrl(stop.lat, stop.lng, stop.name)}" target="_blank" rel="noopener">📍 Google Maps</a>
           <a href="https://www.google.com/maps/dir/?api=1&destination=${stop.lat},${stop.lng}&travelmode=driving" target="_blank" rel="noopener">🧭 導航</a>
         </div>
       </div>`;
-    el.addEventListener("click", () => focusStop(stop.id));
+    el.addEventListener("click", (e) => {
+      if (e.target.closest("a") && !e.target.classList.contains("stop-focus")) return;
+      e.preventDefault();
+      focusStop(stop.id);
+    });
     list.appendChild(el);
   });
 }
 
 function focusStop(stopId) {
-  state.activeStopId = stopId;
   const stop = getDay().stops.find((s) => s.id === stopId);
-  if (!stop || !map) return;
-  map.panTo({ lat: stop.lat, lng: stop.lng });
-  map.setZoom(15);
-  const marker = markers.find((m) => m.stopId === stopId);
-  if (marker) {
-    infoWindow.setContent(`<strong>${stop.name}</strong><br>${stop.time}<br>${stop.desc}`);
-    infoWindow.open(map, marker);
-  }
+  if (!stop) return;
+
+  state.activeStopId = stopId;
+  state.mapFocused = true;
+
+  document.getElementById("map-setup").classList.remove("visible");
+  const frame = document.getElementById("map-frame");
+  frame.style.visibility = "visible";
+  setMapFrameSrc(placeEmbedUrl(stop));
+
+  document.getElementById("map-restore").hidden = false;
+  document.getElementById("map-mode-label").textContent = `定位：${stop.name}`;
+
   renderSidebar();
   const activeEl = document.querySelector(`.stop-item[data-id="${stopId}"]`);
   if (activeEl) activeEl.scrollIntoView({ block: "nearest", behavior: "smooth" });
 }
 
-function renderMap() {
-  if (!map) return;
-  clearMapOverlays();
-  const region = getRegion();
-  const day = getDay();
-  const color = region.dayColors[state.dayIndex];
-  const path = [];
-  let num = 0;
-
-  day.stops.forEach((stop) => {
-    if (stop.skipMarker) {
-      path.push({ lat: stop.lat, lng: stop.lng });
-      return;
-    }
-    num += 1;
-    path.push({ lat: stop.lat, lng: stop.lng });
-
-    const marker = new google.maps.Marker({
-      position: { lat: stop.lat, lng: stop.lng },
-      map,
-      title: stop.name,
-      label: { text: String(num), color: "#fff", fontSize: "11px", fontWeight: "700" },
-      icon: {
-        path: google.maps.SymbolPath.CIRCLE,
-        scale: 14,
-        fillColor: color,
-        fillOpacity: 1,
-        strokeColor: "#fff",
-        strokeWeight: 2,
-      },
-    });
-    marker.stopId = stop.id;
-    marker.addListener("click", () => focusStop(stop.id));
-    markers.push(marker);
-  });
-
-  if (path.length > 1) {
-    const line = new google.maps.Polyline({
-      path,
-      geodesic: true,
-      strokeColor: color,
-      strokeOpacity: 0.85,
-      strokeWeight: 4,
-      map,
-      icons: [
-        {
-          icon: { path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW, scale: 3, strokeColor: color },
-          offset: "50%",
-          repeat: "120px",
-        },
-      ],
-    });
-    polylines.push(line);
-  }
-
-  const bounds = new google.maps.LatLngBounds();
-  path.forEach((p) => bounds.extend(p));
-  if (path.length === 1) {
-    map.setCenter(path[0]);
-    map.setZoom(14);
-  } else {
-    map.fitBounds(bounds, 48);
-  }
-}
-
 function renderAll() {
+  if (!state.mapFocused) showMyMapsOverview();
   renderSidebar();
-  renderMap();
 }
 
 function updateUrl() {
@@ -211,17 +206,19 @@ function updateUrl() {
   history.replaceState(null, "", url);
 }
 
-function initMap() {
-  infoWindow = new google.maps.InfoWindow();
-  const region = getRegion();
+function boot() {
+  document.getElementById("flights-bar").innerHTML = TRIP_DATA.meta.flights
+    .map((f) => `<span>✈️ ${f.date} ${f.code} ${f.route}</span>`)
+    .join("");
 
-  map = new google.maps.Map(document.getElementById("map"), {
-    center: region.center,
-    zoom: region.zoom,
-    mapTypeControl: false,
-    streetViewControl: false,
-    fullscreenControl: true,
-    gestureHandling: "greedy",
+  document.getElementById("page-title").textContent = TRIP_DATA.meta.title;
+  document.getElementById("page-subtitle").textContent = TRIP_DATA.meta.subtitle;
+
+  document.getElementById("map-restore").addEventListener("click", () => {
+    state.mapFocused = false;
+    state.activeStopId = null;
+    showMyMapsOverview();
+    renderSidebar();
   });
 
   document.querySelectorAll(".region-tabs button").forEach((btn) => {
@@ -229,42 +226,13 @@ function initMap() {
       state.regionId = btn.dataset.region;
       state.dayIndex = 0;
       state.activeStopId = null;
-      map.setCenter(getRegion().center);
-      map.setZoom(getRegion().zoom);
+      state.mapFocused = false;
       updateUrl();
       renderAll();
     });
   });
 
   renderAll();
-}
-
-function showMapError() {
-  document.getElementById("map-error").classList.add("visible");
-}
-
-function boot() {
-  const flightsBar = document.getElementById("flights-bar");
-  flightsBar.innerHTML = TRIP_DATA.meta.flights
-    .map((f) => `<span>✈️ ${f.date} ${f.code} ${f.route}</span>`)
-    .join("");
-
-  document.getElementById("page-title").textContent = TRIP_DATA.meta.title;
-  document.getElementById("page-subtitle").textContent = TRIP_DATA.meta.subtitle;
-
-  const key = window.GMAPS_API_KEY || "";
-  if (!key || key === "YOUR_API_KEY_HERE") {
-    showMapError();
-    renderSidebar();
-    return;
-  }
-
-  const script = document.createElement("script");
-  script.src = `https://maps.googleapis.com/maps/api/js?key=${key}&callback=initMap`;
-  script.async = true;
-  script.defer = true;
-  script.onerror = showMapError;
-  document.head.appendChild(script);
 }
 
 boot();

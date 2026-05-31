@@ -27,15 +27,32 @@
 
     <div class="main">
       <div class="map-wrap">
-        <div id="map"></div>
-        <div id="map-error">
-          <h3>需要 Google Maps API Key</h3>
-          <p>
-            請在 <code>config.js</code> 填入你的 API Key，或在 GitHub 仓库 Settings → Secrets 添加
-            <code>GMAPS_API_KEY</code> 后重新部署。
-            <br /><br />
-            启用 <strong>Maps JavaScript API</strong>，并将 HTTP 引荐来源限制为你的 GitHub Pages 域名。
-          </p>
+        <div class="map-toolbar">
+          <span class="map-toolbar-label" id="map-mode-label">My Maps 總覽</span>
+          <div class="map-toolbar-actions">
+            <button type="button" id="map-restore" class="map-btn" hidden>↩ 返回 My Maps</button>
+            <a id="map-open-mymaps" class="map-btn map-btn-link" href="#" target="_blank" rel="noopener">↗ 全屏 My Maps</a>
+          </div>
+        </div>
+        <iframe
+          id="map-frame"
+          title="行程地圖"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen
+        ></iframe>
+        <div id="map-setup" class="map-setup">
+          <h3>📍 嵌入 Google My Maps</h3>
+          <p>網站使用 <strong>Google My Maps</strong>（免費，無需 API Key）。請先建立地圖並把連結填入 <code>config.js</code>。</p>
+          <ol>
+            <li>打開 <a href="https://www.google.com/maps/d/" target="_blank" rel="noopener">Google My Maps</a></li>
+            <li>建立新地圖 → <strong>匯入</strong> → 上傳 <code>busan-locations.kml</code> / <code>jeju-locations.kml</code></li>
+            <li>分享 → 「知道連結的任何人可查看」</li>
+            <li>點 <strong>⋮</strong> → 「在地圖上嵌入」→ 複製 <code>src="..."</code> 裡的網址</li>
+            <li>貼到 <code>config.js</code> 的 <code>embedUrl</code>，分享連結貼到 <code>viewUrl</code></li>
+            <li><code>git push</code> 重新部署</li>
+          </ol>
+          <p class="map-setup-note">完成後刷新此頁，左側會顯示 My Maps，右側為行程列表。</p>
         </div>
       </div>
 
@@ -43,13 +60,14 @@
         <div class="sidebar-head">
           <h2 id="sidebar-title">釜山 · Day 1</h2>
           <p class="theme" id="sidebar-theme"></p>
+          <p class="day-hint" id="day-hint"></p>
         </div>
         <div class="day-tabs" id="day-tabs"></div>
         <div class="legend" id="legend"></div>
         <div class="stats">
           <span id="stat-stops">0 個站點</span>
           <span id="stat-region"></span>
-          <a id="day-directions" href="#" target="_blank" rel="noopener" style="font-size:0.72rem;color:#2563eb;">🗺️ 整日路線</a>
+          <a id="day-directions" href="#" target="_blank" rel="noopener">🗺️ 整日路線</a>
         </div>
         <div class="itinerary" id="itinerary"></div>
       </aside>

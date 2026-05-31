@@ -23,13 +23,29 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Inject Google Maps API Key
+      - name: Inject My Maps URLs (optional secrets)
+        env:
+          BUSAN_EMBED: ${{ secrets.MYMAPS_BUSAN_EMBED }}
+          BUSAN_VIEW: ${{ secrets.MYMAPS_BUSAN_VIEW }}
+          JEJU_EMBED: ${{ secrets.MYMAPS_JEJU_EMBED }}
+          JEJU_VIEW: ${{ secrets.MYMAPS_JEJU_VIEW }}
         run: |
-          if [ -z "${{ secrets.GMAPS_API_KEY }}" ]; then
-            echo 'window.GMAPS_API_KEY = "YOUR_API_KEY_HERE";' > config.js
-            echo "::warning::GMAPS_API_KEY secret not set — map will not load until you add it."
+          if [ -n "$BUSAN_EMBED" ] && [ -n "$JEJU_EMBED" ]; then
+            cat > config.js << EOF
+          window.MYMAPS_CONFIG = {
+            busan: {
+              embedUrl: "$BUSAN_EMBED",
+              viewUrl: "${BUSAN_VIEW:-$BUSAN_EMBED}",
+            },
+            jeju: {
+              embedUrl: "$JEJU_EMBED",
+              viewUrl: "${JEJU_VIEW:-$JEJU_EMBED}",
+            },
+          };
+          EOF
+            echo "config.js generated from GitHub Secrets."
           else
-            echo "window.GMAPS_API_KEY = \"${{ secrets.GMAPS_API_KEY }}\";" > config.js
+            echo "Using committed config.js (set MYMAPS_* secrets to override)."
           fi
 
       - uses: actions/configure-pages@v5

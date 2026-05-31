@@ -256,6 +256,127 @@ header .subtitle {
   border-radius: 6px;
 }
 
+.map-wrap {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  background: #e8eaed;
+}
+
+.map-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 10px;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.map-toolbar-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.map-toolbar-actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.map-btn {
+  font-size: 0.72rem;
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: #f9fafb;
+  color: var(--text);
+  cursor: pointer;
+  font-family: inherit;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.map-btn:hover {
+  background: #eff6ff;
+  border-color: #93c5fd;
+}
+
+.map-btn-link {
+  color: var(--accent);
+}
+
+#map-frame {
+  flex: 1;
+  width: 100%;
+  min-height: 320px;
+  border: 0;
+}
+
+.map-setup {
+  display: none;
+  position: absolute;
+  inset: 36px 0 0;
+  background: rgba(255, 255, 255, 0.97);
+  z-index: 5;
+  padding: 24px 28px;
+  overflow-y: auto;
+}
+
+.map-setup.visible {
+  display: block;
+}
+
+.map-setup h3 {
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+
+.map-setup p,
+.map-setup li {
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.map-setup ol {
+  margin: 12px 0 12px 20px;
+}
+
+.map-setup a {
+  color: var(--accent);
+}
+
+.map-setup code {
+  background: #f3f4f6;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.78rem;
+}
+
+.map-setup-note {
+  margin-top: 12px;
+  padding: 10px 12px;
+  background: #eff6ff;
+  border-radius: 8px;
+  color: #1e40af !important;
+}
+
+.day-hint {
+  font-size: 0.72rem;
+  color: #2563eb;
+  margin-top: 6px;
+  line-height: 1.45;
+}
+
 #map-error {
   display: none;
   position: absolute;
@@ -287,12 +408,6 @@ header .subtitle {
   font-size: 0.8rem;
 }
 
-.map-wrap {
-  position: relative;
-  flex: 1;
-  min-width: 0;
-}
-
 @media (max-width: 768px) {
   .main { flex-direction: column-reverse; }
   .sidebar {
@@ -301,6 +416,6 @@ header .subtitle {
     border-left: none;
     border-top: 1px solid var(--border);
   }
-  #map { min-height: 55vh; }
+  #map-frame { min-height: 55vh; }
   header .subtitle { display: none; }
 }
