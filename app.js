@@ -29,12 +29,23 @@ function isConfigured(url) {
 }
 
 function placeEmbedUrl(stop) {
+  if (stop.cid) {
+    return `https://maps.google.com/maps?cid=${stop.cid}&hl=zh-TW&output=embed`;
+  }
   const q = encodeURIComponent(`${stop.name} ${stop.lat},${stop.lng}`);
   return `https://maps.google.com/maps?q=${q}&ll=${stop.lat},${stop.lng}&z=16&hl=zh-TW&output=embed`;
 }
 
-function mapsUrl(lat, lng, name) {
-  return `https://www.google.com/maps/search/?api=1&query=${lat},${lng}&query_place_id=${encodeURIComponent(name)}`;
+function stopMapsUrl(stop) {
+  if (stop.cid) return `https://maps.google.com/?cid=${stop.cid}`;
+  return `https://www.google.com/maps/search/?api=1&query=${stop.lat},${stop.lng}`;
+}
+
+function stopDirectionsUrl(stop) {
+  if (stop.cid) {
+    return `https://www.google.com/maps/dir/?api=1&destination=${stop.lat},${stop.lng}&travelmode=driving`;
+  }
+  return `https://www.google.com/maps/dir/?api=1&destination=${stop.lat},${stop.lng}&travelmode=driving`;
 }
 
 function directionsUrl(stops) {
@@ -161,8 +172,8 @@ function renderSidebar() {
         ${stop.transport && stop.transport !== "—" ? `<div class="stop-transport">${stop.transport}</div>` : ""}
         <div class="stop-actions">
           <a href="#" class="stop-focus" data-id="${stop.id}">🗺️ 地圖定位</a>
-          <a href="${mapsUrl(stop.lat, stop.lng, stop.name)}" target="_blank" rel="noopener">📍 Google Maps</a>
-          <a href="https://www.google.com/maps/dir/?api=1&destination=${stop.lat},${stop.lng}&travelmode=driving" target="_blank" rel="noopener">🧭 導航</a>
+          <a href="${stopMapsUrl(stop)}" target="_blank" rel="noopener">📍 Google Maps</a>
+          <a href="${stopDirectionsUrl(stop)}" target="_blank" rel="noopener">🧭 導航</a>
         </div>
       </div>`;
     el.addEventListener("click", (e) => {

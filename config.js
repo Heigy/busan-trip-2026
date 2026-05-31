@@ -1,11 +1,11 @@
-// 建立 My Maps 后，把 embed / view 链接贴到下面（见 README）
+// My Maps 嵌入链接（embed 用 embed，分享用 viewer）
 window.MYMAPS_CONFIG = {
   busan: {
-    embedUrl: "YOUR_BUSAN_EMBED_URL",
-    viewUrl: "YOUR_BUSAN_VIEW_URL",
+    embedUrl: "https://www.google.com/maps/d/embed?mid=1YYWCTDv84LEeBrXCHn5J1Atry2eE5oI",
+    viewUrl: "https://www.google.com/maps/d/viewer?mid=1YYWCTDv84LEeBrXCHn5J1Atry2eE5oI",
   },
   jeju: {
-    embedUrl: "YOUR_JEJU_EMBED_URL",
-    viewUrl: "YOUR_JEJU_VIEW_URL",
+    embedUrl: "https://www.google.com/maps/d/embed?mid=1YYWCTDv84LEeBrXCHn5J1Atry2eE5oI",
+    viewUrl: "https://www.google.com/maps/d/viewer?mid=1YYWCTDv84LEeBrXCHn5J1Atry2eE5oI",
   },
 };
