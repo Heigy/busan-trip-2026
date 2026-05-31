@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>釜山 4日行 2026年8月 · 全部地点（更新版）</name>
+    <description>含巨大猪肉汤饭、Olive Young、乐天超市 Buam</description>
+
+    <Folder>
+      <name>Day 1 · 8/1</name>
+      <Placemark>
+        <name>金海国际机场 PUS</name>
+        <description>UO604 07:00抵达</description>
+        <Point><coordinates>128.938222,35.179528,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>海云台酒店</name>
+        <Point><coordinates>129.160456,35.163381,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>巨大猪肉汤饭 거대돼지국밥</name>
+        <description>午餐 11:30 · 汤饭13000/拌面11000 · 09:00-21:00 · 中洞1150-13</description>
+        <Point><coordinates>129.178000,35.163000,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>海云台海水浴场</name>
+        <Point><coordinates>129.160384,35.158698,0</coordinates></Point>
+      </Placemark>
+    </Folder>
+
+    <Folder>
+      <name>Day 2 · 8/2</name>
+      <Placemark><name>甘川洞文化村</name><Point><coordinates>129.010678,35.097493,0</coordinates></Point></Placemark>
+      <Placemark><name>扎嘎其市场</name><Point><coordinates>129.030478,35.096878,0</coordinates></Point></Placemark>
+      <Placemark><name>松岛水晶缆车</name><Point><coordinates>129.018056,35.076389,0</coordinates></Point></Placemark>
+      <Placemark><name>白淺滩文化村</name><Point><coordinates>129.045278,35.078611,0</coordinates></Point></Placemark>
+    </Folder>
+
+    <Folder>
+      <name>Day 3 · 8/3</name>
+      <Placemark><name>Greetvi 西生店</name><Point><coordinates>129.297200,35.359400,0</coordinates></Point></Placemark>
+      <Placemark><name>Skyline Luge</name><Point><coordinates>129.201500,35.292500,0</coordinates></Point></Placemark>
+      <Placemark>
+        <name>青沙浦踏石观景台</name>
+        <description>청사포다릿돌전망대 · 免费 · 167 Cheongsapo-ro · 8月09:00-22:00</description>
+        <Point><coordinates>129.206590,35.161040,0</coordinates></Point>
+      </Placemark>
+      <Placemark><name>青沙浦小镰仓（道口）</name><Point><coordinates>129.222583,35.158833,0</coordinates></Point></Placemark>
+      <Placemark><name>天空胶囊·青沙浦站</name><Point><coordinates>129.222600,35.158900,0</coordinates></Point></Placemark>
+      <Placemark><name>天空胶囊·尾浦站</name><Point><coordinates>129.158611,35.158083,0</coordinates></Point></Placemark>
+      <Placemark>
+        <name>Olive Young 海云台LCT店</name>
+        <description>胶囊后逛街 18:30-19:30 · 10:00-22:30</description>
+        <Point><coordinates>129.163500,35.159500,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>乐天超市 Buam 롯데마트 부산점</name>
+        <description>10:00-23:00 · 241 Sincheon-daero · 地铁2号线釜站4号出口步行约5分</description>
+        <Point><coordinates>129.059100,35.153600,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>海云台罗德罗街（逛街）</name>
+        <Point><coordinates>129.160000,35.162000,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>新世界 Centum City（可选Outlet）</name>
+        <Point><coordinates>129.129000,35.168500,0</coordinates></Point>
+      </Placemark>
+    </Folder>
+
+    <Folder>
+      <name>Day 4 · 8/4</name>
+      <Placemark><name>金海机场 飞济州</name><Point><coordinates>128.938222,35.179528,0</coordinates></Point></Placemark>
+    </Folder>
+  </Document>
+</kml>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>釜山 + 濟州島 2026 · 互動行程地圖</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="config.js"></script>
+  <script src="trip-data.js"></script>
+</head>
+<body>
+  <div id="app">
+    <header>
+      <div>
+        <h1 id="page-title">釜山 + 濟州島 7日6夜</h1>
+        <p class="subtitle" id="page-subtitle">2026年8月 · 5人 · 無自駕</p>
+      </div>
+      <div class="region-tabs">
+        <button type="button" data-region="busan" class="active">釜山</button>
+        <button type="button" data-region="jeju">濟州島</button>
+      </div>
+    </header>
+
+    <div class="flights-bar" id="flights-bar"></div>
+
+    <div class="main">
+      <div class="map-wrap">
+        <div id="map"></div>
+        <div id="map-error">
+          <h3>需要 Google Maps API Key</h3>
+          <p>
+            請在 <code>config.js</code> 填入你的 API Key，或在 GitHub 仓库 Settings → Secrets 添加
+            <code>GMAPS_API_KEY</code> 后重新部署。
+            <br /><br />
+            启用 <strong>Maps JavaScript API</strong>，并将 HTTP 引荐来源限制为你的 GitHub Pages 域名。
+          </p>
+        </div>
+      </div>
+
+      <aside class="sidebar">
+        <div class="sidebar-head">
+          <h2 id="sidebar-title">釜山 · Day 1</h2>
+          <p class="theme" id="sidebar-theme"></p>
+        </div>
+        <div class="day-tabs" id="day-tabs"></div>
+        <div class="legend" id="legend"></div>
+        <div class="stats">
+          <span id="stat-stops">0 個站點</span>
+          <span id="stat-region"></span>
+          <a id="day-directions" href="#" target="_blank" rel="noopener" style="font-size:0.72rem;color:#2563eb;">🗺️ 整日路線</a>
+        </div>
+        <div class="itinerary" id="itinerary"></div>
+      </aside>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

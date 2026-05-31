@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>济州岛 4日 2026年8月 · 全部地点</name>
+    <description>8/4-8/7 · 含牛岛、伴手礼、美食</description>
+    <Folder>
+      <name>Day 1 · 8/4 抵达+西线</name>
+      <Placemark><name>济州机场 CJU</name><Point><coordinates>126.492778,33.506806,0</coordinates></Point></Placemark>
+      <Placemark><name>돔베돈 Dombedon 烤黑猪</name><description>08/4 午餐</description><Point><coordinates>126.512800,33.489200,0</coordinates></Point></Placemark>
+      <Placemark><name>泰迪熊博物馆</name><description>테디베어뮤지엄 중문 · 08/4 13:30</description><Point><coordinates>126.412000,33.241400,0</coordinates></Point></Placemark>
+      <Placemark><name>Hello Kitty Island</name><description>09:00-18:00</description><Point><coordinates>126.361800,33.296500,0</coordinates></Point></Placemark>
+      <Placemark><name>BHC炸鸡 莲洞店</name><Point><coordinates>126.492500,33.486800,0</coordinates></Point></Placemark>
+    </Folder>
+    <Folder>
+      <name>Day 2 · 8/5 东线</name>
+      <Placemark><name>城山日出峰</name><Point><coordinates>126.941600,33.458400,0</coordinates></Point></Placemark>
+      <Placemark><name>城山港 牛岛渡轮</name><description>带护照</description><Point><coordinates>126.922000,33.506000,0</coordinates></Point></Placemark>
+    </Folder>
+    <Folder>
+      <name>Day 3 · 8/6 北海岸+涯月+购物</name>
+      <Placemark><name>伦敦贝果博物馆</name><Point><coordinates>126.861800,33.542200,0</coordinates></Point></Placemark>
+      <Placemark><name>Cafe Layered 小狗咖啡</name><Point><coordinates>126.861800,33.542200,0</coordinates></Point></Placemark>
+      <Placemark><name>Mou Moon</name><Point><coordinates>126.867000,33.548000,0</coordinates></Point></Placemark>
+      <Placemark><name>涯月邑 汉潭海岸</name><Point><coordinates>126.308000,33.462000,0</coordinates></Point></Placemark>
+      <Placemark><name>七星街 칠성로</name><description>08/6 17:00 购物</description><Point><coordinates>126.523500,33.499800,0</coordinates></Point></Placemark>
+      <Placemark><name>Olive Young 济州</name><description>K-Beauty · MALTESE周边</description><Point><coordinates>126.489000,33.487000,0</coordinates></Point></Placemark>
+      <Placemark><name>Hi Jeju</name><description>伴手礼</description><Point><coordinates>126.488800,33.489200,0</coordinates></Point></Placemark>
+      <Placemark><name>Butter Shop</name><Point><coordinates>126.488500,33.489500,0</coordinates></Point></Placemark>
+      <Placemark><name>Jejustar 星星的店</name><Point><coordinates>126.485200,33.490100,0</coordinates></Point></Placemark>
+      <Placemark><name>乐天免税店 济州</name><Point><coordinates>126.492000,33.511000,0</coordinates></Point></Placemark>
+    </Folder>
+    <Folder>
+      <name>Day 4 · 8/7 返程</name>
+      <Placemark><name>济州机场 UO699</name><Point><coordinates>126.492778,33.506806,0</coordinates></Point></Placemark>
+    </Folder>
+  </Document>
+</kml>

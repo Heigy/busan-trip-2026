@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>濟州島 4 日行程流程圖 · 2026年8月</title>
+  <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      background: linear-gradient(160deg, #c8ebe0 0%, #e8f8f2 40%, #d4eef8 100%);
+      display: flex; justify-content: center;
+      padding: 20px 12px 40px;
+      font-family: "Noto Sans TC", sans-serif; color: #2d4a42;
+    }
+    .sheet {
+      width: min(1100px, 100%);
+      background: linear-gradient(180deg, #fffef8 0%, #f5fffb 100%);
+      border: 6px solid #5cb89a;
+      box-shadow: 0 0 0 3px #e0f5ee, 0 0 0 8px #8fd4bc, 0 16px 48px rgba(40, 100, 80, 0.2);
+      padding: 24px 20px 28px; position: relative;
+    }
+    .sheet::before {
+      content: ""; position: absolute; inset: 10px;
+      border: 2px dashed rgba(92, 184, 154, 0.4); pointer-events: none;
+    }
+    header { text-align: center; margin-bottom: 18px; position: relative; z-index: 1; }
+    h1 { font-family: "ZCOOL KuaiLe", cursive; font-size: clamp(1.5rem, 4vw, 2rem); color: #1e6b52; }
+    .subtitle { margin-top: 6px; font-size: 0.85rem; color: #4a8b75; }
+    .badge-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin-top: 10px; }
+    .badge { font-size: 0.7rem; padding: 3px 10px; border-radius: 999px; background: #dff5ec; border: 1px solid #9fd4bf; color: #1e6b52; }
+    .day-block { margin-bottom: 32px; position: relative; z-index: 1; }
+    .day-title {
+      display: inline-flex; flex-wrap: wrap; align-items: center; gap: 6px;
+      background: linear-gradient(90deg, #5cb89a, #7ed4b8);
+      color: #fff; font-weight: 700; font-size: 0.9rem;
+      padding: 6px 14px; border-radius: 999px; margin-bottom: 12px;
+    }
+    .day-theme { font-weight: 400; font-size: 0.78rem; opacity: 0.95; }
+    .flow { display: flex; flex-wrap: wrap; align-items: stretch; gap: 0; padding: 4px 0; }
+    .node {
+      width: 168px; flex-shrink: 0; background: #fff;
+      border: 2px solid #b8e6d4; border-radius: 12px; padding: 8px;
+      margin: 4px 2px; box-shadow: 0 3px 10px rgba(60, 120, 90, 0.1);
+    }
+    .time-badge {
+      display: inline-block; font-size: 0.65rem; font-weight: 700;
+      background: #2d7a5f; color: #fff; padding: 2px 8px; border-radius: 6px; margin-bottom: 4px;
+    }
+    .node-photo { width: 100%; height: 72px; object-fit: cover; border-radius: 8px; margin-bottom: 4px; }
+    .photo-cap { font-size: 0.58rem; color: #6a9a88; display: block; margin-bottom: 4px; }
+    .place { font-weight: 700; font-size: 0.82rem; line-height: 1.3; color: #1e5c48; }
+    .place small { font-weight: 400; color: #5a8f7a; }
+    .do { font-size: 0.68rem; line-height: 1.45; margin: 6px 0; color: #3d5c50; }
+    .stay { font-size: 0.62rem; color: #7aa896; margin-bottom: 4px; }
+    .map-link { font-size: 0.62rem; color: #1a7a5c; text-decoration: none; display: inline-block; margin-right: 6px; }
+    .map-link:hover { text-decoration: underline; }
+    .leg { display: flex; align-items: center; padding: 8px 4px; min-width: 90px; }
+    .leg-arrow { font-size: 1.2rem; color: #5cb89a; margin-right: 4px; }
+    .leg-box { font-size: 0.65rem; line-height: 1.35; background: #edf9f4; border: 1px dashed #9fd4bf; border-radius: 8px; padding: 6px 8px; }
+    .note-box {
+      position: relative; z-index: 1; margin-top: 16px; padding: 12px 14px;
+      background: #f0faf6; border: 2px solid #9fd4bf; border-radius: 10px;
+      font-size: 0.78rem; line-height: 1.6;
+    }
+    .note-box a { color: #1a7a5c; }
+  </style>
+</head>
+<body>
+  <article class="sheet">
+    <header>
+      <h1>🍊 濟州島 4 日行程 · 8/4–8/7</h1>
+      <p class="subtitle">5 人 · 無自駕 · 2 輛的士或 9 座包車（東線強烈建議包車一日）</p>
+      <div class="badge-row">
+        <span class="badge">7C501 8/4 抵達</span>
+        <span class="badge">UO699 8/7 07:30 離境</span>
+        <span class="badge">牛島需護照</span>
+        <span class="badge">免稅機場提貨</span>
+      </div>
+    </header>
+
+    <!-- DAY 1 -->
+    <section class="day-block">
+      <div class="day-title">Day 1 · 8/4 一 <span class="day-theme">黑豬肉 · 泰迪熊 · Hello Kitty · BHC</span></div>
+      <div class="flow">
+        <div class="node">
+          <span class="time-badge">09:05</span>
+          <img class="node-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Jeju_International_Airport.jpg/640px-Jeju_International_Airport.jpg" alt="济州机场" />
+          <div class="place">濟州機場 CJU<br/><small>7C501 抵達</small></div>
+          <div class="do"><strong>做什麼：</strong>入境、取行李、2 輛的士到酒店放行李</div>
+          <div class="stay">—</div>
+          <a class="map-link" href="https://www.google.com/maps/place/Jeju+International+Airport">📍 機場</a>
+        </div>
+        <div class="leg"><span class="leg-arrow">→</span><div class="leg-box"><strong>🚕×2</strong>機場→蓮洞<br/>約 15 分</div></div>
+        <div class="node">
+          <span class="time-badge">11:30–13:00</span>
+          <img class="node-photo" src="https://images.unsplash.com/photo-1529692236671-f1f6c968ba72?w=640&q=80" alt="烤黑猪肉" />
+          <div class="place">烤黑豬肉<br/><small>돔베돈 Dombedon</small></div>
+          <div class="do"><strong>做什麼：</strong>濟州黑豬烤肉套餐（菜板肉+鐵板）· 黑豬街一帶</div>
+          <div class="stay">停留 ~1.5h</div>
+          <a class="map-link" href="https://www.google.com/maps/search/Dombedon+Jeju">📍 地圖</a>
+        </div>
+        <div class="leg"><span class="leg-arrow">→</span><div class="leg-box"><strong>🚐 包車半日</strong>西南線<br/>約 40 分</div></div>
+        <div class="node">
+          <span class="time-badge">13:30–14:30</span>
+          <img class="node-photo" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=640&q=80" alt="泰迪熊博物馆" />
+          <div class="place">泰迪熊博物館<br/><small>테디베어뮤지엄 제주</small></div>
+          <div class="do"><strong>做什麼：</strong>中문度假區 · 泰迪熊主題展、拍照（與 Hello Kitty 同線）</div>
+          <div class="stay">중문관광로110번길 31 · ~1h</div>
+          <a class="map-link" href="https://www.google.com/maps/place/Teddy+Bear+Museum,+31+Jungmungwangwang-ro+110beon-gil,+Seogwipo-si,+Jeju">📍 泰迪熊</a>
+        </div>
+        <div class="leg"><span class="leg-arrow">→</span><div class="leg-box"><strong>🚐 包車</strong>→Hello Kitty<br/>約 20–25 分</div></div>
+        <div class="node">
+          <span class="time-badge">15:00–16:30</span>
+          <img class="node-photo" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=640&q=80" alt="Hello Kitty" />
+          <div class="place">Hello Kitty 博物館<br/><small>헬로키티아일랜드</small></div>
+          <div class="do"><strong>做什麼：</strong>主題館拍照、咖啡廳、周邊（17:00 停止入場）</div>
+          <div class="stay">09:00–18:00</div>
+          <a class="map-link" href="https://www.google.com/maps/place/Hello+Kitty+Island,+340+Hanchang-ro,+Andeok-myeon,+Seogwipo-si,+Jeju">📍 Hello Kitty</a>
+        </div>
+        <div class="leg"><span class="leg-arrow">→</span><div class="leg-box"><strong>🚕×2</strong>→蓮洞酒店<br/>約 45 分</div></div>
+        <div class="node">
+          <span class="time-badge">19:00–21:00</span>
+          <div class="place">BHC 炸雞<br/><small>BHC치킨 연동店</small></div>
+          <div class="do"><strong>做什麼：</strong>芝士炸雞 / 可試濟州限定「火山爆發雞」+ 生啤</div>
+          <div class="stay">蓮洞三無路27</div>
+          <a class="map-link" href="https://www.google.com/maps/search/BHC+Chicken+Jeju+Yeondong">📍 BHC</a>
+        </div>
+        <div class="leg"><span class="leg-arrow">→</span><div class="leg-box"><strong>🚶 便利店</strong>CU/GS25<br/>濟州限定零食</div></div>
+        <div class="node">
+          <span class="time-badge">21:00 後</span>
+          <div class="place">便利店巡禮</div>
+          <div class="do"><strong>做什麼：</strong>橘子巧克力、濟州限定洋芋片、冰杯+飲料組合</div>
+          <div class="stay">酒店附近</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DAY 2 -->
+    <section class="day-block">
+      <div class="day-title">Day 2 · 8/5 二 <span class="day-theme">城山日出峰 · 牛島（東線包車一日）</span></div>
+      <div class="flow">
+        <div class="node">
+          <span class="time-badge">07:30 出發</span>
+          <div class="place">蓮洞酒店</div>
+          <div class="do"><strong>做什麼：</strong>早餐、帶<strong>護照</strong>（牛島渡輪必填表）</div>
+        </div>
+        <div class="leg"><span class="leg-arrow">→</span><div class="leg-box"><strong>🚐 9座包車</strong>一日東線<br/>約 1h → 城山</div></div>
+        <div class="node">
+          <span class="time-badge">09:00–10:30</span>
+          <img class="node-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Seongsan_Ilchulbong.JPG/640px-Seongsan_Ilchulbong.JPG" alt="城山日出峰" />
+          <div class="place">城山日出峰<br/><small>성산일출봉</small></div>
+          <div class="do"><strong>做什麼：</strong>登頂火山口或走免費海岸步道 · 門票 ₩5,000</div>
+          <div class="stay">夏 07:30–19:00</div>
+          <a class="map-link" href="https://www.google.com/maps/place/Seongsan+Ilchulbong">📍 日出峰</a>
+        </div>
+        <div class="leg"><span class="leg-arrow">→</span><div class="leg-box"><strong>🚶/🚐</strong>→城山港<br/>約 10 分</div></div>
+        <div class="node">
+          <span class="time-badge">11:00–16:00</span>
+          <img class="node-photo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Udo_Island_Jeju.jpg/640px-Udo_Island_Jeju.jpg" alt="牛岛" />
+          <div class="place">牛島 우도<br/><small>城山港渡輪</small></div>
+          <div class="do"><strong>做什麼：</strong>渡輪約15分 · 島上環島巴士/電動車 · 花生冰淇淋、白沙灘</div>
+          <div class="stay">往返船票約 ₩10,500/人 · 注意末班船</div>
+          <a class="map-link" href="https://www.google.com/maps/place/Seongsan+Pier,+Udo+Ferry">📍 城山港</a>
+        </div>
+        <div class="leg"><span class="leg-arrow">→</span><div class="leg-box"><strong>🚐 包車</strong>→濟州市區<br/>約 1h</div></div>
+        <div class="node">
+          <span class="time-badge">18:00 後</span>
+          <div class="place">回酒店休息</div>
+          <div class="do"><strong>做什麼：</strong>東線體力消耗大 · 簡餐或便利店</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DAY 3 -->
+    <section class="day-block">
+      <div class="day-title">Day 3 · 8/6 三 <span class="day-theme">貝果 · Mou Moon · 涯月 · 七星街 · Olive Young · 伴手禮</span></div>
+      <div class="flow">
+        <div class="node">
+          <span class="time-badge">08:00</span>
+          <img class="node-photo" src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=640&q=80" alt="贝果" />
+          <div class="place">倫敦貝果博物館<br/><small>런던베이글뮤지엄</small></div>
+          <div class="do"><strong>做什麼：</strong>排隊取號 · 貝果+奶油芝士 · 08:00 開門即到</div>
+          <div class="stay">동복로 85 · ~1h</div>
+          <a class="map-link" href="https://www.google.com/maps/place/London+Bagel+Museum,+85+Dongbok-ro,+Gujwa-eup,+Jeju">📍 貝果</a>
+        </div>
+        <div class="leg"><span class="leg-arrow">→</span><div class="leg-box"><strong>🚶 旁邊</strong>同一地址<br/>小狗咖啡</div></div>
+        <div class="node">
+          <span class="time-badge">09:30–10:30</span>
+          <div class="place">小狗咖啡店<br/><small>Cafe Layered</small></div>
+          <div class="do"><strong>做什麼：</strong>小狗造型甜點、海景、拍照（與貝果館相鄰）</div>
+          <a class="map-link" href="https://www.google.com/maps/place/Cafe+Layered+Jeju+Branch,+85+Dongbok-ro,+Gujwa-eup,+Jeju">📍 Layered</a>
+        </div>
+        <div class="leg"><span class="leg-arrow">→</span><div class="leg-box"><strong>🚕/🚐</strong>→Mou Moon<br/>約 5 分</div></div>
+        <div class="node">
+          <span class="time-badge">11:00–12:30</span>
+          <div class="place">Mou Moon 머문<br/><small>海景烘焙咖啡</small></div>
+          <div class="do"><strong>做什麼：</strong>落地窗外海、咖啡甜點、早午餐</div>
+          <div class="stay">해맞이해안로 460 · 10:00–20:30</div>
+          <a class="map-link" href="https://www.google.com/maps/place/Mou+Moon,+460+Haemajihaean-ro,+Gujwa-eup,+Jeju">📍 Mou Moon</a>
+        </div>
+        <div class="leg"><span class="leg-arrow">→</span><div class="leg-box"><strong>🚐/🚕×2</strong>→涯月邑<br/>約 40 分</div></div>
+        <div class="node">
+          <span class="time-badge">14:00–17:00</span>
+          <img class="node-photo" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=640&q=80" alt="涯月" />
+          <div class="place">涯月邑<br/><small>애월 · 漢潭海岸</small></div>
+          <div class="do"><strong>做什麼：</strong>海岸散步路 · 春日/몽상드애월等海景咖啡 · 橘子海</div>
+          <div class="stay">停留 ~2–3h</div>
+          <a class="map-link" href="https://www.google.com/maps/place/Aewol-eup,+Jeju">📍 涯月</a>
+        </div>
+        <div class="leg"><span class="leg-arrow">→</span><div class="leg-box"><strong>🚕×2</strong>→濟州舊城<br/>約 35 分</div></div>
+        <div class="node">
+          <span class="time-badge">17:00–18:00</span>
+          <div class="place">七星街<br/><small>칠성로상가 · 東門市場旁</small></div>
+          <div class="do"><strong>做什麼：</strong>濟州最大步行商圈 · 服飾/文具 · 可順逛<strong>中央地下商場</strong></div>
+          <div class="stay">관덕로13길 · 近東門市場</div>
+          <a class="map-link" href="https://www.google.com/maps/place/Jeju+Chilseong-ro+Shopping+Street,+12+Gwandeok-ro+13-gil,+Jeju">📍 七星街</a>
+        </div>
+        <div class="leg"><span class="leg-arrow">→</span><div class="leg-box"><strong>🚶/🚕</strong>→Olive Young<br/>約 10–15 分</div></div>
+        <div class="node">
+          <span class="time-badge">18:00–19:00</span>
+          <div class="place">Olive Young + 線條小狗<br/><small>올리브영 · MALTESE周邊</small></div>
+          <div class="do"><strong>做什麼：</strong>K-Beauty 伴手禮 · 搜 <strong>MALTESE/線條小狗</strong> 聯名（노형/蓮洞店）</div>
+          <div class="stay">10:00–22:00</div>
+          <a class="map-link" href="https://www.google.com/maps/search/Olive+Young+Jeju+Nohyeong">📍 Olive Young</a>
+        </div>
+        <div class="leg"><span class="leg-arrow">→</span><div class="leg-box"><strong>🚕</strong>→노연路<br/>約 10 分</div></div>
+        <div class="node">
+          <span class="time-badge">19:00–20:30</span>
+          <div class="place">伴手禮一條街<br/><small>Hi Jeju · Butter · 星星 · Onni</small></div>
+          <div class="do"><strong>做什麼：</strong>① Hi Jeju ② Butter! ③ Jejustar ④ Onni · 可補買線條小狗文創</div>
+          <div class="stay">노연로81 / 99 / 제원길38</div>
+          <a class="map-link" href="https://www.google.com/maps/dir/Hi+Jeju,+81+Noyeon-ro,+Jeju/Butter+Shop+Jeju,+99+Noyeon-ro,+Jeju/Jejustarstore,+38+Jewon-gil,+Jeju">📍 伴手禮動線</a>
+        </div>
+        <div class="leg"><span class="leg-arrow">→</span><div class="leg-box"><strong>🚶</strong>樂天免稅店<br/>機場提貨</div></div>
+        <div class="node">
+          <span class="time-badge">20:00–21:00</span>
+          <div class="place">樂天免稅店<br/><small>롯데면세점 제주</small></div>
+          <div class="do"><strong>做什麼：</strong>護照購物 · <strong>8/7 航班離境提貨</strong> · 保留登機時間</div>
+          <a class="map-link" href="https://www.google.com/maps/place/Lotte+Duty+Free+Jeju">📍 免稅</a>
+        </div>
+        <div class="leg"><span class="leg-arrow">→</span><div class="leg-box"><strong>🚶</strong>便利店第二彈</div></div>
+        <div class="node">
+          <span class="time-badge">21:00 後</span>
+          <div class="place">便利店 + 整理行李</div>
+          <div class="do"><strong>做什麼：</strong>補貨、冰杯、隔日 05:00 出發用</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DAY 4 -->
+    <section class="day-block">
+      <div class="day-title">Day 4 · 8/7 四 <span class="day-theme">UO699 07:30 → 香港</span></div>
+      <div class="flow">
+        <div class="node">
+          <span class="time-badge">05:00</span>
+          <div class="place">酒店退房</div>
+          <div class="do"><strong>做什麼：</strong>2 輛的士 → 濟州機場 · 免稅品提貨 · 值機</div>
+        </div>
+        <div class="leg"><span class="leg-arrow">→</span><div class="leg-box"><strong>✈️ UO699</strong>07:30 起飛</div></div>
+        <div class="node">
+          <span class="time-badge">09:40</span>
+          <div class="place">抵達香港</div>
+          <div class="do"><strong>做什麼：</strong>結束濟州行程</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="note-box">
+      <strong>交通建議</strong>：東線（城山+牛島）建議預訂 <strong>9 座中文包車一日</strong>（KKday/当地）比 2 辆的士划算。<br/>
+      <strong>牛島</strong>：实体护照、填乘船表、查末班船时间。<br/>
+      <strong>贝果博物馆</strong>：周末排队 1h+，建议 8/6 工作日一早到。<br/>
+      <strong>整日路线</strong>：
+      <a href="https://www.google.com/maps/dir/Jeju+International+Airport/Seongsan+Ilchulbong,+Jeju/Seongsan+Pier,+Jeju/London+Bagel+Museum,+85+Dongbok-ro,+Jeju/Cafe+Layered+Jeju,+85+Dongbok-ro,+Jeju/Mou+Moon,+460+Haemajihaean-ro,+Jeju/Aewol-eup,+Jeju/Hi+Jeju,+81+Noyeon-ro,+Jeju/Jeju+International+Airport">济州主要景点串联</a>
+    </div>
+  </article>
+</body>
+</html>

@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>釜山 4 日行程流程圖 · 含時間交通</title>
+  <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      background: linear-gradient(160deg, #e8d4f0 0%, #f5e6ff 40%, #dce8ff 100%);
+      display: flex;
+      justify-content: center;
+      padding: 20px 12px 40px;
+      font-family: "Noto Sans TC", sans-serif;
+      color: #4a3555;
+    }
+    .sheet {
+      width: min(1100px, 100%);
+      background: linear-gradient(180deg, #fffef8 0%, #fff9f0 100%);
+      border: 6px solid #b48bc9;
+      box-shadow: 0 0 0 3px #f3e5ff, 0 0 0 8px #d4a8e8, 0 16px 48px rgba(120, 60, 140, 0.22);
+      padding: 24px 20px 28px;
+      position: relative;
+    }
+    .sheet::before {
+      content: "";
+      position: absolute;
+      inset: 10px;
+      border: 2px dashed rgba(180, 139, 201, 0.4);
+      pointer-events: none;
+    }
+    header { text-align: center; margin-bottom: 18px; position: relative; z-index: 1; }
+    h1 {
+      font-family: "ZCOOL KuaiLe", cursive;
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      color: #6b3d7a;
+    }
+    .subtitle { margin-top: 6px; font-size: 0.85rem; color: #8b6b9e; }
+    .badge-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin-top: 10px; }
+    .badge {
+      font-size: 0.7rem;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: #f0dff8;
+      border: 1px solid #d4b8e8;
+      color: #6b3d7a;
+    }
+
+    .day-block { margin-bottom: 32px; position: relative; z-index: 1; }
+    .day-title {
+      display: inline-flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      background: linear-gradient(90deg, #c9a0dc, #e8b4f0);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 6px 14px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+    }
+    .day-theme { font-weight: 400; font-size: 0.78rem; opacity: 0.95; }
+
+    .flow {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: stretch;
+      justify-content: flex-start;
+      gap: 0;
+      padding: 4px 0;
+    }
+
+    .node {
+      width: 168px;
+      flex-shrink: 0;
+      background: #fff;
+      border: 2px solid #e0c8f0;
+      border-radius: 12px;
+      padding: 8px 8px 10px;
+      text-align: center;
+      box-shadow: 0 3px 10px rgba(120, 80, 150, 0.1);
+    }
+    .time-badge {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: #fff;
+      background: #b48bc9;
+      padding: 2px 8px;
+      border-radius: 6px;
+      margin-bottom: 6px;
+    }
+    .node-photo {
+      width: 100%;
+      height: 88px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 4px;
+      border: 1px solid #e0c8f0;
+      background: #f5ecfa;
+    }
+    .photo-cap {
+      font-size: 0.55rem;
+      color: #8b6b9e;
+      line-height: 1.35;
+      display: block;
+      margin-bottom: 5px;
+      text-align: left;
+    }
+    .place {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #6b3d7a;
+      line-height: 1.3;
+    }
+    .do {
+      font-size: 0.68rem;
+      color: #5c4570;
+      margin-top: 4px;
+      line-height: 1.45;
+      text-align: left;
+      background: #faf5ff;
+      padding: 5px 6px;
+      border-radius: 6px;
+      border-left: 3px solid #e8b4f0;
+    }
+    .stay {
+      font-size: 0.62rem;
+      color: #9a7aab;
+      margin-top: 4px;
+    }
+    .map-link {
+      display: inline-block;
+      margin-top: 5px;
+      font-size: 0.6rem;
+      color: #7b5a9a;
+      text-decoration: underline;
+    }
+
+    .leg {
+      width: 88px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0 2px;
+      min-height: 120px;
+    }
+    .leg-arrow {
+      color: #c9a0dc;
+      font-size: 1.2rem;
+      line-height: 1;
+    }
+    .leg-box {
+      margin-top: 4px;
+      font-size: 0.58rem;
+      line-height: 1.4;
+      text-align: center;
+      background: #f5ecfa;
+      border: 1px dashed #d4b8e8;
+      border-radius: 8px;
+      padding: 5px 4px;
+      color: #6b3d7a;
+      width: 100%;
+    }
+    .leg-box strong {
+      display: block;
+      font-size: 0.62rem;
+      color: #b45a8a;
+      margin-bottom: 2px;
+    }
+
+    .note-box {
+      margin-top: 16px;
+      padding: 12px 14px;
+      background: rgba(240, 223, 248, 0.7);
+      border-radius: 10px;
+      border: 1px solid #e0c8f0;
+      font-size: 0.76rem;
+      line-height: 1.65;
+      position: relative;
+      z-index: 1;
+    }
+    .note-box strong { color: #6b3d7a; }
+
+    @media (max-width: 700px) {
+      .flow { flex-direction: column; align-items: center; }
+      .leg {
+        width: 152px;
+        min-height: auto;
+        flex-direction: row;
+        gap: 8px;
+        padding: 8px 0;
+      }
+      .leg-arrow { transform: rotate(90deg); }
+    }
+    @media print {
+      body { background: #fff; }
+      .sheet { box-shadow: none; width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <article class="sheet">
+    <header>
+      <h1>釜山 4 日行 · 流程圖</h1>
+      <p class="subtitle">2026/8/1–8/4 · 5 人無自駕 · 每站含【实景照片】【做什麼】【時間】【交通】</p>
+      <div class="badge-row">
+        <span class="badge">🚕 5人 = 2輛的士 或 Van</span>
+        <span class="badge">住海雲台</span>
+        <span class="badge">UO604 抵達 · 7C501 飛濟州</span>
+      </div>
+    </header>
+
+    <!-- DAY 1 -->
+    <section class="day-block">
+      <div class="day-title">Day 1 · 8/1 五 <span class="day-theme">抵達 · 巨大豬肉湯飯午餐 · 海雲台</span></div>
+      <div class="flow">
+        <div class="node">
+          <span class="time-badge">02:35–07:00</span>          <img class="node-photo" src="photos/01-airport.jpg" alt="金海国际机场 PUS 实景" />
+          <span class="photo-cap">📸 金海国际机场 PUS 实景</span>
+          <div class="place">釜山機場<br/><small>UO 604</small></div>
+          <div class="do"><strong>做什麼：</strong>抵達、入境、取行李</div>
+          <div class="stay">停留 ~1–1.5h</div>
+        </div>
+        <div class="leg">
+          <span class="leg-arrow">→</span>
+          <div class="leg-box"><strong>🚕 的士×2</strong>機場→海雲台酒店<br/>約 40–50 分</div>
+        </div>
+        <div class="node">
+          <span class="time-badge">10:00–14:00</span>          <img class="node-photo" src="photos/02-hotel.jpg" alt="海云台一带实景" />
+          <span class="photo-cap">📸 海云台一带实景</span>
+          <div class="place">海雲台酒店</div>
+          <div class="do"><strong>做什麼：</strong>Check-in、淋浴補眠、放行李</div>
+          <div class="stay">停留 ~1–2h</div>
+        </div>
+        <div class="leg">
+          <span class="leg-arrow">→</span>
+          <div class="leg-box"><strong>🚶 步行</strong>酒店→湯飯店<br/>約 5–10 分</div>
+        </div>
+        <div class="node">
+          <span class="time-badge">11:30–13:00</span>
+          <img class="node-photo" src="photos/09-food.jpg" alt="釜山猪肉汤饭" />
+          <span class="photo-cap">📸 釜山汤饭（示意）</span>
+          <div class="place">巨大豬肉湯飯 🍲<br/><small>거대돼지국밥</small></div>
+          <div class="do"><strong>做什麼：</strong>豬肉湯飯 ₩13,000 / 水拌麵 ₩11,000<br/>中洞1150-13 · 09:00–21:00</div>
+          <div class="stay">停留 ~1–1.5h</div>
+          <a class="map-link" href="https://www.google.com/maps/search/거대돼지국밥+해운대+중동">📍 地圖</a>
+        </div>
+        <div class="leg">
+          <span class="leg-arrow">→</span>
+          <div class="leg-box"><strong>🚶 步行</strong>→海雲台海灘<br/>約 10–15 分</div>
+        </div>
+        <div class="node">
+          <span class="time-badge">14:00–18:00</span>          <img class="node-photo" src="photos/02-haeundae.jpg" alt="海云台海水浴场实景" />
+          <span class="photo-cap">📸 海云台海水浴场实景</span>
+          <div class="place">海雲台海水浴場</div>
+          <div class="do"><strong>做什麼：</strong>海灘散步、傳統市場吃小食、可選冬柏島</div>
+          <div class="stay">停留 ~2–3h</div>
+          <a class="map-link" href="https://www.google.com/maps/place/Haeundae+Beach">📍 地圖</a>
+        </div>
+        <div class="leg">
+          <span class="leg-arrow">→</span>
+          <div class="leg-box"><strong>🚶 步行</strong>海灘周邊<br/>約 5 分</div>
+        </div>
+        <div class="node">
+          <span class="time-badge">18:00 後</span>          <img class="node-photo" src="photos/09-food.jpg" alt="海云台夜市小吃实景" />
+          <span class="photo-cap">📸 海云台夜市小吃实景</span>
+          <div class="place">海雲台晚餐</div>
+          <div class="do"><strong>做什麼：</strong>미포집豬腳 / 母牛排骨 / 密陽湯飯</div>
+          <div class="stay">輕鬆收尾、早睡</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DAY 2 -->
+    <section class="day-block">
+      <div class="day-title">Day 2 · 8/2 六 <span class="day-theme">西線：甘川 → 扎嘎其 → 松島 → 白淺灘</span></div>
+      <div class="flow">
+        <div class="node">
+          <span class="time-badge">08:30 出發</span>          <img class="node-photo" src="photos/02-hotel.jpg" alt="海云台酒店周边实景" />
+          <span class="photo-cap">📸 海云台酒店周边实景</span>
+          <div class="place">海雲台酒店</div>
+          <div class="do"><strong>做什麼：</strong>早餐後出發</div>
+          <div class="stay">—</div>
+        </div>
+        <div class="leg">
+          <span class="leg-arrow">→</span>
+          <div class="leg-box"><strong>🚕 的士×2</strong>海雲台→甘川洞<br/>約 35–45 分</div>
+        </div>
+        <div class="node">
+          <span class="time-badge">09:00–11:30</span>          <img class="node-photo" src="photos/03-gamcheon.jpg" alt="甘川洞文化村实景" />
+          <span class="photo-cap">📸 甘川洞文化村实景</span>
+          <div class="place">甘川洞文化村<br/><small>감천문화마을</small></div>
+          <div class="do"><strong>做什麼：</strong>彩色壁畫、小王子打卡、逛文創小店</div>
+          <div class="stay">停留 2–2.5h</div>
+          <a class="map-link" href="https://www.google.com/maps/place/Gamcheon+Culture+Village">📍 地圖</a>
+        </div>
+        <div class="leg">
+          <span class="leg-arrow">→</span>
+          <div class="leg-box"><strong>🚕 的士×2</strong>甘川→扎嘎其<br/>約 15–20 分</div>
+        </div>
+        <div class="node">
+          <span class="time-badge">12:00–13:30</span>          <img class="node-photo" src="photos/04-jagalchi.jpg" alt="扎嘎其鱼市场实景" />
+          <span class="photo-cap">📸 扎嘎其鱼市场实景</span>
+          <div class="place">扎嘎其市場<br/><small>자갈치시장</small></div>
+          <div class="do"><strong>做什麼：</strong>活海鮮午餐（八爪魚、烤魚、海鮮鍋）5人同桌</div>
+          <div class="stay">停留 1.5h</div>
+          <a class="map-link" href="https://www.google.com/maps/place/Jagalchi+Market">📍 地圖</a>
+        </div>
+        <div class="leg">
+          <span class="leg-arrow">→</span>
+          <div class="leg-box"><strong>🚕 的士×2</strong>扎嘎其→松島<br/>約 15–20 分</div>
+        </div>
+        <div class="node">
+          <span class="time-badge">14:00–16:00</span>          <img class="node-photo" src="photos/05-songdo.jpg" alt="松岛海水浴场·缆车区域实景" />
+          <span class="photo-cap">📸 松岛海水浴场·缆车区域实景</span>
+          <div class="place">松島海上水晶纜車<br/><small>송도해상케이블카</small></div>
+          <div class="do"><strong>做什麼：</strong>搭透明纜車跨海、松島海灘拍照（需提前購票）</div>
+          <div class="stay">停留 ~2h 含排隊</div>
+          <a class="map-link" href="https://www.google.com/maps/place/Songdo+Marine+Cable+Car">📍 地圖</a>
+        </div>
+        <div class="leg">
+          <span class="leg-arrow">→</span>
+          <div class="leg-box"><strong>🚕 的士×2</strong>松島→白淺灘<br/>約 20–25 分</div>
+        </div>
+        <div class="node">
+          <span class="time-badge">16:45–19:00</span>          <img class="node-photo" src="photos/06-huinnyeoul.jpg" alt="白淺滩文化村实景" />
+          <span class="photo-cap">📸 白淺滩文化村实景</span>
+          <div class="place">白淺灘文化村<br/><small>흰여울문화마을</small></div>
+          <div class="do"><strong>做什麼：</strong>彩色階梯、壁畫、黃昏咖啡（影島）</div>
+          <div class="stay">停留 ~2h</div>
+          <a class="map-link" href="https://www.google.com/maps/place/Huinnyeoul+Culture+Village">📍 地圖</a>
+        </div>
+        <div class="leg">
+          <span class="leg-arrow">→</span>
+          <div class="leg-box"><strong>🚕 的士×2</strong>白淺灘→海雲台<br/>約 25–35 分</div>
+        </div>
+        <div class="node">
+          <span class="time-badge">19:30 後</span>          <img class="node-photo" src="photos/02-haeundae.jpg" alt="海云台海水浴场实景" />
+          <span class="photo-cap">📸 海云台海水浴场实景</span>
+          <div class="place">回海雲台</div>
+          <div class="do"><strong>做什麼：</strong>가야밀면拌麵 / 미포집豬腳 晚餐</div>
+          <div class="stay">回酒店休息</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DAY 3 -->
+    <section class="day-block">
+      <div class="day-title">Day 3 · 8/3 日 <span class="day-theme">Greetvi → 滑車 → 踏石觀景台 → 小镰倉 → 膠囊 → 購物</span></div>
+      <div class="flow">
+        <div class="node">
+          <span class="time-badge">08:00 出發</span>          <img class="node-photo" src="photos/02-hotel.jpg" alt="海云台出发实景" />
+          <span class="photo-cap">📸 海云台出发实景</span>
+          <div class="place">海雲台酒店</div>
+          <div class="do"><strong>做什麼：</strong>早餐、退房行李放酒店或帶上車</div>
+          <div class="stay">—</div>
+        </div>
+        <div class="leg">
+          <span class="leg-arrow">→</span>
+          <div class="leg-box"><strong>🚕 的士×2</strong>海雲台→Greetvi<br/>約 50–60 分</div>
+        </div>
+        <div class="node">
+          <span class="time-badge">10:00–12:30</span>          <img class="node-photo" src="photos/10-greetvi.jpg" alt="机张东海岸·海东龙宫寺（Greetvi 同线海景）" />
+          <span class="photo-cap">📸 机张东海岸·海东龙宫寺（Greetvi 同线海景）</span>
+          <div class="place">Greetvi 西生店<br/><small>그릿비 서생점</small></div>
+          <div class="do"><strong>做什麼：</strong>海景咖啡、現烤麵包早午餐、拍照（10:00開門）</div>
+          <div class="stay">停留 2.5h</div>
+          <a class="map-link" href="https://www.google.com/maps/place/GREETVI">📍 地圖</a>
+        </div>
+        <div class="leg">
+          <span class="leg-arrow">→</span>
+          <div class="leg-box"><strong>🚕 的士×2</strong>Greetvi→Luge<br/>約 15–25 分</div>
+        </div>
+        <div class="node">
+          <span class="time-badge">13:00–16:00</span>          <img class="node-photo" src="photos/11-luge.jpg" alt="Osiria 站·Skyline Luge 机张园区" />
+          <span class="photo-cap">📸 Osiria 站·Skyline Luge 机张园区</span>
+          <div class="place">Skyline Luge<br/><small>스카이라인루지·機張</small></div>
+          <div class="do"><strong>做什麼：</strong>纜車上山 + 斜坡滑車 2–3 圈（親子/刺激）</div>
+          <div class="stay">停留 2–3h</div>
+          <a class="map-link" href="https://www.google.com/maps/place/Skyline+Luge+Busan">📍 地圖</a>
+        </div>
+        <div class="leg">
+          <span class="leg-arrow">→</span>
+          <div class="leg-box"><strong>🚕 的士×2</strong>Luge→踏石觀景台<br/>約 35–45 分</div>
+        </div>
+        <div class="node">
+          <span class="time-badge">16:15–16:50</span>
+          <img class="node-photo" src="photos/08-cheongsapo.jpg" alt="青沙浦踏石观景台" />
+          <span class="photo-cap">📸 青沙浦·海岸步道</span>
+          <div class="place">青沙浦踏石觀景台<br/><small>청사포다릿돌전망대</small></div>
+          <div class="do"><strong>做什麼：</strong>海上天空步道、透明地板俯瞰海浪（免費）· 8月開放至 <strong>22:00</strong></div>
+          <div class="stay">停留 ~30–40 分</div>
+          <a class="map-link" href="https://www.google.com/maps/place/Cheongsapo+Daritdol+Observatory,+167+Cheongsapo-ro,+Haeundae-gu,+Busan">📍 踏石觀景台</a>
+        </div>
+        <div class="leg">
+          <span class="leg-arrow">→</span>
+          <div class="leg-box"><strong>🚶 步行</strong>觀景台→道口<br/>沿海岸約 10–15 分</div>
+        </div>
+        <div class="node">
+          <span class="time-badge">16:50–17:20</span>
+          <img class="node-photo" src="photos/08-cheongsapo.jpg" alt="青沙浦小镰仓道口" />
+          <span class="photo-cap">📸 青沙浦「小镰倉」道口</span>
+          <div class="place">青沙浦「小镰倉」<br/><small>해변열차道口 · 청사포역</small></div>
+          <div class="do"><strong>做什麼：</strong>鐵道道口網紅拍照 · 步行至膠囊站</div>
+          <div class="stay">停留 ~30 分</div>
+          <a class="map-link" href="https://www.google.com/maps/place/Cheongsapo+Station,+Blueline+Park,+Busan">📍 道口/膠囊站</a>
+        </div>
+        <div class="leg">
+          <span class="leg-arrow">→</span>
+          <div class="leg-box"><strong>🚶 步行</strong>道口→膠囊站<br/>約 3–5 分</div>
+        </div>
+        <div class="node">
+          <span class="time-badge">17:30–18:30</span>          <img class="node-photo" src="photos/07-capsule.jpg" alt="海云台天空胶囊列车实景" />
+          <span class="photo-cap">📸 海云台天空胶囊列车实景</span>
+          <div class="place">天空膠囊列車<br/><small>청사포→尾浦</small></div>
+          <div class="do"><strong>做什麼：</strong>搭海雲台藍線天空膠囊看海景（需提前訂票！）</div>
+          <div class="stay">車程 ~30 分 · 尾浦下車</div>
+          <a class="map-link" href="https://www.bluelinepark.com/">🎫 訂票</a>
+        </div>
+        <div class="leg">
+          <span class="leg-arrow">→</span>
+          <div class="leg-box"><strong>🚶 步行</strong>尾浦→LCT<br/>Olive Young 約5分</div>
+        </div>
+        <div class="node">
+          <span class="time-badge">18:30–20:30</span>
+          <img class="node-photo" src="photos/02-haeundae.jpg" alt="海云台购物街" />
+          <span class="photo-cap">📸 海云台商圈</span>
+          <div class="place">Olive Young + 樂天超市<br/><small>올리브영 LCT · 롯데마트 부암</small></div>
+          <div class="do"><strong>做什麼：</strong>① Olive Young LCT（10:00–22:30）美妝伴手禮 ② 地鐵2號線→<strong>樂天超市 Buam</strong>（10:00–23:00）零食/日用品 · 可順路羅德罗街</div>
+          <div class="stay">停留 ~2h</div>
+          <a class="map-link" href="https://www.google.com/maps/place/Olive+Young+Haeundae+LCT">📍 Olive Young</a>
+          <a class="map-link" href="https://www.google.com/maps/place/Lotte+Mart+Busan,+241+Sincheon-daero,+Busanjin-gu,+Busan">🛒 樂天超市</a>
+        </div>
+        <div class="leg">
+          <span class="leg-arrow">→</span>
+          <div class="leg-box"><strong>🚇 地鐵2號線</strong>釜站→海雲台<br/>回酒店 約15分</div>
+        </div>
+        <div class="node">
+          <span class="time-badge">21:00 後</span>
+          <img class="node-photo" src="photos/02-hotel.jpg" alt="酒店" />
+          <span class="photo-cap">📸 回酒店</span>
+          <div class="place">海雲台酒店</div>
+          <div class="do"><strong>做什麼：</strong>整理行李、早休息（明天 05:30 起床）</div>
+          <div class="stay">—</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DAY 4 -->
+    <section class="day-block">
+      <div class="day-title">Day 4 · 8/4 一 <span class="day-theme">飛濟州（不排景點）</span></div>
+      <div class="flow">
+        <div class="node">
+          <span class="time-badge">05:30</span>          <img class="node-photo" src="photos/02-hotel.jpg" alt="海云台酒店实景" />
+          <span class="photo-cap">📸 海云台酒店实景</span>
+          <div class="place">海雲台酒店</div>
+          <div class="do"><strong>做什麼：</strong>退房、檢查護照機票</div>
+          <div class="stay">—</div>
+        </div>
+        <div class="leg">
+          <span class="leg-arrow">→</span>
+          <div class="leg-box"><strong>🚕 06:00出發</strong>2輛的士<br/>約 45–55 分</div>
+        </div>
+        <div class="node">
+          <span class="time-badge">06:30–07:00</span>          <img class="node-photo" src="photos/01-airport.jpg" alt="金海国际机场实景" />
+          <span class="photo-cap">📸 金海国际机场实景</span>
+          <div class="place">金海機場 PUS</div>
+          <div class="do"><strong>做什麼：</strong>值機、安檢、5人集合</div>
+          <div class="stay">提前 1.5h 到機場</div>
+          <a class="map-link" href="https://www.google.com/maps/place/Gimhae+International+Airport">📍 地圖</a>
+        </div>
+        <div class="leg">
+          <span class="leg-arrow">→</span>
+          <div class="leg-box"><strong>✈️ 7C 501</strong>08:00 起飛<br/>釜山→濟州</div>
+        </div>
+        <div class="node">
+          <span class="time-badge">08:00</span>          <img class="node-photo" src="photos/12-jeju.jpg" alt="济州岛实景" />
+          <span class="photo-cap">📸 济州岛实景</span>
+          <div class="place">濟州島</div>
+          <div class="do"><strong>做什麼：</strong>抵達濟州、開始濟州行程</div>
+          <div class="stay">約 09:05 抵達</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="note-box">
+      <strong>照片來源</strong>：Wikimedia Commons 實景（已下載至 <code>photos/</code> 資料夾）。Greetvi 暫用東海岸海東龍宮寺同線海景；Skyline Luge 為 Osiria 站（園區所在）。<br/>
+      <strong>圖例</strong>：紫色時間 = 建議時段 · 箭頭旁 = 交通 + 車程 · 「做什麼」= 具體活動<br/>
+      <strong>必須預約</strong>：天空膠囊 · 松島纜車 · Skyline Luge · 膠囊建議方向「青沙浦→尾浦」<br/>
+      <strong>整日路線</strong>：
+      <a href="https://www.google.com/maps/dir/Gamcheon+Culture+Village,+Busan/Jagalchi+Market,+Busan/Songdo+Marine+Cable+Car,+Busan/Huinnyeoul+Culture+Village,+Busan/Haeundae+Beach,+Busan">8/2 西線</a> ·
+      <a href="https://www.google.com/maps/dir/Haeundae+Station,+Busan/GREETVI,+Seosaeng-myeon,+Ulsan/Skyline+Luge+Busan,+Gijang/Cheongsapo+Daritdol+Observatory,+167+Cheongsapo-ro,+Busan/Cheongsapo+Station,+Blueline+Park,+Busan/Mipo+Station,+Blueline+Park,+Busan/Olive+Young+Haeundae+LCT,+Busan/Lotte+Mart+Busan,+241+Sincheon-daero,+Busanjin-gu,+Busan/Haeundae+Beach,+Busan">8/3 東線+購物</a>
+    </div>
+  </article>
+</body>
+</html>
