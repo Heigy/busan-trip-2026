@@ -7,6 +7,7 @@ const state = {
   mapFocused: false,
   lang: "zh",
   theme: "light",
+  view: "map",
 };
 
 function readStoredTheme() {
@@ -28,6 +29,7 @@ else {
     if (localStorage.getItem("trip-lang") === "en") state.lang = "en";
   } catch (_) { /* private browsing */ }
 }
+if (urlParams.get("view") === "flowchart") state.view = "flowchart";
 
 function isDark() {
   return state.theme === "dark";
@@ -101,6 +103,62 @@ function getMyMapsConfig(regionId) {
   return (window.MYMAPS_CONFIG || {})[regionId] || {};
 }
 
+function flowchartPage() {
+  return state.regionId === "busan" ? "busan-flowchart.html" : "jeju-flowchart.html";
+}
+
+function isMapView() {
+  return state.view === "map";
+}
+
+function setView(view) {
+  state.view = view === "flowchart" ? "flowchart" : "map";
+  if (state.view === "flowchart") {
+    state.mapFocused = false;
+    state.activeStopId = null;
+  }
+  updateUrl();
+  renderAll();
+}
+
+function applyView() {
+  const mapPanel = document.getElementById("map-panel");
+  const flowPanel = document.getElementById("flowchart-panel");
+  const restoreBtn = document.getElementById("map-restore");
+  const externalLink = document.getElementById("map-open-external");
+  const label = document.getElementById("map-mode-label");
+
+  document.querySelectorAll("#view-tabs button[data-view]").forEach((btn) => {
+    btn.classList.toggle("active", btn.dataset.view === state.view);
+    btn.textContent =
+      btn.dataset.view === "map"
+        ? `🗺️ ${ui("viewMap")}`
+        : `📋 ${ui("viewFlowchart")}`;
+  });
+
+  if (isMapView()) {
+    mapPanel?.classList.add("active");
+    flowPanel?.classList.remove("active");
+    externalLink.textContent = ui("mapFullscreen");
+    const myMaps = getMyMapsConfig(state.regionId);
+    externalLink.href = isConfigured(myMaps.viewUrl) ? myMaps.viewUrl : "https://www.google.com/maps/d/";
+    if (!state.mapFocused) label.textContent = ui("mapOverview");
+  } else {
+    mapPanel?.classList.remove("active");
+    flowPanel?.classList.add("active");
+    restoreBtn.hidden = true;
+    label.textContent = ui("flowchartOverview");
+    externalLink.textContent = ui("flowchartFullscreen");
+    externalLink.href = flowchartPage();
+    const frame = document.getElementById("flowchart-frame");
+    if (frame) {
+      frame.title = ui("iframeFlowchart");
+      const src = flowchartPage();
+      if (!frame.getAttribute("src")?.includes(src)) frame.src = src;
+    }
+  }
+}
+
 function isConfigured(url) {
   return url && !url.includes("YOUR_") && url.startsWith("http");
 }
@@ -151,7 +209,7 @@ function applyStaticUi() {
     : "釜山 + 濟州島 2026 · 互動行程地圖";
 
   document.getElementById("map-restore").textContent = ui("mapRestore");
-  document.getElementById("map-open-mymaps").textContent = ui("mapFullscreen");
+  document.getElementById("map-open-external").textContent = ui("mapFullscreen");
   document.getElementById("day-directions").textContent = ui("dayRoute");
   document.getElementById("map-frame").title = ui("iframeTitle");
 
@@ -164,6 +222,7 @@ function applyStaticUi() {
 }
 
 function showMyMapsOverview() {
+  if (!isMapView()) return;
   const cfg = getMyMapsConfig(state.regionId);
   state.mapFocused = false;
   state.activeStopId = null;
@@ -199,14 +258,21 @@ function renderSidebar() {
   document.getElementById("stat-region").textContent = region.dates;
 
   const dayHint = document.getElementById("day-hint");
-  if (isConfigured(myMaps.embedUrl)) {
+  if (!isMapView()) {
+    dayHint.textContent = ui("flowchartHint");
+  } else if (isConfigured(myMaps.embedUrl)) {
     dayHint.textContent = uiFn("dayHint", day.label.split(" · ")[0]);
   } else {
     dayHint.textContent = "";
   }
 
-  const openLink = document.getElementById("map-open-mymaps");
-  openLink.href = isConfigured(myMaps.viewUrl) ? myMaps.viewUrl : "https://www.google.com/maps/d/";
+  const openLink = document.getElementById("map-open-external");
+  if (isMapView()) {
+    openLink.href = isConfigured(myMaps.viewUrl) ? myMaps.viewUrl : "https://www.google.com/maps/d/";
+  } else {
+    openLink.href = flowchartPage();
+    openLink.textContent = ui("flowchartFullscreen");
+  }
 
   const dirEl = document.getElementById("day-directions");
   const dirLink = directionsUrl(day.stops);
@@ -274,6 +340,10 @@ function renderSidebar() {
 }
 
 function focusStop(stopId) {
+  if (!isMapView()) {
+    state.view = "map";
+    applyView();
+  }
   const rawStop = getDayRaw().stops.find((s) => s.id === stopId);
   if (!rawStop) return;
   const stop = localizeStop(rawStop);
@@ -314,9 +384,10 @@ function renderSetupPanel() {
 
 function renderAll() {
   applyStaticUi();
+  applyView();
   renderHeader();
   renderSetupPanel();
-  if (!state.mapFocused) showMyMapsOverview();
+  if (isMapView() && !state.mapFocused) showMyMapsOverview();
   renderSidebar();
 }
 
@@ -326,6 +397,8 @@ function updateUrl() {
   url.searchParams.set("day", String(state.dayIndex + 1));
   if (state.lang === "en") url.searchParams.set("lang", "en");
   else url.searchParams.delete("lang");
+  if (state.view === "flowchart") url.searchParams.set("view", "flowchart");
+  else url.searchParams.delete("view");
   history.replaceState(null, "", url);
 }
 
@@ -367,6 +440,13 @@ function boot() {
       updateUrl();
       renderAll();
     }
+  });
+
+  document.getElementById("view-tabs")?.addEventListener("click", (e) => {
+    const viewBtn = e.target.closest("button[data-view]");
+    if (!viewBtn) return;
+    e.preventDefault();
+    setView(viewBtn.dataset.view);
   });
 
   try {

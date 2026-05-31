@@ -376,6 +376,52 @@ header .subtitle {
   background: var(--card);
   border-bottom: 1px solid var(--border);
   flex-shrink: 0;
+  flex-wrap: wrap;
+}
+
+.view-tabs {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.view-tabs button {
+  border: 1px solid var(--border);
+  background: var(--map-btn-bg);
+  color: var(--text);
+  font-size: 0.72rem;
+  padding: 4px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.view-tabs button.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.content-panel {
+  display: none;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+  position: relative;
+}
+
+.content-panel.active {
+  display: flex;
+}
+
+#flowchart-frame {
+  flex: 1;
+  width: 100%;
+  min-height: 320px;
+  border: 0;
+  background: #fff;
 }
 
 .map-toolbar-label {
@@ -422,6 +468,11 @@ header .subtitle {
   width: 100%;
   min-height: 320px;
   border: 0;
+}
+
+#map-panel {
+  flex: 1;
+  min-height: 0;
 }
 
 .map-setup {
@@ -490,7 +541,10 @@ header .subtitle {
     border-left: none;
     border-top: 1px solid var(--border);
   }
-  #map-frame { min-height: 55vh; }
+  #map-frame,
+  #flowchart-frame { min-height: 55vh; }
+  .view-tabs button { font-size: 0.65rem; padding: 4px 8px; }
+  .map-toolbar-label { max-width: 120px; }
   header .subtitle { display: none; }
   .header-actions { gap: 4px; }
   .lang-tabs button { padding: 4px 8px; font-size: 0.62rem; }

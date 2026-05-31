@@ -6,7 +6,7 @@
   <title>釜山 + 濟州島 2026 · 互動行程地圖</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=3" />
+  <link rel="stylesheet" href="styles.css?v=4" />
   <script>
     (function () {
       try {
@@ -16,9 +16,9 @@
       } catch (_) {}
     })();
   </script>
-  <script src="config.js?v=3"></script>
-  <script src="trip-data.js?v=3"></script>
-  <script src="i18n.js?v=3"></script>
+  <script src="config.js?v=4"></script>
+  <script src="trip-data.js?v=4"></script>
+  <script src="i18n.js?v=4"></script>
 </head>
 <body>
   <div id="app">
@@ -45,31 +45,45 @@
     <div class="main">
       <div class="map-wrap">
         <div class="map-toolbar">
+          <div class="view-tabs" role="group" id="view-tabs">
+            <button type="button" data-view="map" class="active">🗺️ 互動地圖</button>
+            <button type="button" data-view="flowchart">📋 路線圖</button>
+          </div>
           <span class="map-toolbar-label" id="map-mode-label">My Maps 總覽</span>
           <div class="map-toolbar-actions">
             <button type="button" id="map-restore" class="map-btn" hidden>↩ 返回 My Maps</button>
-            <a id="map-open-mymaps" class="map-btn map-btn-link" href="#" target="_blank" rel="noopener">↗ 全屏 My Maps</a>
+            <a id="map-open-external" class="map-btn map-btn-link" href="#" target="_blank" rel="noopener">↗ 全屏 My Maps</a>
           </div>
         </div>
-        <iframe
-          id="map-frame"
-          title="行程地圖"
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-          allowfullscreen
-        ></iframe>
-        <div id="map-setup" class="map-setup">
-          <h3>📍 嵌入 Google My Maps</h3>
-          <p class="setup-intro">網站使用 <strong>Google My Maps</strong>（免費，無需 API Key）。請先建立地圖並把連結填入 <code>config.js</code>。</p>
-          <ol>
-            <li>打開 <a href="https://www.google.com/maps/d/" target="_blank" rel="noopener">Google My Maps</a></li>
-            <li>建立新地圖 → <strong>匯入</strong> → 上傳 <code>busan-locations.kml</code> / <code>jeju-locations.kml</code></li>
-            <li>分享 → 「知道連結的任何人可查看」</li>
-            <li>點 <strong>⋮</strong> → 「在地圖上嵌入」→ 複製 <code>src="..."</code> 裡的網址</li>
-            <li>貼到 <code>config.js</code> 的 <code>embedUrl</code>，分享連結貼到 <code>viewUrl</code></li>
-            <li><code>git push</code> 重新部署</li>
-          </ol>
-          <p class="map-setup-note setup-note">完成後刷新此頁，左側會顯示 My Maps，右側為行程列表。</p>
+        <div id="map-panel" class="content-panel active">
+          <iframe
+            id="map-frame"
+            title="行程地圖"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen
+          ></iframe>
+          <div id="map-setup" class="map-setup">
+            <h3>📍 嵌入 Google My Maps</h3>
+            <p class="setup-intro">網站使用 <strong>Google My Maps</strong>（免費，無需 API Key）。請先建立地圖並把連結填入 <code>config.js</code>。</p>
+            <ol>
+              <li>打開 <a href="https://www.google.com/maps/d/" target="_blank" rel="noopener">Google My Maps</a></li>
+              <li>建立新地圖 → <strong>匯入</strong> → 上傳 <code>busan-locations.kml</code> / <code>jeju-locations.kml</code></li>
+              <li>分享 → 「知道連結的任何人可查看」</li>
+              <li>點 <strong>⋮</strong> → 「在地圖上嵌入」→ 複製 <code>src="..."</code> 裡的網址</li>
+              <li>貼到 <code>config.js</code> 的 <code>embedUrl</code>，分享連結貼到 <code>viewUrl</code></li>
+              <li><code>git push</code> 重新部署</li>
+            </ol>
+            <p class="map-setup-note setup-note">完成後刷新此頁，左側會顯示 My Maps，右側為行程列表。</p>
+          </div>
+        </div>
+        <div id="flowchart-panel" class="content-panel">
+          <iframe
+            id="flowchart-frame"
+            title="旅遊路線圖"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
         </div>
       </div>
 
@@ -91,6 +105,6 @@
     </div>
   </div>
 
-  <script src="app.js?v=3"></script>
+  <script src="app.js?v=4"></script>
 </body>
 </html>
