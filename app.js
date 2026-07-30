@@ -239,6 +239,10 @@ function applyView() {
   const externalLink = document.getElementById("map-open-external");
   const label = document.getElementById("map-mode-label");
 
+  document.body.classList.toggle("view-flights", isFlightsView());
+  document.body.classList.toggle("view-flowchart", isFlowchartView());
+  document.body.classList.toggle("view-map", isMapView());
+
   document.querySelectorAll("#view-tabs button[data-view]").forEach((btn) => {
     btn.classList.toggle("active", btn.dataset.view === state.view);
     const key =
@@ -277,6 +281,11 @@ function applyView() {
     externalLink.hidden = true;
     label.textContent = ui("flightsOverview");
     renderFlightsPanel();
+    // iOS: reset scroll position into the scroll container after layout
+    requestAnimationFrame(() => {
+      const scroller = document.getElementById("flights-content");
+      if (scroller) scroller.scrollTop = 0;
+    });
   }
 }
 

@@ -77,6 +77,10 @@ html, body {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  height: 100dvh;
+  max-height: 100vh;
+  max-height: 100dvh;
+  overflow: hidden;
 }
 
 /* ── Header ── */
@@ -265,8 +269,10 @@ header .subtitle {
   position: relative;
   flex: 1;
   min-width: 0;
+  min-height: 0;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
   background: var(--map-wrap-bg);
   transition: background 0.25s;
 }
@@ -461,11 +467,19 @@ header .subtitle {
 /* ── Flights panel ── */
 #flights-panel {
   background: var(--bg);
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .flights-scroll {
   flex: 1;
+  min-height: 0;
   overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
   padding: 20px 22px 32px;
 }
 
@@ -952,6 +966,23 @@ header .subtitle {
     border-left: none;
     border-top: 1px solid var(--border);
   }
+
+  /* Flights: hide itinerary sidebar so the list can scroll full-screen */
+  body.view-flights .sidebar {
+    display: none;
+  }
+  body.view-flights .main {
+    flex-direction: column;
+  }
+  body.view-flights .map-wrap {
+    flex: 1;
+    min-height: 0;
+  }
+  body.view-flights #flights-panel,
+  body.view-flights .flights-scroll {
+    min-height: 0;
+  }
+
   #map-frame,
   #flowchart-frame { min-height: 54vh; }
   .view-tabs button { font-size: 0.65rem; padding: 4px 9px; }
@@ -963,4 +994,5 @@ header .subtitle {
   .theme-toggle { width: 30px; height: 30px; }
   header { padding: 0 14px; }
   .flights-bar { padding: 6px 14px; }
+  .flights-scroll { padding: 14px 14px calc(24px + env(safe-area-inset-bottom, 0px)); }
 }
