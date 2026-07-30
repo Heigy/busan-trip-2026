@@ -611,6 +611,28 @@ button.flight-pnr.copied {
   word-break: break-all;
 }
 
+.copy-value-wrap .copy-target.is-masked,
+button.flight-pnr.is-masked {
+  letter-spacing: 0.08em;
+}
+
+.secrets-intro-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px 16px;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+
+.secrets-intro-row h2 {
+  margin-bottom: 4px;
+}
+
+.secrets-toggle {
+  flex-shrink: 0;
+}
+
 .copy-btn {
   flex-shrink: 0;
   border: 1px solid var(--border);
@@ -1255,6 +1277,26 @@ button.flight-pnr.copied {
   background: color-mix(in srgb, var(--accent) 14%, transparent);
   color: var(--accent);
   border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
+.stop-optional-badge {
+  font-family: var(--font-body);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--muted) 16%, transparent);
+  color: var(--muted);
+  border: 1px solid color-mix(in srgb, var(--muted) 35%, transparent);
+}
+
+.stop-item.optional {
+  opacity: 0.85;
+}
+
+.stop-item.optional .stop-name {
+  font-style: italic;
 }
 
 .stop-name {

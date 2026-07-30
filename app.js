@@ -7,7 +7,7 @@ const state = {
   mapFocused: false,
   lang: "zh",
   theme: "light",
-  view: "map",
+  view: "flowchart",
   dayPlan: "a",
 };
 
@@ -30,11 +30,13 @@ else {
     if (localStorage.getItem("trip-lang") === "en") state.lang = "en";
   } catch (_) { /* private browsing */ }
 }
-if (urlParams.get("view") === "flowchart") state.view = "flowchart";
+if (urlParams.get("view") === "map") state.view = "map";
 else if (urlParams.get("view") === "flights") state.view = "flights";
 else if (urlParams.get("view") === "bookings") state.view = "bookings";
 else if (urlParams.get("view") === "food") state.view = "food";
 else if (urlParams.get("view") === "pack") state.view = "pack";
+else if (urlParams.get("view") === "flowchart") state.view = "flowchart";
+/* else keep default flowchart */
 if (urlParams.get("plan") === "b") state.dayPlan = "b";
 else if (urlParams.get("plan") === "a") state.dayPlan = "a";
 else {
@@ -280,6 +282,53 @@ function escapeHtml(str) {
     .replace(/"/g, "&quot;");
 }
 
+/** Mask order / PNR / phone for public display. Keep last 4 when long enough. */
+function maskSecret(value) {
+  const s = String(value || "").trim();
+  if (!s) return "";
+  if (s.length <= 4) return "••••";
+  if (s.length <= 6) return `${s.slice(0, 1)}••••${s.slice(-1)}`;
+  if (s.length <= 10) return `${s.slice(0, 2)}••••${s.slice(-2)}`;
+  return `${s.slice(0, 4)}••••${s.slice(-4)}`;
+}
+
+function secretsRevealed() {
+  try {
+    return sessionStorage.getItem("trip-reveal-secrets") === "1";
+  } catch (_) {
+    return false;
+  }
+}
+
+function setSecretsRevealed(on) {
+  try {
+    if (on) sessionStorage.setItem("trip-reveal-secrets", "1");
+    else sessionStorage.removeItem("trip-reveal-secrets");
+  } catch (_) {}
+}
+
+function displaySecret(value) {
+  return secretsRevealed() ? String(value || "") : maskSecret(value);
+}
+
+function secretsToggleHtml() {
+  const on = secretsRevealed();
+  return `<button type="button" class="map-btn secrets-toggle" data-secrets-toggle="1">${
+    on ? ui("hideSecrets") : ui("revealSecrets")
+  }</button>`;
+}
+
+function wireSecretsToggle(root) {
+  root?.querySelectorAll("[data-secrets-toggle]")?.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      setSecretsRevealed(!secretsRevealed());
+      if (isFlightsView()) renderFlightsPanel();
+      else if (isBookingsView()) renderBookingsPanel();
+    });
+  });
+}
+
 async function copyText(text) {
   const value = String(text || "").trim();
   if (!value) return false;
@@ -319,14 +368,17 @@ function showCopyToast(msg) {
   showCopyToast._t = setTimeout(() => el.classList.remove("show"), 1400);
 }
 
-function copyableValue(label, value) {
+function copyableValue(label, value, { sensitive = false } = {}) {
   if (!value) return "";
-  const safe = escapeHtml(value);
+  const shown = sensitive ? displaySecret(value) : String(value);
+  const copyVal = sensitive && !secretsRevealed() ? shown : String(value);
+  const safeShown = escapeHtml(shown);
+  const safeCopy = escapeHtml(copyVal);
   return `<div class="booking-meta-row">
     <span>${label}</span>
     <span class="copy-value-wrap">
-      <strong class="copy-target">${safe}</strong>
-      <button type="button" class="copy-btn" data-copy="${safe}" title="${ui("copy")}">${ui("copy")}</button>
+      <strong class="copy-target${sensitive && !secretsRevealed() ? " is-masked" : ""}">${safeShown}</strong>
+      <button type="button" class="copy-btn" data-copy="${safeCopy}" title="${ui("copy")}">${ui("copy")}</button>
     </span>
   </div>`;
 }
@@ -392,7 +444,7 @@ function renderFlightsPanel() {
           </div>
           <div class="flight-pnr-box">
             <span class="flight-pnr-label">${ui("flightPnr")}</span>
-            <button type="button" class="flight-pnr copy-btn" data-copy="${escapeHtml(f.pnr)}" title="${ui("copy")}">${escapeHtml(f.pnr)}</button>
+            <button type="button" class="flight-pnr copy-btn${secretsRevealed() ? "" : " is-masked"}" data-copy="${escapeHtml(secretsRevealed() ? f.pnr : maskSecret(f.pnr))}" title="${ui("copy")}">${escapeHtml(displaySecret(f.pnr))}</button>
           </div>
         </div>
         <div class="flight-route">
@@ -420,13 +472,19 @@ function renderFlightsPanel() {
 
   root.innerHTML = `
     <div class="flights-intro">
-      <h2>${ui("flightsOverview")}</h2>
-      <p class="flights-pax-label">${ui("flightPassengers")}</p>
+      <div class="secrets-intro-row">
+        <div>
+          <h2>${ui("flightsOverview")}</h2>
+          <p class="flights-pax-label">${ui("flightPassengers")} · ${ui("secretsHint")}</p>
+        </div>
+        ${secretsToggleHtml()}
+      </div>
       <div class="flight-pax-row">${passengers}</div>
     </div>
     ${cards}`;
 
   wireCopyButtons(root);
+  wireSecretsToggle(root);
 }
 
 function findDayIndexById(regionId, dayId) {
@@ -456,14 +514,14 @@ function renderBookingsPanel() {
     .map((b) => {
       const rows = [
         `<div class="booking-meta-row"><span>${ui("bookingPlatform")}</span><strong>${escapeHtml(b.platform || "")}</strong></div>`,
-        copyableValue(ui("bookingOrder"), b.orderNo),
-        b.voucherNo ? copyableValue(ui("bookingVoucher"), b.voucherNo) : "",
+        copyableValue(ui("bookingOrder"), b.orderNo, { sensitive: true }),
+        b.voucherNo ? copyableValue(ui("bookingVoucher"), b.voucherNo, { sensitive: true }) : "",
         `<div class="booking-meta-row"><span>${ui("bookingQty")}</span><strong>${escapeHtml(locField(b.qty))}</strong></div>`,
         b.lead ? copyableValue(ui("bookingLead"), b.lead) : "",
         b.amount
           ? `<div class="booking-meta-row"><span>${ui("bookingAmount")}</span><strong>${escapeHtml(b.amount)}</strong></div>`
           : "",
-        b.phone ? copyableValue(ui("bookingPhone"), b.phone) : "",
+        b.phone ? copyableValue(ui("bookingPhone"), b.phone, { sensitive: true }) : "",
       ].join("");
 
       const travelers = (b.travelers || [])
@@ -499,8 +557,13 @@ function renderBookingsPanel() {
 
   root.innerHTML = `
     <div class="flights-intro">
-      <h2>${ui("bookingsOverview")}</h2>
-      <p class="flights-pax-label">${ui("bookingsHint")}</p>
+      <div class="secrets-intro-row">
+        <div>
+          <h2>${ui("bookingsOverview")}</h2>
+          <p class="flights-pax-label">${ui("bookingsHint")} · ${ui("secretsHint")}</p>
+        </div>
+        ${secretsToggleHtml()}
+      </div>
     </div>
     ${cards}`;
 
@@ -512,6 +575,7 @@ function renderBookingsPanel() {
     });
   });
   wireCopyButtons(root);
+  wireSecretsToggle(root);
 }
 
 function openExternalPage(url) {
@@ -799,7 +863,7 @@ function stopDirectionsUrl(stop) {
 }
 
 function directionsUrl(stops) {
-  const pts = stops.filter((s) => !s.skipMarker);
+  const pts = stops.filter((s) => !s.skipMarker && !s.optional);
   if (pts.length < 2) return null;
   const origin = `${pts[0].lat},${pts[0].lng}`;
   const dest = `${pts[pts.length - 1].lat},${pts[pts.length - 1].lng}`;
@@ -1070,16 +1134,20 @@ function renderSidebar() {
     const stop = localizeStop(rawStop);
     num += 1;
     const booking = typeof window.bookingForStop === "function" ? window.bookingForStop(stop.id) : null;
-    const badge = booking
-      ? `<span class="stop-booking-badge">${ui("bookingBadge")}</span>`
-      : "";
+    const badges = [
+      rawStop.optional ? `<span class="stop-optional-badge">${ui("optionalBadge")}</span>` : "",
+      booking ? `<span class="stop-booking-badge">${ui("bookingBadge")}</span>` : "",
+    ].join("");
     const el = document.createElement("div");
-    el.className = "stop-item" + (state.activeStopId === stop.id ? " active" : "");
+    el.className =
+      "stop-item" +
+      (state.activeStopId === stop.id ? " active" : "") +
+      (rawStop.optional ? " optional" : "");
     el.dataset.id = stop.id;
     el.innerHTML = `
       <div class="stop-num" style="background:${color}">${num}</div>
       <div class="stop-body">
-        <div class="stop-time">${stop.time}${badge}</div>
+        <div class="stop-time">${stop.time}${badges}</div>
         <div class="stop-name">${stop.name}</div>
         ${rawStop.nameKo ? `<div class="stop-ko">${rawStop.nameKo}</div>` : ""}
         <div class="stop-desc">${stop.desc}</div>
@@ -1156,7 +1224,7 @@ function updateUrl() {
   else url.searchParams.delete("plan");
   if (state.lang === "en") url.searchParams.set("lang", "en");
   else url.searchParams.delete("lang");
-  if (state.view === "flowchart" || state.view === "flights" || state.view === "bookings" || state.view === "food" || state.view === "pack") {
+  if (state.view === "map" || state.view === "flights" || state.view === "bookings" || state.view === "food" || state.view === "pack") {
     url.searchParams.set("view", state.view);
   } else {
     url.searchParams.delete("view");
