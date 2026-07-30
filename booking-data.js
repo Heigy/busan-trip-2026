@@ -1,6 +1,43 @@
 window.BOOKING_DATA = {
   bookings: [
     {
+      id: "busan-hotel",
+      stopIds: ["b1-5", "b4-1"],
+      region: "busan",
+      dayId: "busan-d1",
+      status: "confirmed",
+      date: "2026-08-01",
+      dateLabel: { zh: "8月1–4日 · 三晚", en: "Aug 1–4 · 3 nights" },
+      time: { zh: "入住 16:00 後 · 退房 11:00 前", en: "Check-in after 16:00 · Check-out before 11:00" },
+      title: {
+        zh: "Raviens 海雲台大道酒店",
+        en: "Raviens Haeundae Avenue",
+      },
+      titleKo: "라비앙즈 해운대 에비뉴",
+      platform: "Trip.com / 攜程",
+      orderNo: "1128149696460314",
+      voucherNo: "1128149696471958",
+      qty: { zh: "標準雙床房 × 3 間 · 3 晚", en: "Standard Twin × 3 rooms · 3 nights" },
+      lead: "NG YI HIN",
+      travelers: null,
+      howToUse: {
+        zh: "憑確認號辦理入住 · 官方入住時間為當地 16:00 後",
+        en: "Check in with confirmation no. · official check-in after 16:00 local time",
+      },
+      address: {
+        zh: "釜山 海雲台區 九南路18巷 30（郵編 48094）",
+        en: "30 Gunam-ro 18beon-gil, Haeundae-gu, Busan 48094",
+      },
+      note: {
+        zh: "不含餐 · 每房最多 2 人 · 已付 CNY 7,723.02",
+        en: "No meals · max 2 per room · paid CNY 7,723.02",
+      },
+      link: null,
+      website: null,
+      phone: "+82-51-731-3277",
+      amount: "CNY 7,723.02",
+    },
+    {
       id: "songdo-cable",
       stopIds: ["b2-3"],
       region: "busan",

@@ -20,12 +20,13 @@ window.TRIP_DATA = {
         {
           id: "busan-d1",
           label: "Day 1 · 8/1",
-          theme: "抵達 · 巨大豬肉湯飯 · 海雲台 · 傳統市場",
+          theme: "抵達 · 巨大豬肉湯飯 · 海雲台 · 入住酒店",
           stops: [
             { id: "b1-1", name: "金海國際機場", nameKo: "김해공항", time: "07:00", desc: "UO604 抵達、入境取行李", transport: "✈️ UO604", lat: 35.179528, lng: 128.938222, cid: "1559275999526138604" },
             { id: "b1-2", name: "巨大豬肉湯飯", nameKo: "거대돼지국밥", time: "11:30–13:00", desc: "湯飯 ₩13,000 / 拌麵 ₩11,000", transport: "🚕×2 約40–50分", lat: 35.163, lng: 129.178, cid: "17410649710382375846" },
-            { id: "b1-3", name: "海雲台浴場", nameKo: "해운대해수욕장", time: "14:00–17:00", desc: "海水浴場散步、拍照", transport: "🚶 步行", lat: 35.158698, lng: 129.160384, cid: "8123395504340323431" },
-            { id: "b1-4", name: "海雲臺傳統市場", nameKo: "해운대전통시장", time: "17:00–18:30", desc: "小吃、海鮮、伴手禮", transport: "🚶 步行", lat: 35.1592, lng: 129.1615, cid: "15417742290736329149" },
+            { id: "b1-3", name: "海雲台浴場", nameKo: "해운대해수욕장", time: "14:00–16:00", desc: "海水浴場散步、拍照", transport: "🚶 步行", lat: 35.158698, lng: 129.160384, cid: "8123395504340323431" },
+            { id: "b1-5", name: "Raviens 海雲台大道酒店", nameKo: "라비앙즈 해운대 에비뉴", time: "16:00+", desc: "已訂入住 · 確認號 1128149696471958 · 雙床×3", transport: "🚶 步行", lat: 35.16161, lng: 129.15833, bookingId: "busan-hotel" },
+            { id: "b1-4", name: "海雲臺傳統市場", nameKo: "해운대전통시장", time: "16:45–18:30", desc: "小吃、海鮮、伴手禮", transport: "🚶 步行", lat: 35.1592, lng: 129.1615, cid: "15417742290736329149" },
           ],
         },
         {
@@ -58,7 +59,7 @@ window.TRIP_DATA = {
           label: "Day 4 · 8/4",
           theme: "飛濟州",
           stops: [
-            { id: "b4-1", name: "海雲台酒店", nameKo: "退房", time: "05:45", desc: "退房、檢查護照", transport: "—", lat: 35.163381, lng: 129.160456, skipMarker: true },
+            { id: "b4-1", name: "Raviens 海雲台大道酒店", nameKo: "라비앙즈 해운대 에비뉴", time: "05:45", desc: "退房（官方 11:00 前）· 檢查護照", transport: "—", lat: 35.16161, lng: 129.15833, bookingId: "busan-hotel" },
             { id: "b4-2", name: "金海機場 PUS", nameKo: "김해공항", time: "06:50–08:50", desc: "7C0503 值機登機（08:50起飛）", transport: "🚕×2 06:00出發", lat: 35.179528, lng: 128.938222, cid: "1559275999526138604" },
           ],
         },
