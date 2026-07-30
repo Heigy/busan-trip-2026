@@ -577,16 +577,37 @@ function renderSidebar() {
     dayHint.textContent = "";
   }
 
+  const inspirationWrap = document.getElementById("region-inspiration-wrap");
   const inspiration = document.getElementById("region-inspiration");
-  if (inspiration) {
-    if (region.inspirationUrl) {
-      inspiration.hidden = false;
+  const inspirationAlt = document.getElementById("region-inspiration-alt");
+  const inspirationCity = document.getElementById("region-inspiration-city");
+  if (inspirationWrap) {
+    const show = Boolean(region.inspirationUrl || region.inspirationUrlCity);
+    inspirationWrap.hidden = !show;
+    if (inspiration && region.inspirationUrl) {
       inspiration.href = region.inspirationUrl;
       inspiration.textContent = ui("inspirationLink");
-    } else {
+      inspiration.hidden = false;
+    } else if (inspiration) {
       inspiration.hidden = true;
-      inspiration.removeAttribute("href");
-      inspiration.textContent = "";
+    }
+    if (inspirationAlt) {
+      if (region.inspirationUrlAlt) {
+        inspirationAlt.hidden = false;
+        inspirationAlt.href = region.inspirationUrlAlt;
+        inspirationAlt.textContent = ui("inspirationAlt");
+      } else {
+        inspirationAlt.hidden = true;
+      }
+    }
+    if (inspirationCity) {
+      if (region.inspirationUrlCity) {
+        inspirationCity.hidden = false;
+        inspirationCity.href = region.inspirationUrlCity;
+        inspirationCity.textContent = ui("inspirationCity");
+      } else {
+        inspirationCity.hidden = true;
+      }
     }
   }
 

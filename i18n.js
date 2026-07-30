@@ -10,9 +10,11 @@ window.I18N = {
     dayRoute: { zh: "整日路線", en: "Full-day route" },
     stops: { zh: "個站點", en: " stops" },
     inspirationLink: {
-      zh: "不知去哪？看 VisitKorea（海雲台靈感）",
-      en: "Stuck? VisitKorea ideas (Haeundae)",
+      zh: "不知去哪？VisitKorea（海雲台）",
+      en: "Stuck? VisitKorea (Haeundae)",
     },
+    inspirationAlt: { zh: "繁體備用", en: "Trad. Chinese" },
+    inspirationCity: { zh: "釜山觀光網", en: "Visit Busan" },
     stopInfo: { zh: "景點介紹", en: "Attraction info" },
     dayHint: {
       zh: (day) => `左側 My Maps 圖層欄勾選「${day}」查看當日標記`,

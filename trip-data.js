@@ -16,7 +16,9 @@ window.TRIP_DATA = {
       center: { lat: 35.158, lng: 129.06 },
       zoom: 11,
       dayColors: ["#e91e63", "#2196f3", "#ff9800", "#9c27b0"],
-      inspirationUrl: "https://big5chinese.visitkorea.or.kr/svc/contents/contentsView.do?vcontsId=110798",
+      inspirationUrl: "https://chinese.visitkorea.or.kr/svc/contents/contentsView.do?vcontsId=111456",
+      inspirationUrlAlt: "https://big5chinese.visitkorea.or.kr/svc/contents/contentsView.do?vcontsId=110798",
+      inspirationUrlCity: "https://www.visitbusan.net/tw/index.do",
       days: [
         {
           id: "busan-d1",
@@ -29,7 +31,7 @@ window.TRIP_DATA = {
             { id: "b1-9", name: "海雲台咖啡休息", nameKo: "해운대 카페", time: "10:00–11:00", desc: "喝咖啡、補眠休息", transport: "🚶 步行", lat: 35.1628, lng: 129.1602 },
             { id: "b1-7", name: "Olive Young 海雲台站店", nameKo: "올리브영 해운대역", time: "11:00–12:00", desc: "距酒店步行約 5 分 · 美妝伴手禮", transport: "🚶 約5分", lat: 35.1632, lng: 129.1596 },
             { id: "b1-2", name: "巨大豬肉湯飯", nameKo: "거대돼지국밥", time: "12:15–13:30", desc: "湯飯 ₩13,000 / 拌麵 ₩11,000", transport: "🚕×2 約10–15分", lat: 35.163, lng: 129.178, cid: "17410649710382375846" },
-            { id: "b1-3", name: "海雲台浴場", nameKo: "해운대해수욕장", time: "14:00–16:00", desc: "海水浴場散步、拍照", transport: "🚶/🚕", lat: 35.158698, lng: 129.160384, cid: "8123395504340323431", infoUrl: "https://big5chinese.visitkorea.or.kr/svc/contents/contentsView.do?vcontsId=110798" },
+            { id: "b1-3", name: "海雲台浴場", nameKo: "해운대해수욕장", time: "14:00–16:00", desc: "海水浴場散步、拍照", transport: "🚶/🚕", lat: 35.158698, lng: 129.160384, cid: "8123395504340323431", infoUrl: "https://chinese.visitkorea.or.kr/svc/contents/contentsView.do?vcontsId=111456" },
             { id: "b1-5", name: "Raviens 酒店（正式入住）", nameKo: "라비앙즈 해운대 에비뉴", time: "16:00+", desc: "正式 Check-in · 確認號 1128149696471958", transport: "🚶 步行", lat: 35.16161, lng: 129.15833, bookingId: "busan-hotel" },
             { id: "b1-4", name: "海雲臺傳統市場", nameKo: "해운대전통시장", time: "16:45–18:30", desc: "小吃、海鮮、伴手禮", transport: "🚶 步行", lat: 35.1592, lng: 129.1615, cid: "15417742290736329149" },
           ],

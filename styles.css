@@ -1087,14 +1087,30 @@ header .subtitle {
   border-radius: 8px;
 }
 
+.region-inspiration-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  margin-top: 8px;
+  align-items: center;
+}
+
+.region-inspiration-wrap[hidden] {
+  display: none;
+}
+
 .region-inspiration {
   display: inline-block;
-  margin-top: 8px;
   font-size: 0.72rem;
   font-weight: 600;
   color: var(--accent);
   text-decoration: none;
   line-height: 1.4;
+}
+
+.region-inspiration.muted {
+  font-weight: 500;
+  color: var(--muted);
 }
 
 .region-inspiration:hover {
