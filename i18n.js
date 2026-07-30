@@ -24,6 +24,28 @@ window.I18N = {
       zh: "完成後刷新此頁，左側會顯示 My Maps，右側為行程列表。",
       en: "Refresh after setup — map on the left, itinerary on the right.",
     },
+    setupTitleJeju: { zh: "濟州 My Maps 尚未單獨設定", en: "Jeju My Maps not set up yet" },
+    setupIntroJeju: {
+      zh: "目前濟州與釜山共用同一張地圖，所以切到濟州時看起來像「沒反應」。請另建一張濟州地圖並更新 config.js。",
+      en: "Jeju currently reuses the Busan map, so switching looks like nothing happened. Create a separate Jeju My Map and update config.js.",
+    },
+    setupKmlBusan: {
+      zh: "匯入檔案：<code>busan-locations.kml</code>",
+      en: "Import file: <code>busan-locations.kml</code>",
+    },
+    setupKmlJeju: {
+      zh: "匯入檔案：<code>jeju-locations.kml</code>（倉庫裡已有）",
+      en: "Import file: <code>jeju-locations.kml</code> (already in the repo)",
+    },
+    setupNoteJeju: {
+      zh: "建好地圖後，把 embed / viewer 連結貼到 config.js 的 jeju 區塊，再 git push。右側點「地圖定位」仍可先看單一景點。",
+      en: "After creating the map, paste embed/viewer URLs into config.js → jeju, then git push. You can still use “Show on map” for each stop.",
+    },
+    createMyMaps: { zh: "建立 My Maps", en: "Create My Maps" },
+    dayHintJejuNoMap: {
+      zh: "濟州 My Maps 未單獨設定 · 可先點右側「地圖定位」看景點",
+      en: "Jeju My Maps not set · tap “Show on map” for each stop",
+    },
     iframeTitle: { zh: "行程地圖", en: "Trip map" },
     viewMap: { zh: "互動地圖", en: "Map" },
     viewFlowchart: { zh: "路線圖", en: "Route chart" },

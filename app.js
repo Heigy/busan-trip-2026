@@ -106,6 +106,30 @@ function getMyMapsConfig(regionId) {
   return (window.MYMAPS_CONFIG || {})[regionId] || {};
 }
 
+function extractMapMid(url) {
+  if (!url) return "";
+  try {
+    return new URL(url).searchParams.get("mid") || "";
+  } catch (_) {
+    const m = String(url).match(/[?&]mid=([^&]+)/);
+    return m ? decodeURIComponent(m[1]) : "";
+  }
+}
+
+function isConfigured(url) {
+  return url && !url.includes("YOUR_") && url.startsWith("http");
+}
+
+/** Jeju currently reuses Busan's mid — treat as not set up. */
+function hasDedicatedMyMap(regionId) {
+  const cfg = getMyMapsConfig(regionId);
+  if (!isConfigured(cfg.embedUrl)) return false;
+  if (regionId !== "jeju") return true;
+  const busan = getMyMapsConfig("busan");
+  if (!isConfigured(busan.embedUrl)) return true;
+  return extractMapMid(cfg.embedUrl) !== extractMapMid(busan.embedUrl);
+}
+
 function flowchartPage() {
   return state.regionId === "busan" ? "busan-flowchart.html" : "jeju-flowchart.html";
 }
@@ -256,10 +280,6 @@ function applyView() {
   }
 }
 
-function isConfigured(url) {
-  return url && !url.includes("YOUR_") && url.startsWith("http");
-}
-
 function mapsHl() {
   return isEn() ? "en" : "zh-TW";
 }
@@ -293,9 +313,11 @@ function directionsUrl(stops) {
   return url;
 }
 
-function setMapFrameSrc(src) {
+function setMapFrameSrc(src, force) {
   const frame = document.getElementById("map-frame");
-  if (frame.src !== src) frame.src = src;
+  if (!frame) return;
+  if (!force && frame.getAttribute("src") === src) return;
+  frame.src = src;
 }
 
 function applyStaticUi() {
@@ -318,6 +340,26 @@ function applyStaticUi() {
   });
 }
 
+function updateMapSetupCopy() {
+  const setup = document.getElementById("map-setup");
+  if (!setup) return;
+  const h3 = setup.querySelector("h3");
+  const intro = setup.querySelector(".setup-intro");
+  const note = setup.querySelector(".setup-note");
+  const kmlHint = setup.querySelector(".setup-kml");
+  if (state.regionId === "jeju") {
+    if (h3) h3.textContent = ui("setupTitleJeju");
+    if (intro) intro.textContent = ui("setupIntroJeju");
+    if (kmlHint) kmlHint.innerHTML = ui("setupKmlJeju");
+    if (note) note.textContent = ui("setupNoteJeju");
+  } else {
+    if (h3) h3.textContent = ui("setupTitle");
+    if (intro) intro.textContent = ui("setupIntro");
+    if (kmlHint) kmlHint.innerHTML = ui("setupKmlBusan");
+    if (note) note.textContent = ui("setupNote");
+  }
+}
+
 function showMyMapsOverview() {
   if (!isMapView()) return;
   const cfg = getMyMapsConfig(state.regionId);
@@ -329,8 +371,9 @@ function showMyMapsOverview() {
 
   const setup = document.getElementById("map-setup");
   const frame = document.getElementById("map-frame");
+  updateMapSetupCopy();
 
-  if (!isConfigured(cfg.embedUrl)) {
+  if (!hasDedicatedMyMap(state.regionId)) {
     setup.classList.add("visible");
     frame.style.visibility = "hidden";
     frame.removeAttribute("src");
@@ -339,7 +382,7 @@ function showMyMapsOverview() {
 
   setup.classList.remove("visible");
   frame.style.visibility = "visible";
-  setMapFrameSrc(cfg.embedUrl);
+  setMapFrameSrc(cfg.embedUrl, true);
 }
 
 function renderSidebar() {
@@ -359,6 +402,8 @@ function renderSidebar() {
     dayHint.textContent = ui("flightsHint");
   } else if (isFlowchartView()) {
     dayHint.textContent = ui("flowchartHint");
+  } else if (!hasDedicatedMyMap(state.regionId)) {
+    dayHint.textContent = ui("dayHintJejuNoMap");
   } else if (isConfigured(myMaps.embedUrl)) {
     dayHint.textContent = uiFn("dayHint", day.label.split(" · ")[0]);
   } else {
@@ -368,7 +413,13 @@ function renderSidebar() {
   const openLink = document.getElementById("map-open-external");
   if (isMapView()) {
     openLink.hidden = false;
-    openLink.href = isConfigured(myMaps.viewUrl) ? myMaps.viewUrl : "https://www.google.com/maps/d/";
+    if (hasDedicatedMyMap(state.regionId) && isConfigured(myMaps.viewUrl)) {
+      openLink.href = myMaps.viewUrl;
+      openLink.textContent = ui("mapFullscreen");
+    } else {
+      openLink.href = "https://www.google.com/maps/d/";
+      openLink.textContent = ui("createMyMaps");
+    }
   } else if (isFlowchartView()) {
     openLink.hidden = false;
     openLink.href = flowchartPage();
@@ -475,14 +526,7 @@ function renderHeader() {
 }
 
 function renderSetupPanel() {
-  const setup = document.getElementById("map-setup");
-  if (!setup) return;
-  const h3 = setup.querySelector("h3");
-  const intro = setup.querySelector(".setup-intro");
-  const note = setup.querySelector(".setup-note");
-  if (h3) h3.textContent = ui("setupTitle");
-  if (intro) intro.textContent = ui("setupIntro");
-  if (note) note.textContent = ui("setupNote");
+  updateMapSetupCopy();
 }
 
 function renderAll() {
