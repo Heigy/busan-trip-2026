@@ -2,7 +2,7 @@ window.BOOKING_DATA = {
   bookings: [
     {
       id: "busan-hotel",
-      stopIds: ["b1-5", "b4-1"],
+      stopIds: ["b1-5a", "b1-5", "b4-1"],
       region: "busan",
       dayId: "busan-d1",
       status: "confirmed",
