@@ -8,6 +8,7 @@ const state = {
   lang: "zh",
   theme: "light",
   view: "map",
+  dayPlan: "a",
 };
 
 function readStoredTheme() {
@@ -33,6 +34,14 @@ if (urlParams.get("view") === "flowchart") state.view = "flowchart";
 else if (urlParams.get("view") === "flights") state.view = "flights";
 else if (urlParams.get("view") === "bookings") state.view = "bookings";
 else if (urlParams.get("view") === "food") state.view = "food";
+if (urlParams.get("plan") === "b") state.dayPlan = "b";
+else if (urlParams.get("plan") === "a") state.dayPlan = "a";
+else {
+  try {
+    const savedPlan = localStorage.getItem("trip-day1-plan");
+    if (savedPlan === "a" || savedPlan === "b") state.dayPlan = savedPlan;
+  } catch (_) { /* private browsing */ }
+}
 
 function isDark() {
   return state.theme === "dark";
@@ -88,14 +97,54 @@ function getRegion() {
 }
 
 function getDayRaw() {
-  return TRIP_DATA.regions.find((r) => r.id === state.regionId).days[state.dayIndex];
+  const day = TRIP_DATA.regions.find((r) => r.id === state.regionId).days[state.dayIndex];
+  if (!day?.plans) return day;
+  const planId = day.plans[state.dayPlan] ? state.dayPlan : day.defaultPlan || "a";
+  const plan = day.plans[planId];
+  return {
+    ...day,
+    activePlanId: planId,
+    theme: plan.theme || day.theme,
+    planName: plan.name,
+    planBlurb: plan.blurb,
+    stops: plan.stops,
+  };
 }
 
 function getDay() {
   const day = getDayRaw();
-  if (!isEn()) return day;
+  const planName = day.planName ? locField(day.planName) : null;
+  const planBlurb = day.planBlurb ? locField(day.planBlurb) : null;
+  const planTheme =
+    day.plans && day.theme != null
+      ? typeof day.theme === "object"
+        ? locField(day.theme)
+        : day.theme
+      : null;
+
+  if (!isEn()) {
+    return {
+      ...day,
+      theme: planTheme || day.theme,
+      planName,
+      planBlurb,
+    };
+  }
   const en = I18N.days[day.id]?.en;
-  return en ? { ...day, ...en } : day;
+  const merged = en ? { ...day, ...en } : { ...day };
+  if (planTheme) merged.theme = planTheme;
+  return { ...merged, planName, planBlurb };
+}
+
+function setDayPlan(planId) {
+  state.dayPlan = planId === "b" ? "b" : "a";
+  state.activeStopId = null;
+  state.mapFocused = false;
+  try {
+    localStorage.setItem("trip-day1-plan", state.dayPlan);
+  } catch (_) {}
+  updateUrl();
+  renderAll();
 }
 
 function localizeStop(stop) {
@@ -641,6 +690,7 @@ function renderSidebar() {
   document.getElementById("stat-region").textContent = region.dates;
 
   const dayHint = document.getElementById("day-hint");
+  const rawDay = getDayRaw();
   if (isFlightsView()) {
     dayHint.textContent = ui("flightsHint");
   } else if (isBookingsView()) {
@@ -649,12 +699,36 @@ function renderSidebar() {
     dayHint.textContent = ui("foodHint");
   } else if (isFlowchartView()) {
     dayHint.textContent = ui("flowchartHint");
+  } else if (rawDay.plans && day.planBlurb) {
+    dayHint.textContent = day.planBlurb;
   } else if (!hasDedicatedMyMap(state.regionId)) {
     dayHint.textContent = ui("dayHintJejuNoMap");
   } else if (isConfigured(myMaps.embedUrl)) {
     dayHint.textContent = uiFn("dayHint", day.label.split(" · ")[0]);
   } else {
     dayHint.textContent = "";
+  }
+
+  const planTabs = document.getElementById("plan-tabs");
+  if (planTabs) {
+    if (rawDay.plans) {
+      planTabs.hidden = false;
+      planTabs.innerHTML = "";
+      ["a", "b"].forEach((pid) => {
+        const plan = rawDay.plans[pid];
+        if (!plan) return;
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.dataset.plan = pid;
+        btn.textContent = locField(plan.name);
+        btn.classList.toggle("active", (rawDay.activePlanId || state.dayPlan) === pid);
+        btn.addEventListener("click", () => setDayPlan(pid));
+        planTabs.appendChild(btn);
+      });
+    } else {
+      planTabs.hidden = true;
+      planTabs.innerHTML = "";
+    }
   }
 
   const inspirationWrap = document.getElementById("region-inspiration-wrap");
@@ -831,6 +905,9 @@ function updateUrl() {
   const url = new URL(location.href);
   url.searchParams.set("region", state.regionId);
   url.searchParams.set("day", String(state.dayIndex + 1));
+  const rawDay = TRIP_DATA.regions.find((r) => r.id === state.regionId)?.days[state.dayIndex];
+  if (rawDay?.plans && state.dayPlan === "b") url.searchParams.set("plan", "b");
+  else url.searchParams.delete("plan");
   if (state.lang === "en") url.searchParams.set("lang", "en");
   else url.searchParams.delete("lang");
   if (state.view === "flowchart" || state.view === "flights" || state.view === "bookings" || state.view === "food") {

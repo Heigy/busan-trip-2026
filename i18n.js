@@ -66,7 +66,12 @@ window.I18N = {
     },
     foodOnTrip: { zh: "已排行程", en: "On itinerary" },
     foodMaps: { zh: "地圖", en: "Maps" },
-    foodFilterAll: { zh: "全部", en: "All" },
+    planA: { zh: "Plan A · 海雲台", en: "Plan A · Haeundae" },
+    planB: { zh: "Plan B · 田浦", en: "Plan B · Jeonpo" },
+    planPickHint: {
+      zh: "Day 1 可切換上午方案",
+      en: "Day 1 has two morning options",
+    },
     bookingsOverview: { zh: "已訂住宿與票券", en: "Booked stays & tickets" },
     bookingsHint: {
       zh: "海雲台酒店 + 松島纜車 + 藍線列車 · 點卡片可跳到對應行程日",
@@ -123,7 +128,7 @@ window.I18N = {
     jeju: { en: { name: "Jeju" } },
   },
   days: {
-    "busan-d1": { en: { theme: "Drop bags · snack & coffee · Olive Young · pork soup · beach · check-in · market" } },
+    "busan-d1": { en: { theme: "Arrival · Haeundae or Jeonpo options · check-in" } },
     "busan-d2": { en: { theme: "West: Gamcheon → Jagalchi → Songdo → Huinnyeoul" } },
     "busan-d3": { en: { theme: "Greetvi → Luge → Observatory → Blueline → Seomyeon shopping" } },
     "busan-d4": { en: { theme: "Fly to Jeju" } },
@@ -137,6 +142,8 @@ window.I18N = {
     "b1-5a": { en: { name: "Raviens (drop bags)", desc: "Leave luggage first (check-in from 16:00)", transport: "🚕×2 ~40–50 min" } },
     "b1-8": { en: { name: "Haeundae Station snack", desc: "Quick bite after landing · pick near the station", transport: "🚶 Walk" } },
     "b1-9": { en: { name: "Haeundae café break", desc: "Coffee & rest", transport: "🚶 Walk" } },
+    "b1-10": { en: { name: "HASH TABLE brunch", desc: "Popular Jeonpo brunch · small space · 74 Seojeon-ro", transport: "🚕×2 ~25–35 min" } },
+    "b1-11": { en: { name: "Jeonpo Café Street", desc: "AVIVERE / lifestyle shops / photo booths · Seojeon-ro & Dongcheon-ro", transport: "🚶 Walk" } },
     "b1-7": { en: { name: "Olive Young Haeundae Station", desc: "~5 min walk from hotel · K-Beauty & gifts", transport: "🚶 ~5 min" } },
     "b1-2": { en: { name: "Geodae Pork Soup", desc: "Soup ₩13,000 / noodles ₩11,000", transport: "🚕×2 ~10–15 min" } },
     "b1-3": { en: { name: "Haeundae Beach", desc: "Beach walk & photos", transport: "🚶/🚕" } },
