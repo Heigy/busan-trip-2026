@@ -521,7 +521,7 @@ function renderBookingsPanel() {
         b.amount
           ? `<div class="booking-meta-row"><span>${ui("bookingAmount")}</span><strong>${escapeHtml(b.amount)}</strong></div>`
           : "",
-        b.phone ? copyableValue(ui("bookingPhone"), b.phone, { sensitive: true }) : "",
+        b.phone ? copyableValue(ui("bookingPhone"), b.phone) : "",
       ].join("");
 
       const travelers = (b.travelers || [])
