@@ -286,11 +286,12 @@ function mapsHl() {
 
 function placeEmbedUrl(stop) {
   const s = localizeStop(stop);
-  if (stop.cid) {
-    return `https://maps.google.com/maps?cid=${stop.cid}&hl=${mapsHl()}&output=embed`;
-  }
-  const q = encodeURIComponent(`${s.name} ${stop.lat},${stop.lng}`);
-  return `https://maps.google.com/maps?q=${q}&ll=${stop.lat},${stop.lng}&z=16&hl=${mapsHl()}&output=embed`;
+  const name = encodeURIComponent(s.name || "Pin");
+  const lat = Number(stop.lat);
+  const lng = Number(stop.lng);
+  // Coordinate query reliably draws a red pin in the free embed iframe.
+  // CID-only embeds often open place details without a clear map marker.
+  return `https://maps.google.com/maps?q=${name}@${lat},${lng}&ll=${lat},${lng}&z=17&hl=${mapsHl()}&output=embed`;
 }
 
 function stopMapsUrl(stop) {
@@ -360,6 +361,27 @@ function updateMapSetupCopy() {
   }
 }
 
+function hideFocusBadge() {
+  const badge = document.getElementById("map-focus-badge");
+  if (badge) badge.hidden = true;
+}
+
+function showFocusBadge(stop) {
+  const badge = document.getElementById("map-focus-badge");
+  const nameEl = document.getElementById("map-focus-name");
+  const metaEl = document.getElementById("map-focus-meta");
+  const linkEl = document.getElementById("map-focus-open");
+  if (!badge || !nameEl || !metaEl || !linkEl) return;
+
+  const s = localizeStop(stop);
+  nameEl.textContent = s.name;
+  const bits = [s.time, stop.nameKo].filter(Boolean);
+  metaEl.textContent = bits.join(" · ");
+  linkEl.href = stopMapsUrl(stop);
+  linkEl.textContent = ui("googleMaps");
+  badge.hidden = false;
+}
+
 function showMyMapsOverview() {
   if (!isMapView()) return;
   const cfg = getMyMapsConfig(state.regionId);
@@ -368,6 +390,7 @@ function showMyMapsOverview() {
 
   document.getElementById("map-restore").hidden = true;
   document.getElementById("map-mode-label").textContent = ui("mapOverview");
+  hideFocusBadge();
 
   const setup = document.getElementById("map-setup");
   const frame = document.getElementById("map-frame");
@@ -507,10 +530,11 @@ function focusStop(stopId) {
 
   document.getElementById("map-setup").classList.remove("visible");
   document.getElementById("map-frame").style.visibility = "visible";
-  setMapFrameSrc(placeEmbedUrl(rawStop));
+  setMapFrameSrc(placeEmbedUrl(rawStop), true);
 
   document.getElementById("map-restore").hidden = false;
   document.getElementById("map-mode-label").textContent = `${ui("mapFocus")}${stop.name}`;
+  showFocusBadge(rawStop);
 
   renderSidebar();
   document.querySelector(`.stop-item[data-id="${stopId}"]`)?.scrollIntoView({ block: "nearest", behavior: "smooth" });
