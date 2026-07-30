@@ -59,6 +59,14 @@ window.I18N = {
     viewFlights: { zh: "航班", en: "Flights" },
     viewBookings: { zh: "預訂", en: "Bookings" },
     viewFood: { zh: "美食", en: "Food" },
+    viewPack: { zh: "行李", en: "Pack" },
+    packOverview: { zh: "行李清單", en: "Packing list" },
+    packHint: {
+      zh: "勾選會記在本機 · 含衣服、電子、證件與錢、日用品",
+      en: "Checks are saved on this device · clothes, electronics, IDs & money, toiletries",
+    },
+    packProgress: { zh: "已打包", en: "Packed" },
+    packReset: { zh: "全部取消勾選", en: "Uncheck all" },
     foodOverview: { zh: "濟州美食 List", en: "Jeju Food List" },
     foodHint: {
       zh: "彈性備選 · 點地址開地圖 · ★ 已排進 Day 3 的會標出",

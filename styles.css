@@ -467,7 +467,8 @@ header .subtitle {
 /* ── Flights panel ── */
 #flights-panel,
 #bookings-panel,
-#food-panel {
+#food-panel,
+#pack-panel {
   background: var(--bg);
   flex: 1;
   min-height: 0;
@@ -968,6 +969,82 @@ button.flight-pnr.copied {
   text-decoration: none;
 }
 
+.pack-intro {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px 18px;
+  align-items: flex-end;
+}
+
+.pack-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.pack-progress {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.pack-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.pack-col {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 14px 10px;
+}
+
+.pack-col-title {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.pack-list {
+  display: grid;
+  gap: 4px;
+}
+
+.pack-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 4px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: var(--text);
+}
+
+.pack-item:hover {
+  background: var(--pill-bg);
+}
+
+.pack-item input {
+  margin-top: 3px;
+  accent-color: var(--accent);
+  flex-shrink: 0;
+}
+
+.pack-item.checked span {
+  color: var(--muted);
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+}
+
 @media (max-width: 768px) {
   .flights-scroll { padding: 14px 14px 24px; }
   .flight-route { padding: 12px 10px; }
@@ -1398,7 +1475,8 @@ button.flight-pnr.copied {
 
   #flights-panel,
   #bookings-panel,
-  #food-panel {
+  #food-panel,
+  #pack-panel {
     overflow: visible;
     flex: none;
     min-height: auto;
@@ -1425,7 +1503,8 @@ button.flight-pnr.copied {
   body.view-flowchart .sidebar,
   body.view-flights .sidebar,
   body.view-bookings .sidebar,
-  body.view-food .sidebar {
+  body.view-food .sidebar,
+  body.view-pack .sidebar {
     order: 2;
   }
 

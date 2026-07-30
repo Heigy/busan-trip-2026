@@ -1,4 +1,4 @@
-/* global TRIP_DATA, MYMAPS_CONFIG, I18N, FLIGHT_DATA, BOOKING_DATA, FOOD_DATA */
+/* global TRIP_DATA, MYMAPS_CONFIG, I18N, FLIGHT_DATA, BOOKING_DATA, FOOD_DATA, PACKING_DATA */
 
 const state = {
   regionId: "busan",
@@ -34,6 +34,7 @@ if (urlParams.get("view") === "flowchart") state.view = "flowchart";
 else if (urlParams.get("view") === "flights") state.view = "flights";
 else if (urlParams.get("view") === "bookings") state.view = "bookings";
 else if (urlParams.get("view") === "food") state.view = "food";
+else if (urlParams.get("view") === "pack") state.view = "pack";
 if (urlParams.get("plan") === "b") state.dayPlan = "b";
 else if (urlParams.get("plan") === "a") state.dayPlan = "a";
 else {
@@ -246,11 +247,16 @@ function isFoodView() {
   return state.view === "food";
 }
 
+function isPackView() {
+  return state.view === "pack";
+}
+
 function setView(view) {
   if (view === "flowchart") state.view = "flowchart";
   else if (view === "flights") state.view = "flights";
   else if (view === "bookings") state.view = "bookings";
   else if (view === "food") state.view = "food";
+  else if (view === "pack") state.view = "pack";
   else state.view = "map";
   if (state.view !== "map") {
     state.mapFocused = false;
@@ -570,12 +576,95 @@ function renderFoodPanel() {
     <div class="food-grid">${cards}</div>`;
 }
 
+const PACK_STORAGE_KEY = "trip-packing-checked";
+
+function loadPackChecked() {
+  try {
+    const raw = localStorage.getItem(PACK_STORAGE_KEY);
+    if (!raw) return {};
+    const parsed = JSON.parse(raw);
+    return parsed && typeof parsed === "object" ? parsed : {};
+  } catch (_) {
+    return {};
+  }
+}
+
+function savePackChecked(map) {
+  try {
+    localStorage.setItem(PACK_STORAGE_KEY, JSON.stringify(map));
+  } catch (_) { /* private browsing */ }
+}
+
+function packingStats(checked) {
+  const items = (PACKING_DATA?.categories || []).flatMap((c) => c.items);
+  const total = items.length;
+  const done = items.filter((it) => checked[it.id]).length;
+  return { total, done };
+}
+
+function renderPackPanel() {
+  const root = document.getElementById("pack-content");
+  if (!root || !window.PACKING_DATA) return;
+
+  const checked = loadPackChecked();
+  const { total, done } = packingStats(checked);
+
+  const cols = PACKING_DATA.categories
+    .map((cat) => {
+      const list = cat.items
+        .map((it) => {
+          const on = Boolean(checked[it.id]);
+          return `
+          <label class="pack-item${on ? " checked" : ""}">
+            <input type="checkbox" data-pack-id="${it.id}" ${on ? "checked" : ""} />
+            <span>${escapeHtml(locField(it.label))}</span>
+          </label>`;
+        })
+        .join("");
+      return `
+      <section class="pack-col">
+        <h3 class="pack-col-title">${escapeHtml(locField(cat.title))}</h3>
+        <div class="pack-list">${list}</div>
+      </section>`;
+    })
+    .join("");
+
+  root.innerHTML = `
+    <div class="flights-intro pack-intro">
+      <div>
+        <h2>${ui("packOverview")}</h2>
+        <p class="flights-pax-label">${ui("packHint")}</p>
+      </div>
+      <div class="pack-toolbar">
+        <span class="pack-progress">${ui("packProgress")} ${done}/${total}</span>
+        <button type="button" class="map-btn" id="pack-reset">${ui("packReset")}</button>
+      </div>
+    </div>
+    <div class="pack-grid">${cols}</div>`;
+
+  root.querySelectorAll("input[data-pack-id]").forEach((input) => {
+    input.addEventListener("change", () => {
+      const map = loadPackChecked();
+      if (input.checked) map[input.dataset.packId] = true;
+      else delete map[input.dataset.packId];
+      savePackChecked(map);
+      renderPackPanel();
+    });
+  });
+
+  root.querySelector("#pack-reset")?.addEventListener("click", () => {
+    savePackChecked({});
+    renderPackPanel();
+  });
+}
+
 function applyView() {
   const mapPanel = document.getElementById("map-panel");
   const flowPanel = document.getElementById("flowchart-panel");
   const flightsPanel = document.getElementById("flights-panel");
   const bookingsPanel = document.getElementById("bookings-panel");
   const foodPanel = document.getElementById("food-panel");
+  const packPanel = document.getElementById("pack-panel");
   const restoreBtn = document.getElementById("map-restore");
   const externalLink = document.getElementById("map-open-external");
   const label = document.getElementById("map-mode-label");
@@ -583,6 +672,7 @@ function applyView() {
   document.body.classList.toggle("view-flights", isFlightsView());
   document.body.classList.toggle("view-bookings", isBookingsView());
   document.body.classList.toggle("view-food", isFoodView());
+  document.body.classList.toggle("view-pack", isPackView());
   document.body.classList.toggle("view-flowchart", isFlowchartView());
   document.body.classList.toggle("view-map", isMapView());
 
@@ -597,7 +687,9 @@ function applyView() {
             ? "viewBookings"
             : btn.dataset.view === "food"
               ? "viewFood"
-              : "viewFlights";
+              : btn.dataset.view === "pack"
+                ? "viewPack"
+                : "viewFlights";
     btn.textContent = ui(key);
   });
 
@@ -606,6 +698,7 @@ function applyView() {
   flightsPanel?.classList.toggle("active", isFlightsView());
   bookingsPanel?.classList.toggle("active", isBookingsView());
   foodPanel?.classList.toggle("active", isFoodView());
+  packPanel?.classList.toggle("active", isPackView());
 
   if (isMapView()) {
     externalLink.hidden = false;
@@ -641,6 +734,11 @@ function applyView() {
     externalLink.hidden = true;
     label.textContent = ui("foodOverview");
     renderFoodPanel();
+  } else if (isPackView()) {
+    restoreBtn.hidden = true;
+    externalLink.hidden = true;
+    label.textContent = ui("packOverview");
+    renderPackPanel();
   } else {
     restoreBtn.hidden = true;
     externalLink.hidden = true;
@@ -825,6 +923,8 @@ function renderSidebar() {
     dayHint.textContent = ui("bookingsHint");
   } else if (isFoodView()) {
     dayHint.textContent = ui("foodHint");
+  } else if (isPackView()) {
+    dayHint.textContent = ui("packHint");
   } else if (isFlowchartView()) {
     dayHint.textContent = ui("flowchartHint");
   } else if (rawDay.plans && day.planBlurb) {
@@ -1056,7 +1156,7 @@ function updateUrl() {
   else url.searchParams.delete("plan");
   if (state.lang === "en") url.searchParams.set("lang", "en");
   else url.searchParams.delete("lang");
-  if (state.view === "flowchart" || state.view === "flights" || state.view === "bookings" || state.view === "food") {
+  if (state.view === "flowchart" || state.view === "flights" || state.view === "bookings" || state.view === "food" || state.view === "pack") {
     url.searchParams.set("view", state.view);
   } else {
     url.searchParams.delete("view");
