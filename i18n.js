@@ -58,6 +58,15 @@ window.I18N = {
     viewFlowchart: { zh: "路線圖", en: "Route chart" },
     viewFlights: { zh: "航班", en: "Flights" },
     viewBookings: { zh: "預訂", en: "Bookings" },
+    viewFood: { zh: "美食", en: "Food" },
+    foodOverview: { zh: "濟州美食 List", en: "Jeju Food List" },
+    foodHint: {
+      zh: "彈性備選 · 點地址開地圖 · ★ 已排進 Day 3 的會標出",
+      en: "Flexible picks · tap address for Maps · ★ = already on Day 3",
+    },
+    foodOnTrip: { zh: "已排行程", en: "On itinerary" },
+    foodMaps: { zh: "地圖", en: "Maps" },
+    foodFilterAll: { zh: "全部", en: "All" },
     bookingsOverview: { zh: "已訂住宿與票券", en: "Booked stays & tickets" },
     bookingsHint: {
       zh: "海雲台酒店 + 松島纜車 + 藍線列車 · 點卡片可跳到對應行程日",

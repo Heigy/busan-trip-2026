@@ -1,4 +1,4 @@
-/* global TRIP_DATA, MYMAPS_CONFIG, I18N, FLIGHT_DATA, BOOKING_DATA */
+/* global TRIP_DATA, MYMAPS_CONFIG, I18N, FLIGHT_DATA, BOOKING_DATA, FOOD_DATA */
 
 const state = {
   regionId: "busan",
@@ -32,6 +32,7 @@ else {
 if (urlParams.get("view") === "flowchart") state.view = "flowchart";
 else if (urlParams.get("view") === "flights") state.view = "flights";
 else if (urlParams.get("view") === "bookings") state.view = "bookings";
+else if (urlParams.get("view") === "food") state.view = "food";
 
 function isDark() {
   return state.theme === "dark";
@@ -151,10 +152,15 @@ function isBookingsView() {
   return state.view === "bookings";
 }
 
+function isFoodView() {
+  return state.view === "food";
+}
+
 function setView(view) {
   if (view === "flowchart") state.view = "flowchart";
   else if (view === "flights") state.view = "flights";
   else if (view === "bookings") state.view = "bookings";
+  else if (view === "food") state.view = "food";
   else state.view = "map";
   if (state.view !== "map") {
     state.mapFocused = false;
@@ -344,17 +350,62 @@ function wireOpenButtons(root = document) {
   });
 }
 
+function foodMapsUrl(place) {
+  const q = place.maps || place.address || locField(place.name);
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
+}
+
+function renderFoodPanel() {
+  const root = document.getElementById("food-content");
+  if (!root || !window.FOOD_DATA) return;
+
+  const cards = FOOD_DATA.places
+    .map((p) => {
+      const badge = p.onItinerary
+        ? `<span class="food-badge">${ui("foodOnTrip")}</span>`
+        : "";
+      const note = p.note ? `<p class="food-note">${locField(p.note)}</p>` : "";
+      const dayHint = p.dayHint ? `<p class="food-day">${locField(p.dayHint)}</p>` : "";
+      return `
+      <article class="food-card${p.onItinerary ? " on-trip" : ""}">
+        <div class="food-card-top">
+          <div>
+            <p class="food-cat">${locField(p.category)} · ${locField(p.area)}</p>
+            <h3 class="food-title">${locField(p.name)}${badge}</h3>
+            ${p.nameKo ? `<p class="food-ko">${p.nameKo}</p>` : ""}
+          </div>
+        </div>
+        <p class="food-address">${p.address}</p>
+        ${note}
+        ${dayHint}
+        <div class="food-actions">
+          <a class="food-maps" href="${foodMapsUrl(p)}" target="_blank" rel="noopener noreferrer">${ui("foodMaps")}</a>
+        </div>
+      </article>`;
+    })
+    .join("");
+
+  root.innerHTML = `
+    <div class="flights-intro">
+      <h2>${ui("foodOverview")}</h2>
+      <p class="flights-pax-label">${ui("foodHint")}</p>
+    </div>
+    <div class="food-grid">${cards}</div>`;
+}
+
 function applyView() {
   const mapPanel = document.getElementById("map-panel");
   const flowPanel = document.getElementById("flowchart-panel");
   const flightsPanel = document.getElementById("flights-panel");
   const bookingsPanel = document.getElementById("bookings-panel");
+  const foodPanel = document.getElementById("food-panel");
   const restoreBtn = document.getElementById("map-restore");
   const externalLink = document.getElementById("map-open-external");
   const label = document.getElementById("map-mode-label");
 
   document.body.classList.toggle("view-flights", isFlightsView());
   document.body.classList.toggle("view-bookings", isBookingsView());
+  document.body.classList.toggle("view-food", isFoodView());
   document.body.classList.toggle("view-flowchart", isFlowchartView());
   document.body.classList.toggle("view-map", isMapView());
 
@@ -367,7 +418,9 @@ function applyView() {
           ? "viewFlowchart"
           : btn.dataset.view === "bookings"
             ? "viewBookings"
-            : "viewFlights";
+            : btn.dataset.view === "food"
+              ? "viewFood"
+              : "viewFlights";
     btn.textContent = ui(key);
   });
 
@@ -375,6 +428,7 @@ function applyView() {
   flowPanel?.classList.toggle("active", isFlowchartView());
   flightsPanel?.classList.toggle("active", isFlightsView());
   bookingsPanel?.classList.toggle("active", isBookingsView());
+  foodPanel?.classList.toggle("active", isFoodView());
 
   if (isMapView()) {
     externalLink.hidden = false;
@@ -405,6 +459,11 @@ function applyView() {
     externalLink.hidden = true;
     label.textContent = ui("bookingsOverview");
     renderBookingsPanel();
+  } else if (isFoodView()) {
+    restoreBtn.hidden = true;
+    externalLink.hidden = true;
+    label.textContent = ui("foodOverview");
+    renderFoodPanel();
   } else {
     restoreBtn.hidden = true;
     externalLink.hidden = true;
@@ -586,6 +645,8 @@ function renderSidebar() {
     dayHint.textContent = ui("flightsHint");
   } else if (isBookingsView()) {
     dayHint.textContent = ui("bookingsHint");
+  } else if (isFoodView()) {
+    dayHint.textContent = ui("foodHint");
   } else if (isFlowchartView()) {
     dayHint.textContent = ui("flowchartHint");
   } else if (!hasDedicatedMyMap(state.regionId)) {
@@ -772,7 +833,7 @@ function updateUrl() {
   url.searchParams.set("day", String(state.dayIndex + 1));
   if (state.lang === "en") url.searchParams.set("lang", "en");
   else url.searchParams.delete("lang");
-  if (state.view === "flowchart" || state.view === "flights" || state.view === "bookings") {
+  if (state.view === "flowchart" || state.view === "flights" || state.view === "bookings" || state.view === "food") {
     url.searchParams.set("view", state.view);
   } else {
     url.searchParams.delete("view");
