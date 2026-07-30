@@ -959,34 +959,100 @@ header .subtitle {
 
 /* ── Responsive ── */
 @media (max-width: 768px) {
-  .main { flex-direction: column-reverse; }
+  /* Unlock page scroll on phones — nested iframe/panel scrolling is unreliable */
+  html, body {
+    height: auto;
+    min-height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #app {
+    height: auto;
+    max-height: none;
+    min-height: 100dvh;
+    overflow: visible;
+  }
+
+  .main {
+    flex-direction: column;
+    flex: none;
+    min-height: auto;
+  }
+
+  .map-wrap {
+    flex: none;
+    min-height: auto;
+    overflow: visible;
+  }
+
+  .content-panel {
+    flex: none;
+    min-height: auto;
+  }
+
+  .content-panel.active {
+    display: flex;
+  }
+
+  #map-panel.active {
+    height: 62vh;
+    min-height: 320px;
+  }
+
+  #map-frame {
+    height: 100%;
+    min-height: 0;
+  }
+
+  #flowchart-panel.active {
+    display: block;
+  }
+
+  #flowchart-frame {
+    display: block;
+    width: 100%;
+    min-height: 70vh;
+    height: 1200px; /* JS will resize to content */
+    border: 0;
+  }
+
+  #flights-panel {
+    overflow: visible;
+    flex: none;
+    min-height: auto;
+  }
+
+  .flights-scroll {
+    flex: none;
+    min-height: auto;
+    height: auto;
+    overflow: visible;
+    -webkit-overflow-scrolling: auto;
+    padding: 14px 14px calc(28px + env(safe-area-inset-bottom, 0px));
+  }
+
   .sidebar {
     width: 100%;
-    max-height: 46vh;
+    max-height: none;
+    flex: none;
     border-left: none;
     border-top: 1px solid var(--border);
   }
 
-  /* Flights: hide itinerary sidebar so the list can scroll full-screen */
+  /* On flowchart/flights, put itinerary below content so users scroll the page */
+  body.view-flowchart .sidebar,
   body.view-flights .sidebar {
-    display: none;
-  }
-  body.view-flights .main {
-    flex-direction: column;
-  }
-  body.view-flights .map-wrap {
-    flex: 1;
-    min-height: 0;
-  }
-  body.view-flights #flights-panel,
-  body.view-flights .flights-scroll {
-    min-height: 0;
+    order: 2;
   }
 
-  #map-frame,
-  #flowchart-frame { min-height: 54vh; }
   .view-tabs button { font-size: 0.65rem; padding: 4px 9px; }
   .map-toolbar-label { max-width: 100px; }
+  header {
+    position: sticky;
+    top: 0;
+  }
   header .subtitle { display: none; }
   .header-actions { gap: 6px; }
   .lang-tabs button { padding: 4px 8px; font-size: 0.62rem; }
@@ -994,5 +1060,4 @@ header .subtitle {
   .theme-toggle { width: 30px; height: 30px; }
   header { padding: 0 14px; }
   .flights-bar { padding: 6px 14px; }
-  .flights-scroll { padding: 14px 14px calc(24px + env(safe-area-inset-bottom, 0px)); }
 }

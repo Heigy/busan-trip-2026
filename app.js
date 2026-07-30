@@ -274,19 +274,48 @@ function applyView() {
     if (frame) {
       frame.title = ui("iframeFlowchart");
       const src = flowchartPage();
-      if (!frame.getAttribute("src")?.includes(src)) frame.src = src;
+      const needsLoad = !frame.getAttribute("src")?.includes(src);
+      if (needsLoad) {
+        frame.onload = () => resizeFlowchartFrame(frame);
+        frame.src = src;
+      } else {
+        resizeFlowchartFrame(frame);
+      }
     }
   } else {
     restoreBtn.hidden = true;
     externalLink.hidden = true;
     label.textContent = ui("flightsOverview");
     renderFlightsPanel();
-    // iOS: reset scroll position into the scroll container after layout
-    requestAnimationFrame(() => {
-      const scroller = document.getElementById("flights-content");
-      if (scroller) scroller.scrollTop = 0;
-    });
   }
+}
+
+function resizeFlowchartFrame(frame) {
+  const el = frame || document.getElementById("flowchart-frame");
+  if (!el) return;
+  const fit = () => {
+    try {
+      const doc = el.contentDocument || el.contentWindow?.document;
+      if (!doc) return;
+      const body = doc.body;
+      const html = doc.documentElement;
+      const h = Math.max(
+        body?.scrollHeight || 0,
+        body?.offsetHeight || 0,
+        html?.scrollHeight || 0,
+        html?.offsetHeight || 0,
+        800
+      );
+      el.style.height = `${h + 24}px`;
+    } catch (_) {
+      el.style.height = "1600px";
+    }
+  };
+  fit();
+  // Images in flowchart load late — remeasure a few times
+  setTimeout(fit, 300);
+  setTimeout(fit, 1000);
+  setTimeout(fit, 2500);
 }
 
 function mapsHl() {
