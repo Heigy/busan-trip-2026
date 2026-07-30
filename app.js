@@ -325,6 +325,25 @@ function renderBookingsPanel() {
   });
 }
 
+function openExternalPage(url) {
+  if (!url) return;
+  const absolute = /^https?:\/\//i.test(url) ? url : new URL(url, location.href).href;
+  const win = window.open(absolute, "_blank", "noopener,noreferrer");
+  if (!win) location.assign(absolute);
+}
+
+function wireOpenButtons(root = document) {
+  root.querySelectorAll("[data-open]").forEach((el) => {
+    if (el.dataset.openBound) return;
+    el.dataset.openBound = "1";
+    el.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      openExternalPage(el.getAttribute("data-open") || el.href);
+    });
+  });
+}
+
 function applyView() {
   const mapPanel = document.getElementById("map-panel");
   const flowPanel = document.getElementById("flowchart-panel");
@@ -585,16 +604,16 @@ function renderSidebar() {
     const show = Boolean(region.inspirationUrl || region.inspirationUrlCity);
     inspirationWrap.hidden = !show;
     if (inspiration && region.inspirationUrl) {
-      inspiration.href = region.inspirationUrl;
-      inspiration.textContent = ui("inspirationLink");
       inspiration.hidden = false;
+      inspiration.dataset.open = region.inspirationUrl;
+      inspiration.textContent = ui("inspirationLink");
     } else if (inspiration) {
       inspiration.hidden = true;
     }
     if (inspirationAlt) {
       if (region.inspirationUrlAlt) {
         inspirationAlt.hidden = false;
-        inspirationAlt.href = region.inspirationUrlAlt;
+        inspirationAlt.dataset.open = region.inspirationUrlAlt;
         inspirationAlt.textContent = ui("inspirationAlt");
       } else {
         inspirationAlt.hidden = true;
@@ -603,12 +622,13 @@ function renderSidebar() {
     if (inspirationCity) {
       if (region.inspirationUrlCity) {
         inspirationCity.hidden = false;
-        inspirationCity.href = region.inspirationUrlCity;
+        inspirationCity.dataset.open = region.inspirationUrlCity;
         inspirationCity.textContent = ui("inspirationCity");
       } else {
         inspirationCity.hidden = true;
       }
     }
+    wireOpenButtons(inspirationWrap);
   }
 
   const openLink = document.getElementById("map-open-external");
@@ -687,7 +707,7 @@ function renderSidebar() {
           <a href="#" class="stop-focus">${ui("mapLocate")}</a>
           <a href="${stopMapsUrl(rawStop)}" target="_blank" rel="noopener">${ui("googleMaps")}</a>
           <a href="${stopDirectionsUrl(rawStop)}" target="_blank" rel="noopener">${ui("navigate")}</a>
-          ${rawStop.infoUrl ? `<a href="${rawStop.infoUrl}" target="_blank" rel="noopener">${ui("stopInfo")}</a>` : ""}
+          ${rawStop.infoUrl ? `<a href="${rawStop.infoUrl}" class="stop-info" data-open="${rawStop.infoUrl}" target="_blank" rel="noopener noreferrer">${ui("stopInfo")}</a>` : ""}
         </div>
       </div>`;
     el.addEventListener("click", (e) => {
@@ -697,6 +717,7 @@ function renderSidebar() {
     });
     list.appendChild(el);
   });
+  wireOpenButtons(list);
 }
 
 function focusStop(stopId) {
@@ -807,6 +828,7 @@ function boot() {
   });
 
   try {
+    wireOpenButtons();
     renderAll();
   } catch (err) {
     console.error(err);

@@ -1090,7 +1090,7 @@ header .subtitle {
 .region-inspiration-wrap {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px 12px;
+  gap: 8px;
   margin-top: 8px;
   align-items: center;
 }
@@ -1099,25 +1099,32 @@ header .subtitle {
   display: none;
 }
 
-.region-inspiration {
-  display: inline-block;
+.region-inspiration-btn {
+  appearance: none;
+  font-family: inherit;
   font-size: 0.72rem;
   font-weight: 600;
+  line-height: 1.35;
+  padding: 7px 11px;
+  border-radius: 8px;
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--border));
+  background: color-mix(in srgb, var(--accent) 12%, var(--card));
   color: var(--accent);
-  text-decoration: none;
-  line-height: 1.4;
+  cursor: pointer;
 }
 
-.region-inspiration.muted {
+.region-inspiration-btn.muted {
   font-weight: 500;
-  color: var(--muted);
+  color: var(--text);
+  background: var(--card);
+  border-color: var(--border);
 }
 
-.region-inspiration:hover {
-  text-decoration: underline;
+.region-inspiration-btn:hover {
+  filter: brightness(1.03);
 }
 
-.region-inspiration[hidden] {
+.region-inspiration-btn[hidden] {
   display: none;
 }
 

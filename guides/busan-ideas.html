@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>釜山靈感 · 海雲台與周邊</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600&family=Noto+Serif+TC:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f6f3ee;
+      --card: #fffdf9;
+      --text: #1c1917;
+      --muted: #78716c;
+      --accent: #0f766e;
+      --border: #e7e0d5;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Noto Sans TC", sans-serif;
+      background:
+        radial-gradient(ellipse 80% 50% at 10% -10%, #dbeafe 0%, transparent 55%),
+        radial-gradient(ellipse 70% 40% at 100% 0%, #fde68a55 0%, transparent 50%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      padding: 28px 18px 48px;
+    }
+    main {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    h1 {
+      font-family: "Noto Serif TC", serif;
+      font-size: 1.65rem;
+      margin: 0 0 8px;
+      letter-spacing: -0.02em;
+    }
+    .lead {
+      color: var(--muted);
+      margin: 0 0 22px;
+      font-size: 0.95rem;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px 18px 16px;
+      margin-bottom: 14px;
+    }
+    .card h2 {
+      font-family: "Noto Serif TC", serif;
+      font-size: 1.15rem;
+      margin: 0 0 10px;
+    }
+    .card p, .card li {
+      font-size: 0.9rem;
+      margin: 0 0 8px;
+    }
+    .card ul {
+      margin: 0;
+      padding-left: 1.2em;
+    }
+    .meta {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+    .actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 8px;
+    }
+    .btn {
+      display: block;
+      text-align: center;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .btn-primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    .btn-secondary {
+      background: #ecfdf5;
+      border-color: #99f6e4;
+      color: #115e59;
+    }
+    .note {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 16px;
+    }
+    a.back {
+      display: inline-block;
+      margin-bottom: 18px;
+      color: var(--accent);
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <a class="back" href="./index.html?region=busan&day=1">← 返回行程</a>
+    <h1>不知去哪？先看海雲台靈感</h1>
+    <p class="lead">整理自韓國觀光公社 VisitKorea。下面按鈕會在<strong>新分頁</strong>開啟官方網站。</p>
+
+    <section class="card">
+      <h2>海雲台海水浴場</h2>
+      <p>釜山代表性海灘，沙灘長約 1.5 公里，水深較淺、潮差小，周邊飯店與娛樂設施多，四季都有節慶活動。</p>
+      <p class="meta">地址：釜山廣域市海雲台區海雲台海邊路 264<br/>電話：+82-51-749-7611<br/>門票：免費（夏季設施另計）</p>
+      <ul>
+        <li>地鐵 2 號線海雲台站 3 / 5 號出口，步行約 5 分鐘</li>
+        <li>周邊可逛：冬柏島、藍線公園、LCT / X the SKY</li>
+        <li>劇組取景：《大力女子姜南順》沙灘場景</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>開啟官方頁面（新分頁）</h2>
+      <div class="actions">
+        <button type="button" class="btn btn-primary" data-open="https://chinese.visitkorea.or.kr/svc/contents/contentsView.do?vcontsId=111456">
+          打開 VisitKorea（簡體）
+        </button>
+        <button type="button" class="btn btn-secondary" data-open="https://big5chinese.visitkorea.or.kr/svc/contents/contentsView.do?vcontsId=110798">
+          打開 VisitKorea（繁體）
+        </button>
+        <button type="button" class="btn" data-open="https://www.visitbusan.net/tw/index.do">
+          打開釜山觀光網
+        </button>
+      </div>
+      <p class="note">若官方站在微信 / 公司網路打不開，可先看上方摘要，或改用手機瀏覽器、無痕模式再開。</p>
+    </section>
+  </main>
+  <script>
+    document.querySelectorAll("[data-open]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const url = btn.getAttribute("data-open");
+        const win = window.open(url, "_blank", "noopener,noreferrer");
+        if (!win) {
+          // Popup blocked — fall back to same-tab navigation
+          location.href = url;
+        }
+      });
+    });
+  </script>
+</body>
+</html>

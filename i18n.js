@@ -10,12 +10,12 @@ window.I18N = {
     dayRoute: { zh: "整日路線", en: "Full-day route" },
     stops: { zh: "個站點", en: " stops" },
     inspirationLink: {
-      zh: "不知去哪？VisitKorea（海雲台）",
-      en: "Stuck? VisitKorea (Haeundae)",
+      zh: "不知去哪？打開靈感頁（新分頁）",
+      en: "Stuck? Open ideas page (new tab)",
     },
-    inspirationAlt: { zh: "繁體備用", en: "Trad. Chinese" },
+    inspirationAlt: { zh: "VisitKorea 官網", en: "VisitKorea site" },
     inspirationCity: { zh: "釜山觀光網", en: "Visit Busan" },
-    stopInfo: { zh: "景點介紹", en: "Attraction info" },
+    stopInfo: { zh: "靈感介紹", en: "Ideas page" },
     dayHint: {
       zh: (day) => `左側 My Maps 圖層欄勾選「${day}」查看當日標記`,
       en: (day) => `In My Maps (left), enable layer “${day}” for today’s pins`,
