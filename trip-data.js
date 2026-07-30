@@ -3,9 +3,9 @@ window.TRIP_DATA = {
     title: "釜山 + 濟州島 7日6夜",
     subtitle: "2026年8月1–7日 · 5人 · 無自駕",
     flights: [
-      { date: "8/1", code: "UO604", route: "香港 → 釜山" },
-      { date: "8/4", code: "7C501", route: "釜山 → 濟州" },
-      { date: "8/7", code: "UO699", route: "濟州 → 香港" },
+      { date: "8/1", code: "UO604", route: "香港 02:35 → 釜山 07:00" },
+      { date: "8/4", code: "7C0503", route: "釜山 08:50 → 濟州 09:55" },
+      { date: "8/7", code: "UO699", route: "濟州 07:30 → 香港 09:40" },
     ],
   },
   regions: [
@@ -58,8 +58,8 @@ window.TRIP_DATA = {
           label: "Day 4 · 8/4",
           theme: "飛濟州",
           stops: [
-            { id: "b4-1", name: "海雲台酒店", nameKo: "退房", time: "05:30", desc: "退房、檢查護照", transport: "—", lat: 35.163381, lng: 129.160456, skipMarker: true },
-            { id: "b4-2", name: "金海機場 PUS", nameKo: "김해공항", time: "06:30–08:00", desc: "7C501 值機登機", transport: "🚕×2 06:00出發", lat: 35.179528, lng: 128.938222, cid: "1559275999526138604" },
+            { id: "b4-1", name: "海雲台酒店", nameKo: "退房", time: "05:45", desc: "退房、檢查護照", transport: "—", lat: 35.163381, lng: 129.160456, skipMarker: true },
+            { id: "b4-2", name: "金海機場 PUS", nameKo: "김해공항", time: "06:50–08:50", desc: "7C0503 值機登機（08:50起飛）", transport: "🚕×2 06:00出發", lat: 35.179528, lng: 128.938222, cid: "1559275999526138604" },
           ],
         },
       ],
@@ -77,7 +77,7 @@ window.TRIP_DATA = {
           label: "Day 1 · 8/4",
           theme: "黑豬肉 · 泰迪熊 · Hello Kitty · BHC",
           stops: [
-            { id: "j1-1", name: "濟州機場 CJU", nameKo: "제주공항", time: "09:05", desc: "7C501 抵達", transport: "✈️ 7C501", lat: 33.506806, lng: 126.492778 },
+            { id: "j1-1", name: "濟州機場 CJU", nameKo: "제주공항", time: "09:55", desc: "7C0503 抵達", transport: "✈️ 7C0503", lat: 33.506806, lng: 126.492778 },
             { id: "j1-2", name: "Dombedon 烤黑豬肉", nameKo: "돔베돈", time: "11:30–13:00", desc: "濟州黑豬烤肉", transport: "🚕×2 約15分", lat: 33.4892, lng: 126.5128 },
             { id: "j1-3", name: "泰迪熊博物館", nameKo: "테디베어뮤지엄", time: "13:30–14:30", desc: "中문度假區主題展", transport: "🚐 包車約40分", lat: 33.2414, lng: 126.412 },
             { id: "j1-4", name: "Hello Kitty Island", nameKo: "헬로키티아일랜드", time: "15:00–16:30", desc: "主題館拍照、周邊", transport: "🚐 包車20–25分", lat: 33.2965, lng: 126.3618 },

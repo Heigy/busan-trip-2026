@@ -1,4 +1,4 @@
-/* global TRIP_DATA, MYMAPS_CONFIG, I18N */
+/* global TRIP_DATA, MYMAPS_CONFIG, I18N, FLIGHT_DATA */
 
 const state = {
   regionId: "busan",
@@ -30,6 +30,7 @@ else {
   } catch (_) { /* private browsing */ }
 }
 if (urlParams.get("view") === "flowchart") state.view = "flowchart";
+else if (urlParams.get("view") === "flights") state.view = "flights";
 
 function isDark() {
   return state.theme === "dark";
@@ -39,7 +40,9 @@ function applyTheme() {
   document.documentElement.setAttribute("data-theme", isDark() ? "dark" : "light");
   const btn = document.getElementById("theme-toggle");
   if (btn) {
-    btn.textContent = isDark() ? "☀️" : "🌙";
+    btn.innerHTML = isDark()
+      ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>'
+      : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
     btn.setAttribute("aria-label", ui(isDark() ? "themeLight" : "themeDark"));
   }
 }
@@ -111,9 +114,19 @@ function isMapView() {
   return state.view === "map";
 }
 
+function isFlowchartView() {
+  return state.view === "flowchart";
+}
+
+function isFlightsView() {
+  return state.view === "flights";
+}
+
 function setView(view) {
-  state.view = view === "flowchart" ? "flowchart" : "map";
-  if (state.view === "flowchart") {
+  if (view === "flowchart") state.view = "flowchart";
+  else if (view === "flights") state.view = "flights";
+  else state.view = "map";
+  if (state.view !== "map") {
     state.mapFocused = false;
     state.activeStopId = null;
   }
@@ -121,32 +134,111 @@ function setView(view) {
   renderAll();
 }
 
+function locField(obj) {
+  if (!obj) return "";
+  if (typeof obj === "string") return obj;
+  return isEn() ? obj.en : obj.zh;
+}
+
+function renderFlightsPanel() {
+  const root = document.getElementById("flights-content");
+  if (!root || !window.FLIGHT_DATA) return;
+
+  const passengers = FLIGHT_DATA.passengers
+    .map((p) => `<span class="flight-pax">${p.surname} ${p.given}</span>`)
+    .join("");
+
+  const cards = FLIGHT_DATA.flights
+    .map((f) => {
+      const seats = f.seats
+        .map((s) => {
+          const bag =
+            s.bag && s.bag !== "shared rule"
+              ? `<span class="seat-bag">${ui("flightBag")} ${s.bag}</span>`
+              : s.bag === "shared rule"
+                ? ""
+                : `<span class="seat-bag muted">${ui("flightNoBag")}</span>`;
+          return `<li><strong>${s.name}</strong><span class="seat-no">${s.seat}</span>${bag}</li>`;
+        })
+        .join("");
+
+      return `
+      <article class="flight-card">
+        <div class="flight-card-top">
+          <div>
+            <p class="flight-date">${locField(f.dateLabel)}</p>
+            <h3 class="flight-no">${f.flightNo}</h3>
+            <p class="flight-airline">${locField(f.airline)} · ${locField(f.cabin)}${f.fareClass ? ` · ${f.fareClass}` : ""}</p>
+          </div>
+          <div class="flight-pnr-box">
+            <span class="flight-pnr-label">${ui("flightPnr")}</span>
+            <code class="flight-pnr">${f.pnr}</code>
+          </div>
+        </div>
+        <div class="flight-route">
+          <div class="flight-endpoint">
+            <span class="flight-time">${f.depart}</span>
+            <span class="flight-code">${f.from.code}</span>
+            <span class="flight-airport">${locField(f.from)}</span>
+          </div>
+          <div class="flight-arrow" aria-hidden="true">→</div>
+          <div class="flight-endpoint">
+            <span class="flight-time">${f.arrive}</span>
+            <span class="flight-code">${f.to.code}</span>
+            <span class="flight-airport">${locField(f.to)}</span>
+          </div>
+        </div>
+        <p class="flight-tip"><strong>${ui("flightCheckIn")}</strong> ${locField(f.checkInHint)}</p>
+        <p class="flight-tip"><strong>${ui("flightCarry")}</strong> ${locField(f.bagCarry)}</p>
+        <div class="flight-seats">
+          <h4>${ui("flightSeats")}</h4>
+          <ul>${seats}</ul>
+        </div>
+      </article>`;
+    })
+    .join("");
+
+  root.innerHTML = `
+    <div class="flights-intro">
+      <h2>${ui("flightsOverview")}</h2>
+      <p class="flights-pax-label">${ui("flightPassengers")}</p>
+      <div class="flight-pax-row">${passengers}</div>
+    </div>
+    ${cards}`;
+}
+
 function applyView() {
   const mapPanel = document.getElementById("map-panel");
   const flowPanel = document.getElementById("flowchart-panel");
+  const flightsPanel = document.getElementById("flights-panel");
   const restoreBtn = document.getElementById("map-restore");
   const externalLink = document.getElementById("map-open-external");
   const label = document.getElementById("map-mode-label");
 
   document.querySelectorAll("#view-tabs button[data-view]").forEach((btn) => {
     btn.classList.toggle("active", btn.dataset.view === state.view);
-    btn.textContent =
+    const key =
       btn.dataset.view === "map"
-        ? `🗺️ ${ui("viewMap")}`
-        : `📋 ${ui("viewFlowchart")}`;
+        ? "viewMap"
+        : btn.dataset.view === "flowchart"
+          ? "viewFlowchart"
+          : "viewFlights";
+    btn.textContent = ui(key);
   });
 
+  mapPanel?.classList.toggle("active", isMapView());
+  flowPanel?.classList.toggle("active", isFlowchartView());
+  flightsPanel?.classList.toggle("active", isFlightsView());
+
   if (isMapView()) {
-    mapPanel?.classList.add("active");
-    flowPanel?.classList.remove("active");
+    externalLink.hidden = false;
     externalLink.textContent = ui("mapFullscreen");
     const myMaps = getMyMapsConfig(state.regionId);
     externalLink.href = isConfigured(myMaps.viewUrl) ? myMaps.viewUrl : "https://www.google.com/maps/d/";
     if (!state.mapFocused) label.textContent = ui("mapOverview");
-  } else {
-    mapPanel?.classList.remove("active");
-    flowPanel?.classList.add("active");
+  } else if (isFlowchartView()) {
     restoreBtn.hidden = true;
+    externalLink.hidden = false;
     label.textContent = ui("flowchartOverview");
     externalLink.textContent = ui("flowchartFullscreen");
     externalLink.href = flowchartPage();
@@ -156,6 +248,11 @@ function applyView() {
       const src = flowchartPage();
       if (!frame.getAttribute("src")?.includes(src)) frame.src = src;
     }
+  } else {
+    restoreBtn.hidden = true;
+    externalLink.hidden = true;
+    label.textContent = ui("flightsOverview");
+    renderFlightsPanel();
   }
 }
 
@@ -258,7 +355,9 @@ function renderSidebar() {
   document.getElementById("stat-region").textContent = region.dates;
 
   const dayHint = document.getElementById("day-hint");
-  if (!isMapView()) {
+  if (isFlightsView()) {
+    dayHint.textContent = ui("flightsHint");
+  } else if (isFlowchartView()) {
     dayHint.textContent = ui("flowchartHint");
   } else if (isConfigured(myMaps.embedUrl)) {
     dayHint.textContent = uiFn("dayHint", day.label.split(" · ")[0]);
@@ -268,10 +367,14 @@ function renderSidebar() {
 
   const openLink = document.getElementById("map-open-external");
   if (isMapView()) {
+    openLink.hidden = false;
     openLink.href = isConfigured(myMaps.viewUrl) ? myMaps.viewUrl : "https://www.google.com/maps/d/";
-  } else {
+  } else if (isFlowchartView()) {
+    openLink.hidden = false;
     openLink.href = flowchartPage();
     openLink.textContent = ui("flowchartFullscreen");
+  } else {
+    openLink.hidden = true;
   }
 
   const dirEl = document.getElementById("day-directions");
@@ -367,7 +470,7 @@ function renderHeader() {
   document.getElementById("page-title").textContent = meta.title;
   document.getElementById("page-subtitle").textContent = meta.subtitle;
   document.getElementById("flights-bar").innerHTML = meta.flights
-    .map((f) => `<span>✈️ ${f.date} ${f.code} ${f.route}</span>`)
+    .map((f) => `<span><span class="flight-code">${f.code}</span> ${f.date} · ${f.route}</span>`)
     .join("");
 }
 
@@ -397,8 +500,11 @@ function updateUrl() {
   url.searchParams.set("day", String(state.dayIndex + 1));
   if (state.lang === "en") url.searchParams.set("lang", "en");
   else url.searchParams.delete("lang");
-  if (state.view === "flowchart") url.searchParams.set("view", "flowchart");
-  else url.searchParams.delete("view");
+  if (state.view === "flowchart" || state.view === "flights") {
+    url.searchParams.set("view", state.view);
+  } else {
+    url.searchParams.delete("view");
+  }
   history.replaceState(null, "", url);
 }
 
