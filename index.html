@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600&family=Noto+Serif+TC:wght@500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=10" />
+  <link rel="stylesheet" href="styles.css?v=11" />
   <script>
     (function () {
       try {
@@ -17,10 +17,11 @@
       } catch (_) {}
     })();
   </script>
-  <script src="config.js?v=10"></script>
-  <script src="trip-data.js?v=10"></script>
-  <script src="flight-data.js?v=10"></script>
-  <script src="i18n.js?v=10"></script>
+  <script src="config.js?v=11"></script>
+  <script src="trip-data.js?v=11"></script>
+  <script src="flight-data.js?v=11"></script>
+  <script src="booking-data.js?v=11"></script>
+  <script src="i18n.js?v=11"></script>
 </head>
 <body>
   <div id="app">
@@ -53,6 +54,7 @@
             <button type="button" data-view="map" class="active">互動地圖</button>
             <button type="button" data-view="flowchart">路線圖</button>
             <button type="button" data-view="flights">航班</button>
+            <button type="button" data-view="bookings">預訂</button>
           </div>
           <span class="map-toolbar-label" id="map-mode-label">My Maps 總覽</span>
           <div class="map-toolbar-actions">
@@ -102,6 +104,9 @@
         <div id="flights-panel" class="content-panel">
           <div class="flights-scroll" id="flights-content"></div>
         </div>
+        <div id="bookings-panel" class="content-panel">
+          <div class="flights-scroll" id="bookings-content"></div>
+        </div>
       </div>
 
       <aside class="sidebar">
@@ -122,6 +127,6 @@
     </div>
   </div>
 
-  <script src="app.js?v=10"></script>
+  <script src="app.js?v=11"></script>
 </body>
 </html>

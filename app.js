@@ -1,4 +1,4 @@
-/* global TRIP_DATA, MYMAPS_CONFIG, I18N, FLIGHT_DATA */
+/* global TRIP_DATA, MYMAPS_CONFIG, I18N, FLIGHT_DATA, BOOKING_DATA */
 
 const state = {
   regionId: "busan",
@@ -31,6 +31,7 @@ else {
 }
 if (urlParams.get("view") === "flowchart") state.view = "flowchart";
 else if (urlParams.get("view") === "flights") state.view = "flights";
+else if (urlParams.get("view") === "bookings") state.view = "bookings";
 
 function isDark() {
   return state.theme === "dark";
@@ -146,9 +147,14 @@ function isFlightsView() {
   return state.view === "flights";
 }
 
+function isBookingsView() {
+  return state.view === "bookings";
+}
+
 function setView(view) {
   if (view === "flowchart") state.view = "flowchart";
   else if (view === "flights") state.view = "flights";
+  else if (view === "bookings") state.view = "bookings";
   else state.view = "map";
   if (state.view !== "map") {
     state.mapFocused = false;
@@ -231,15 +237,105 @@ function renderFlightsPanel() {
     ${cards}`;
 }
 
+function findDayIndexById(regionId, dayId) {
+  const region = TRIP_DATA.regions.find((r) => r.id === regionId);
+  if (!region) return 0;
+  const idx = region.days.findIndex((d) => d.id === dayId);
+  return idx >= 0 ? idx : 0;
+}
+
+function openBookingDay(booking) {
+  if (!booking) return;
+  state.regionId = booking.region || "busan";
+  state.dayIndex = findDayIndexById(state.regionId, booking.dayId);
+  state.view = "map";
+  state.mapFocused = false;
+  state.activeStopId = booking.stopIds?.[0] || null;
+  updateUrl();
+  renderAll();
+  if (state.activeStopId) focusStop(state.activeStopId);
+}
+
+function renderBookingsPanel() {
+  const root = document.getElementById("bookings-content");
+  if (!root || !window.BOOKING_DATA) return;
+
+  const cards = BOOKING_DATA.bookings
+    .map((b) => {
+      const rows = [
+        [ui("bookingPlatform"), b.platform],
+        [ui("bookingOrder"), b.orderNo],
+        b.voucherNo ? [ui("bookingVoucher"), b.voucherNo] : null,
+        [ui("bookingQty"), locField(b.qty)],
+        b.lead ? [ui("bookingLead"), b.lead] : null,
+        b.amount ? [ui("bookingAmount"), b.amount] : null,
+        b.phone ? [ui("bookingPhone"), b.phone] : null,
+      ]
+        .filter(Boolean)
+        .map(
+          ([label, value]) =>
+            `<div class="booking-meta-row"><span>${label}</span><strong>${value}</strong></div>`
+        )
+        .join("");
+
+      const travelers = (b.travelers || [])
+        .map((name) => `<span class="flight-pax">${name}</span>`)
+        .join("");
+
+      const web = b.website
+        ? `<a class="booking-web" href="${b.website}" target="_blank" rel="noopener">${ui("bookingWebsite")}</a>`
+        : "";
+
+      return `
+      <article class="booking-card" data-booking-id="${b.id}">
+        <div class="booking-card-top">
+          <div>
+            <p class="flight-date">${locField(b.dateLabel)} · ${locField(b.time)}</p>
+            <h3 class="booking-title">${locField(b.title)}</h3>
+            ${b.titleKo ? `<p class="booking-ko">${b.titleKo}</p>` : ""}
+          </div>
+          <span class="booking-status">${ui("bookingConfirmed")}</span>
+        </div>
+        <div class="booking-meta">${rows}</div>
+        <p class="flight-tip"><strong>${ui("bookingHow")}</strong> ${locField(b.howToUse)}</p>
+        <p class="flight-tip"><strong>${ui("bookingAddress")}</strong> ${locField(b.address)}</p>
+        ${b.note ? `<p class="flight-tip muted-tip">${locField(b.note)}</p>` : ""}
+        ${travelers ? `<div class="flight-pax-row booking-pax">${travelers}</div>` : ""}
+        <div class="booking-actions">
+          <button type="button" class="booking-open-day" data-booking-id="${b.id}">${ui("bookingOpenDay")}</button>
+          ${web}
+        </div>
+      </article>`;
+    })
+    .join("");
+
+  root.innerHTML = `
+    <div class="flights-intro">
+      <h2>${ui("bookingsOverview")}</h2>
+      <p class="flights-pax-label">${ui("bookingsHint")}</p>
+    </div>
+    ${cards}`;
+
+  root.querySelectorAll(".booking-open-day").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      const booking = BOOKING_DATA.bookings.find((x) => x.id === btn.dataset.bookingId);
+      openBookingDay(booking);
+    });
+  });
+}
+
 function applyView() {
   const mapPanel = document.getElementById("map-panel");
   const flowPanel = document.getElementById("flowchart-panel");
   const flightsPanel = document.getElementById("flights-panel");
+  const bookingsPanel = document.getElementById("bookings-panel");
   const restoreBtn = document.getElementById("map-restore");
   const externalLink = document.getElementById("map-open-external");
   const label = document.getElementById("map-mode-label");
 
   document.body.classList.toggle("view-flights", isFlightsView());
+  document.body.classList.toggle("view-bookings", isBookingsView());
   document.body.classList.toggle("view-flowchart", isFlowchartView());
   document.body.classList.toggle("view-map", isMapView());
 
@@ -250,13 +346,16 @@ function applyView() {
         ? "viewMap"
         : btn.dataset.view === "flowchart"
           ? "viewFlowchart"
-          : "viewFlights";
+          : btn.dataset.view === "bookings"
+            ? "viewBookings"
+            : "viewFlights";
     btn.textContent = ui(key);
   });
 
   mapPanel?.classList.toggle("active", isMapView());
   flowPanel?.classList.toggle("active", isFlowchartView());
   flightsPanel?.classList.toggle("active", isFlightsView());
+  bookingsPanel?.classList.toggle("active", isBookingsView());
 
   if (isMapView()) {
     externalLink.hidden = false;
@@ -282,6 +381,11 @@ function applyView() {
         resizeFlowchartFrame(frame);
       }
     }
+  } else if (isBookingsView()) {
+    restoreBtn.hidden = true;
+    externalLink.hidden = true;
+    label.textContent = ui("bookingsOverview");
+    renderBookingsPanel();
   } else {
     restoreBtn.hidden = true;
     externalLink.hidden = true;
@@ -461,6 +565,8 @@ function renderSidebar() {
   const dayHint = document.getElementById("day-hint");
   if (isFlightsView()) {
     dayHint.textContent = ui("flightsHint");
+  } else if (isBookingsView()) {
+    dayHint.textContent = ui("bookingsHint");
   } else if (isFlowchartView()) {
     dayHint.textContent = ui("flowchartHint");
   } else if (!hasDedicatedMyMap(state.regionId)) {
@@ -528,13 +634,17 @@ function renderSidebar() {
     if (rawStop.skipMarker) return;
     const stop = localizeStop(rawStop);
     num += 1;
+    const booking = typeof window.bookingForStop === "function" ? window.bookingForStop(stop.id) : null;
+    const badge = booking
+      ? `<span class="stop-booking-badge">${ui("bookingBadge")}</span>`
+      : "";
     const el = document.createElement("div");
     el.className = "stop-item" + (state.activeStopId === stop.id ? " active" : "");
     el.dataset.id = stop.id;
     el.innerHTML = `
       <div class="stop-num" style="background:${color}">${num}</div>
       <div class="stop-body">
-        <div class="stop-time">${stop.time}</div>
+        <div class="stop-time">${stop.time}${badge}</div>
         <div class="stop-name">${stop.name}</div>
         ${rawStop.nameKo ? `<div class="stop-ko">${rawStop.nameKo}</div>` : ""}
         <div class="stop-desc">${stop.desc}</div>
@@ -606,7 +716,7 @@ function updateUrl() {
   url.searchParams.set("day", String(state.dayIndex + 1));
   if (state.lang === "en") url.searchParams.set("lang", "en");
   else url.searchParams.delete("lang");
-  if (state.view === "flowchart" || state.view === "flights") {
+  if (state.view === "flowchart" || state.view === "flights" || state.view === "bookings") {
     url.searchParams.set("view", state.view);
   } else {
     url.searchParams.delete("view");
