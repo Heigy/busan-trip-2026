@@ -123,7 +123,8 @@ window.TRIP_DATA = {
           theme: "黑豬肉 · 泰迪熊 · Hello Kitty · BHC",
           stops: [
             { id: "j1-1", name: "濟州機場 CJU", nameKo: "제주공항", time: "09:55", desc: "7C0503 抵達", transport: "✈️ 7C0503", lat: 33.506806, lng: 126.492778 },
-            { id: "j1-2", name: "Dombedon 烤黑豬肉", nameKo: "돔베돈", time: "11:30–13:00", desc: "濟州黑豬烤肉", transport: "🚕×2 約15分", lat: 33.4892, lng: 126.5128 },
+            { id: "j1-1a", name: "濟州太平洋酒店（寄行李）", nameKo: "제주퍼시픽호텔", time: "10:15–10:30", desc: "先寄行李 · 正式入住 15:00 · 確認號 1128149699160234", transport: "🚕×2 約10分", lat: 33.510836, lng: 126.519072, bookingId: "jeju-hotel" },
+            { id: "j1-2", name: "Dombedon 烤黑豬肉", nameKo: "돔베돈", time: "11:30–13:00", desc: "濟州黑豬烤肉", transport: "🚕×2 約10–15分", lat: 33.4892, lng: 126.5128 },
             { id: "j1-3", name: "泰迪熊博物館", nameKo: "테디베어뮤지엄", time: "13:30–14:30", desc: "中문度假區主題展", transport: "🚐 包車約40分", lat: 33.2414, lng: 126.412 },
             { id: "j1-4", name: "Hello Kitty Island", nameKo: "헬로키티아일랜드", time: "15:00–16:30", desc: "主題館拍照、周邊", transport: "🚐 包車20–25分", lat: 33.2965, lng: 126.3618 },
             { id: "j1-5", name: "BHC 炸雞 蓮洞店", nameKo: "BHC치킨", time: "18:00–19:30", desc: "火山雞、啤酒", transport: "🚐 回市區", lat: 33.4868, lng: 126.4925 },
@@ -134,7 +135,7 @@ window.TRIP_DATA = {
           label: "Day 2 · 8/5",
           theme: "城山日出峰 + 牛島（建議9座包車）",
           stops: [
-            { id: "j2-0", name: "濟州酒店 蓮洞", nameKo: "노형/연동", time: "07:30", desc: "出發（帶護照！）", transport: "—", lat: 33.4875, lng: 126.491, skipMarker: true },
+            { id: "j2-0", name: "濟州太平洋酒店", nameKo: "제주퍼시픽호텔", time: "07:30", desc: "出發（帶護照！）· 確認號 1128149699160234", transport: "—", lat: 33.510836, lng: 126.519072, bookingId: "jeju-hotel" },
             { id: "j2-1", name: "城山日出峰", nameKo: "성산일출봉", time: "09:00–11:00", desc: "門票 ₩5,000", transport: "🚐 包車約1h", lat: 33.4584, lng: 126.9416 },
             { id: "j2-2", name: "城山港 牛島渡輪", nameKo: "성산포항", time: "11:30–16:00", desc: "牛島一日（需護照）", transport: "🚐 包車", lat: 33.506, lng: 126.922 },
           ],
@@ -159,7 +160,7 @@ window.TRIP_DATA = {
           label: "Day 4 · 8/7",
           theme: "返程",
           stops: [
-            { id: "j4-1", name: "濟州酒店", nameKo: "退房", time: "05:00", desc: "退房出發", transport: "—", lat: 33.4875, lng: 126.491, skipMarker: true },
+            { id: "j4-1", name: "濟州太平洋酒店（退房）", nameKo: "제주퍼시픽호텔", time: "05:00", desc: "退房出發 · 官方 12:00 前 · 確認號 1128149699160234", transport: "—", lat: 33.510836, lng: 126.519072, bookingId: "jeju-hotel" },
             { id: "j4-2", name: "濟州機場 CJU", nameKo: "제주공항", time: "07:30", desc: "UO699 離境", transport: "🚕×2 05:00出發", lat: 33.506806, lng: 126.492778 },
           ],
         },

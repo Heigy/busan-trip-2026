@@ -579,6 +579,90 @@ header .subtitle {
   border-radius: 8px;
   background: var(--setup-note-bg);
   color: var(--accent);
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+  cursor: pointer;
+  font: inherit;
+}
+
+button.flight-pnr {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+button.flight-pnr:hover,
+button.flight-pnr.copied {
+  background: color-mix(in srgb, var(--accent) 16%, transparent);
+}
+
+.copy-value-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: flex-end;
+  max-width: 70%;
+}
+
+.copy-value-wrap .copy-target {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  text-align: right;
+  word-break: break-all;
+}
+
+.copy-btn {
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--muted);
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.copy-btn:hover,
+.copy-btn.copied {
+  color: var(--accent);
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
+}
+
+.copy-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%) translateY(12px);
+  background: var(--text);
+  color: var(--card);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 10px 16px;
+  border-radius: 999px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s, transform 0.2s;
+  z-index: 1000;
+}
+
+.copy-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.day-tabs .today-tab {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+  color: var(--accent);
+}
+
+.day-tabs .today-tab:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.day-tabs button.is-today:not(.active) {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 50%, transparent);
 }
 
 .flight-route {
@@ -740,6 +824,7 @@ header .subtitle {
   justify-content: space-between;
   gap: 12px;
   font-size: 0.75rem;
+  align-items: center;
 }
 
 .booking-meta-row span {

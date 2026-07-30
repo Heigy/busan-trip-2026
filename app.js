@@ -43,6 +43,47 @@ else {
   } catch (_) { /* private browsing */ }
 }
 
+/** Seoul calendar date → region + day during the trip */
+const TRIP_BY_DATE = {
+  "2026-08-01": { regionId: "busan", dayIndex: 0 },
+  "2026-08-02": { regionId: "busan", dayIndex: 1 },
+  "2026-08-03": { regionId: "busan", dayIndex: 2 },
+  "2026-08-04": { regionId: "jeju", dayIndex: 0 },
+  "2026-08-05": { regionId: "jeju", dayIndex: 1 },
+  "2026-08-06": { regionId: "jeju", dayIndex: 2 },
+  "2026-08-07": { regionId: "jeju", dayIndex: 3 },
+};
+
+function seoulDateKey(date = new Date()) {
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Seoul",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(date);
+}
+
+function getTodayTrip() {
+  return TRIP_BY_DATE[seoulDateKey()] || null;
+}
+
+function applyTodayTrip({ force = false } = {}) {
+  const today = getTodayTrip();
+  if (!today) return false;
+  const urlHasDay = urlParams.has("day");
+  const urlHasRegion = urlParams.has("region");
+  if (!force && (urlHasDay || urlHasRegion)) return false;
+  state.regionId = today.regionId;
+  state.dayIndex = today.dayIndex;
+  state.activeStopId = null;
+  state.mapFocused = false;
+  return true;
+}
+
+if (!applyTodayTrip()) {
+  /* keep URL / defaults */
+}
+
 function isDark() {
   return state.theme === "dark";
 }
@@ -225,6 +266,94 @@ function locField(obj) {
   return isEn() ? obj.en : obj.zh;
 }
 
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+async function copyText(text) {
+  const value = String(text || "").trim();
+  if (!value) return false;
+  try {
+    await navigator.clipboard.writeText(value);
+    return true;
+  } catch (_) {
+    try {
+      const ta = document.createElement("textarea");
+      ta.value = value;
+      ta.setAttribute("readonly", "");
+      ta.style.position = "fixed";
+      ta.style.left = "-9999px";
+      document.body.appendChild(ta);
+      ta.select();
+      const ok = document.execCommand("copy");
+      document.body.removeChild(ta);
+      return ok;
+    } catch (_) {
+      return false;
+    }
+  }
+}
+
+function showCopyToast(msg) {
+  let el = document.getElementById("copy-toast");
+  if (!el) {
+    el = document.createElement("div");
+    el.id = "copy-toast";
+    el.className = "copy-toast";
+    el.setAttribute("role", "status");
+    document.body.appendChild(el);
+  }
+  el.textContent = msg;
+  el.classList.add("show");
+  clearTimeout(showCopyToast._t);
+  showCopyToast._t = setTimeout(() => el.classList.remove("show"), 1400);
+}
+
+function copyableValue(label, value) {
+  if (!value) return "";
+  const safe = escapeHtml(value);
+  return `<div class="booking-meta-row">
+    <span>${label}</span>
+    <span class="copy-value-wrap">
+      <strong class="copy-target">${safe}</strong>
+      <button type="button" class="copy-btn" data-copy="${safe}" title="${ui("copy")}">${ui("copy")}</button>
+    </span>
+  </div>`;
+}
+
+function wireCopyButtons(root) {
+  root?.querySelectorAll(".copy-btn[data-copy]").forEach((btn) => {
+    btn.addEventListener("click", async (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const ok = await copyText(btn.dataset.copy);
+      if (ok) {
+        const prev = btn.textContent;
+        btn.textContent = ui("copied");
+        btn.classList.add("copied");
+        showCopyToast(ui("copied"));
+        setTimeout(() => {
+          btn.textContent = prev;
+          btn.classList.remove("copied");
+        }, 1200);
+      }
+    });
+  });
+}
+
+function jumpToToday() {
+  if (!applyTodayTrip({ force: true })) {
+    showCopyToast(ui("todayOffTrip"));
+    return;
+  }
+  updateUrl();
+  renderAll();
+}
+
 function renderFlightsPanel() {
   const root = document.getElementById("flights-content");
   if (!root || !window.FLIGHT_DATA) return;
@@ -257,7 +386,7 @@ function renderFlightsPanel() {
           </div>
           <div class="flight-pnr-box">
             <span class="flight-pnr-label">${ui("flightPnr")}</span>
-            <code class="flight-pnr">${f.pnr}</code>
+            <button type="button" class="flight-pnr copy-btn" data-copy="${escapeHtml(f.pnr)}" title="${ui("copy")}">${escapeHtml(f.pnr)}</button>
           </div>
         </div>
         <div class="flight-route">
@@ -290,6 +419,8 @@ function renderFlightsPanel() {
       <div class="flight-pax-row">${passengers}</div>
     </div>
     ${cards}`;
+
+  wireCopyButtons(root);
 }
 
 function findDayIndexById(regionId, dayId) {
@@ -318,23 +449,19 @@ function renderBookingsPanel() {
   const cards = BOOKING_DATA.bookings
     .map((b) => {
       const rows = [
-        [ui("bookingPlatform"), b.platform],
-        [ui("bookingOrder"), b.orderNo],
-        b.voucherNo ? [ui("bookingVoucher"), b.voucherNo] : null,
-        [ui("bookingQty"), locField(b.qty)],
-        b.lead ? [ui("bookingLead"), b.lead] : null,
-        b.amount ? [ui("bookingAmount"), b.amount] : null,
-        b.phone ? [ui("bookingPhone"), b.phone] : null,
-      ]
-        .filter(Boolean)
-        .map(
-          ([label, value]) =>
-            `<div class="booking-meta-row"><span>${label}</span><strong>${value}</strong></div>`
-        )
-        .join("");
+        `<div class="booking-meta-row"><span>${ui("bookingPlatform")}</span><strong>${escapeHtml(b.platform || "")}</strong></div>`,
+        copyableValue(ui("bookingOrder"), b.orderNo),
+        b.voucherNo ? copyableValue(ui("bookingVoucher"), b.voucherNo) : "",
+        `<div class="booking-meta-row"><span>${ui("bookingQty")}</span><strong>${escapeHtml(locField(b.qty))}</strong></div>`,
+        b.lead ? copyableValue(ui("bookingLead"), b.lead) : "",
+        b.amount
+          ? `<div class="booking-meta-row"><span>${ui("bookingAmount")}</span><strong>${escapeHtml(b.amount)}</strong></div>`
+          : "",
+        b.phone ? copyableValue(ui("bookingPhone"), b.phone) : "",
+      ].join("");
 
       const travelers = (b.travelers || [])
-        .map((name) => `<span class="flight-pax">${name}</span>`)
+        .map((name) => `<span class="flight-pax">${escapeHtml(name)}</span>`)
         .join("");
 
       const web = b.website
@@ -378,6 +505,7 @@ function renderBookingsPanel() {
       openBookingDay(booking);
     });
   });
+  wireCopyButtons(root);
 }
 
 function openExternalPage(url) {
@@ -795,10 +923,28 @@ function renderSidebar() {
 
   const dayTabs = document.getElementById("day-tabs");
   dayTabs.innerHTML = "";
+  const today = getTodayTrip();
+  const todayBtn = document.createElement("button");
+  todayBtn.type = "button";
+  todayBtn.className = "today-tab";
+  todayBtn.textContent = ui("jumpToday");
+  todayBtn.title = today
+    ? `${today.regionId === "jeju" ? "濟州" : "釜山"} Day ${today.dayIndex + 1}`
+    : ui("todayOffTrip");
+  todayBtn.disabled = !today;
+  const onToday =
+    today && state.regionId === today.regionId && state.dayIndex === today.dayIndex;
+  todayBtn.classList.toggle("active", Boolean(onToday));
+  todayBtn.addEventListener("click", () => jumpToToday());
+  dayTabs.appendChild(todayBtn);
+
   TRIP_DATA.regions.find((r) => r.id === state.regionId).days.forEach((d, i) => {
     const btn = document.createElement("button");
     btn.textContent = d.label.replace(/ · .*/, "");
     btn.classList.toggle("active", i === state.dayIndex);
+    if (today && today.regionId === state.regionId && today.dayIndex === i) {
+      btn.classList.add("is-today");
+    }
     btn.addEventListener("click", () => {
       state.dayIndex = i;
       state.activeStopId = null;
