@@ -577,6 +577,19 @@ function renderSidebar() {
     dayHint.textContent = "";
   }
 
+  const inspiration = document.getElementById("region-inspiration");
+  if (inspiration) {
+    if (region.inspirationUrl) {
+      inspiration.hidden = false;
+      inspiration.href = region.inspirationUrl;
+      inspiration.textContent = ui("inspirationLink");
+    } else {
+      inspiration.hidden = true;
+      inspiration.removeAttribute("href");
+      inspiration.textContent = "";
+    }
+  }
+
   const openLink = document.getElementById("map-open-external");
   if (isMapView()) {
     openLink.hidden = false;
@@ -653,6 +666,7 @@ function renderSidebar() {
           <a href="#" class="stop-focus">${ui("mapLocate")}</a>
           <a href="${stopMapsUrl(rawStop)}" target="_blank" rel="noopener">${ui("googleMaps")}</a>
           <a href="${stopDirectionsUrl(rawStop)}" target="_blank" rel="noopener">${ui("navigate")}</a>
+          ${rawStop.infoUrl ? `<a href="${rawStop.infoUrl}" target="_blank" rel="noopener">${ui("stopInfo")}</a>` : ""}
         </div>
       </div>`;
     el.addEventListener("click", (e) => {

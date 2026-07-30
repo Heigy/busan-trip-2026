@@ -1087,6 +1087,24 @@ header .subtitle {
   border-radius: 8px;
 }
 
+.region-inspiration {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+  line-height: 1.4;
+}
+
+.region-inspiration:hover {
+  text-decoration: underline;
+}
+
+.region-inspiration[hidden] {
+  display: none;
+}
+
 /* ── Responsive ── */
 @media (max-width: 768px) {
   /* Unlock page scroll on phones — nested iframe/panel scrolling is unreliable */
