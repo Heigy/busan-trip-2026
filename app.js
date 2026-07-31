@@ -226,7 +226,8 @@ function hasDedicatedMyMap(regionId) {
 }
 
 function flowchartPage() {
-  return state.regionId === "busan" ? "busan-flowchart.html" : "jeju-flowchart.html";
+  const base = state.regionId === "busan" ? "busan-flowchart.html" : "jeju-flowchart.html";
+  return `${base}?v=35`;
 }
 
 function isMapView() {
