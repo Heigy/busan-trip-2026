@@ -23,7 +23,7 @@ window.TRIP_DATA = {
         {
           id: "busan-d1",
           label: "Day 1 · 8/1",
-          theme: "抵達 · 海雲台輕鬆 · 入住（田浦改到 Day3 晚）",
+          theme: "抵達 · 海雲台輕鬆 · 入住",
           stops: [
             { id: "b1-1", name: "金海國際機場", nameKo: "김해공항", time: "07:00", desc: "UO604 抵達、入境取行李", transport: "✈️ UO604", lat: 35.179528, lng: 128.938222, cid: "1559275999526138604" },
             { id: "b1-5a", name: "Raviens 酒店（寄行李）", nameKo: "라비앙즈 해운대 에비뉴", time: "08:30–09:00", desc: "先寄放行李（正式入住 16:00）", transport: "🚕×2 約40–50分", lat: 35.16161, lng: 129.15833, bookingId: "busan-hotel" },

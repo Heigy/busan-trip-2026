@@ -149,7 +149,7 @@ window.I18N = {
     jeju: { en: { name: "Jeju" } },
   },
   days: {
-    "busan-d1": { en: { theme: "Arrival · easy Haeundae · check-in (Jeonpo moved to Day 3 night)" } },
+    "busan-d1": { en: { theme: "Arrival · easy Haeundae · check-in" } },
     "busan-d2": { en: { theme: "West: Gamcheon → Jagalchi → Songdo → Huinnyeoul" } },
     "busan-d3": { en: { theme: "Greetvi → Observatory / Lotte Dong · Blueline → Seomyeon or Jeonpo" } },
     "busan-d4": { en: { theme: "Fly to Jeju" } },
@@ -163,8 +163,6 @@ window.I18N = {
     "b1-5a": { en: { name: "Raviens (drop bags)", desc: "Leave luggage first (check-in from 16:00)", transport: "🚕×2 ~40–50 min" } },
     "b1-8": { en: { name: "Haeundae Station snack", desc: "Quick bite after landing · pick near the station", transport: "🚶 Walk" } },
     "b1-9": { en: { name: "Haeundae café break", desc: "Coffee & rest", transport: "🚶 Walk" } },
-    "b1-10": { en: { name: "HASH TABLE brunch", desc: "Brunch spot (skip at night · better daytime)", transport: "—" } },
-    "b1-11": { en: { name: "Jeonpo Café Street", desc: "Moved to Day 3 Plan B evening as b3-9", transport: "—" } },
     "b1-7": { en: { name: "Olive Young Haeundae Station", desc: "~5 min walk from hotel · K-Beauty & gifts", transport: "🚶 ~5 min" } },
     "b1-2": { en: { name: "Geodae Pork Soup", desc: "Soup ₩13,000 / noodles ₩11,000", transport: "🚕×2 ~10–15 min" } },
     "b1-3": { en: { name: "Haeundae Beach", desc: "Beach walk & photos", transport: "🚶/🚕" } },
