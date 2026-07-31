@@ -89,8 +89,8 @@ window.I18N = {
     },
     foodOnTrip: { zh: "已排行程", en: "On itinerary" },
     foodMaps: { zh: "地圖", en: "Maps" },
-    planA: { zh: "Plan A · 直奔踏石", en: "Plan A · Observatory" },
-    planB: { zh: "Plan B · 東釜山樂天", en: "Plan B · Lotte Dong" },
+    planA: { zh: "Plan A · 東釜山樂天", en: "Plan A · Lotte Dong" },
+    planB: { zh: "Plan B · 直奔踏石", en: "Plan B · Observatory" },
     planPickHint: {
       zh: "Day 1 可切換上午方案",
       en: "Day 1 has two morning options",
@@ -166,7 +166,7 @@ window.I18N = {
   days: {
     "busan-d1": { en: { theme: "Arrival · easy Haeundae · check-in" } },
     "busan-d2": { en: { theme: "West: Gamcheon → Jagalchi → Songdo → Huinnyeoul" } },
-    "busan-d3": { en: { theme: "Greetvi → Observatory / Lotte Dong · Blueline → Jeonpo dinner" } },
+    "busan-d3": { en: { theme: "Greetvi → Lotte Dong / Observatory · Blueline → Jeonpo dinner" } },
     "busan-d4": { en: { theme: "Fly to Jeju" } },
     "jeju-d1": { en: { theme: "Black pork · Teddy Bear · Hello Kitty · BHC" } },
     "jeju-d2": { en: { theme: "Seongsan + Udo (9-seat van recommended)" } },

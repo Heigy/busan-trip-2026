@@ -50,23 +50,24 @@ window.TRIP_DATA = {
         {
           id: "busan-d3",
           label: "Day 3 · 8/3",
-          theme: "Greetvi → 踏石 / 東釜山樂天 · 藍線 → 田浦晚餐",
+          theme: "Greetvi → 東釜山樂天／踏石 · 藍線 → 田浦晚餐",
           defaultPlan: "a",
           plans: {
             a: {
               id: "a",
-              name: { zh: "Plan A · 直奔踏石", en: "Plan A · Straight to Observatory" },
+              name: { zh: "Plan A · 東釜山樂天", en: "Plan A · Lotte Dong Busan" },
               theme: {
-                zh: "Greetvi → 踏石 → 藍線 → 田浦晚餐",
-                en: "Greetvi → Observatory → Blueline → Jeonpo dinner",
+                zh: "Greetvi → Lotte MAISON → 踏石 → 藍線 → 田浦晚餐",
+                en: "Greetvi → Lotte MAISON → Observatory → Blueline → Jeonpo dinner",
               },
               blurb: {
-                zh: "不去購物中途站 · 更鬆趕 18:00 藍線 · 晚間田浦吃飯逛街",
-                en: "Skip mid-day mall · easier buffer for 18:00 Blueline · Jeonpo dinner at night",
+                zh: "預設方案 · 白天東釜山購物 · 晚間田浦吃飯逛街",
+                en: "Default · shop Lotte Dong by day · Jeonpo dinner at night",
               },
               stops: [
-                { id: "b3-1", name: "Greetvi 西生店", nameKo: "그릿비 서생점", time: "10:00–13:00", desc: "海景咖啡早午餐", transport: "🚕×2 約50–60分", lat: 35.3594, lng: 129.2972, cid: "14923122734873620011" },
-                { id: "b3-3", name: "青沙浦踏石觀景台", nameKo: "청사포다릿돌전망대", time: "14:30–16:30", desc: "海上天空步道（免費）", transport: "🚕×2 約40–55分", lat: 35.16104, lng: 129.20659, cid: "16474630453593542182" },
+                { id: "b3-1", name: "Greetvi 西生店", nameKo: "그릿비 서생점", time: "10:00–12:30", desc: "海景咖啡早午餐", transport: "🚕×2 約50–60分", lat: 35.3594, lng: 129.2972, cid: "14923122734873620011" },
+                { id: "b3-8", name: "樂天 MAISON 東釜山", nameKo: "롯데몰 메종 동부산", time: "13:00–15:30", desc: "Lotte Mall MAISON Dong Busan · 生活精品/Outlet 商圈 · 約 10:30–20:00", transport: "🚕×2 約20–30分", lat: 35.1918, lng: 129.2127, mapsUrl: "https://maps.app.goo.gl/9BY7U1gu7pT5qs6QA" },
+                { id: "b3-3", name: "青沙浦踏石觀景台", nameKo: "청사포다릿돌전망대", time: "16:00–16:50", desc: "海上天空步道（免費）· 短停後趕藍線", transport: "🚕×2 約25–35分", lat: 35.16104, lng: 129.20659, cid: "16474630453593542182" },
                 { id: "b3-4", name: "海雲台藍線公園 青沙浦站", nameKo: "청사포역", time: "17:40–18:00", desc: "已訂海邊列車 18:00 第19回 · 單程×5 · 建議提早到", transport: "🚶 步行", lat: 35.1589, lng: 129.2226, cid: "5330431299439421123", bookingId: "blueline-train" },
                 { id: "b3-5", name: "海雲台藍線公園 尾浦站", nameKo: "미포역", time: "18:00–18:30", desc: "海邊列車下車 · 海景 · 訂單號見「預訂」頁", transport: "🚡 藍線列車", lat: 35.158083, lng: 129.158611, cid: "5191000921095413519", bookingId: "blueline-train" },
                 { id: "b3-9", name: "田浦晚餐／咖啡街", nameKo: "전포카페거리", time: "19:15–21:30", desc: "地鐵到西面後步行 · 烤肉／韓食／甜品 · 西前路·東川路 · HASH TABLE 偏早午餐可略過", transport: "🚇→🚶 約30–40分", lat: 35.1565, lng: 129.0635 },
@@ -74,19 +75,18 @@ window.TRIP_DATA = {
             },
             b: {
               id: "b",
-              name: { zh: "Plan B · 東釜山樂天", en: "Plan B · Lotte Dong Busan" },
+              name: { zh: "Plan B · 直奔踏石", en: "Plan B · Straight to Observatory" },
               theme: {
-                zh: "Greetvi → Lotte MAISON → 踏石 → 藍線 → 田浦晚餐",
-                en: "Greetvi → Lotte MAISON → Observatory → Blueline → Jeonpo dinner",
+                zh: "Greetvi → 踏石 → 藍線 → 田浦晚餐",
+                en: "Greetvi → Observatory → Blueline → Jeonpo dinner",
               },
               blurb: {
-                zh: "白天東釜山購物 · 晚上同樣田浦吃飯逛街（零食已在樂天解決）",
-                en: "Shop Lotte Dong by day · same Jeonpo dinner at night (snacks covered at the mall)",
+                zh: "備選 · 不去購物中途站 · 更鬆趕 18:00 藍線",
+                en: "Alt · skip mid-day mall · easier buffer for 18:00 Blueline",
               },
               stops: [
-                { id: "b3-1", name: "Greetvi 西生店", nameKo: "그릿비 서생점", time: "10:00–12:30", desc: "海景咖啡早午餐", transport: "🚕×2 約50–60分", lat: 35.3594, lng: 129.2972, cid: "14923122734873620011" },
-                { id: "b3-8", name: "樂天 MAISON 東釜山", nameKo: "롯데몰 메종 동부산", time: "13:00–15:30", desc: "Lotte Mall MAISON Dong Busan · 生活精品/Outlet 商圈 · 約 10:30–20:00", transport: "🚕×2 約20–30分", lat: 35.1918, lng: 129.2127, mapsUrl: "https://maps.app.goo.gl/9BY7U1gu7pT5qs6QA" },
-                { id: "b3-3", name: "青沙浦踏石觀景台", nameKo: "청사포다릿돌전망대", time: "16:00–16:50", desc: "海上天空步道（免費）· 短停後趕藍線", transport: "🚕×2 約25–35分", lat: 35.16104, lng: 129.20659, cid: "16474630453593542182" },
+                { id: "b3-1", name: "Greetvi 西生店", nameKo: "그릿비 서생점", time: "10:00–13:00", desc: "海景咖啡早午餐", transport: "🚕×2 約50–60分", lat: 35.3594, lng: 129.2972, cid: "14923122734873620011" },
+                { id: "b3-3", name: "青沙浦踏石觀景台", nameKo: "청사포다릿돌전망대", time: "14:30–16:30", desc: "海上天空步道（免費）", transport: "🚕×2 約40–55分", lat: 35.16104, lng: 129.20659, cid: "16474630453593542182" },
                 { id: "b3-4", name: "海雲台藍線公園 青沙浦站", nameKo: "청사포역", time: "17:40–18:00", desc: "已訂海邊列車 18:00 第19回 · 單程×5 · 建議提早到", transport: "🚶 步行", lat: 35.1589, lng: 129.2226, cid: "5330431299439421123", bookingId: "blueline-train" },
                 { id: "b3-5", name: "海雲台藍線公園 尾浦站", nameKo: "미포역", time: "18:00–18:30", desc: "海邊列車下車 · 海景 · 訂單號見「預訂」頁", transport: "🚡 藍線列車", lat: 35.158083, lng: 129.158611, cid: "5191000921095413519", bookingId: "blueline-train" },
                 { id: "b3-9", name: "田浦晚餐／咖啡街", nameKo: "전포카페거리", time: "19:15–21:30", desc: "地鐵到西面後步行 · 烤肉／韓食／甜品 · 西前路·東川路 · HASH TABLE 偏早午餐可略過", transport: "🚇→🚶 約30–40分", lat: 35.1565, lng: 129.0635 },
