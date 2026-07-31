@@ -63,8 +63,8 @@ window.I18N = {
     viewCost: { zh: "費用", en: "Costs" },
     costOverview: { zh: "旅遊費用總結", en: "Trip cost summary" },
     costHint: {
-      zh: "基準貨幣港幣 HKD · 已付來自憑證 · 預估僅供參考 · 機票／松島可之後補上",
-      en: "Base currency HKD · paid from vouchers · estimates are rough · flights/Songdo can be filled later",
+      zh: "基準貨幣港幣 HKD · 已付來自憑證／機票確認信 · 預估僅供參考",
+      en: "Base currency HKD · paid from vouchers/flight emails · estimates are rough",
     },
     costPaid: { zh: "已付", en: "Paid" },
     costEstimate: { zh: "預估", en: "Estimate" },
@@ -73,7 +73,7 @@ window.I18N = {
     costEstimateTotal: { zh: "當地預估", en: "On-trip estimate" },
     costPaidPlusEst: { zh: "已付+預估", en: "Paid + estimate" },
     costTbdTotal: { zh: "待補項目", en: "Items TBD" },
-    costTbdHint: { zh: "機票、松島纜車等", en: "Flights, Songdo cable, etc." },
+    costTbdHint: { zh: "松島纜車金額等", en: "Songdo cable amount, etc." },
     costPerPerson: { zh: "人均", en: "Per person" },
     packOverview: { zh: "行李清單", en: "Packing list" },
     packHint: {
