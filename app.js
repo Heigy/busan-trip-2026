@@ -7,7 +7,7 @@ const state = {
   mapFocused: false,
   lang: "zh",
   theme: "light",
-  view: "flowchart",
+  view: "map",
   dayPlan: "a",
 };
 
@@ -37,7 +37,7 @@ else if (urlParams.get("view") === "food") state.view = "food";
 else if (urlParams.get("view") === "pack") state.view = "pack";
 else if (urlParams.get("view") === "cost") state.view = "cost";
 else if (urlParams.get("view") === "flowchart") state.view = "flowchart";
-/* else keep default flowchart */
+/* else keep default map */
 if (urlParams.get("plan") === "b") state.dayPlan = "b";
 else if (urlParams.get("plan") === "a") state.dayPlan = "a";
 else {
@@ -1375,7 +1375,7 @@ function updateUrl() {
   else url.searchParams.delete("plan");
   if (state.lang === "en") url.searchParams.set("lang", "en");
   else url.searchParams.delete("lang");
-  if (state.view === "map" || state.view === "flights" || state.view === "bookings" || state.view === "food" || state.view === "pack" || state.view === "cost") {
+  if (state.view === "flights" || state.view === "bookings" || state.view === "food" || state.view === "pack" || state.view === "cost" || state.view === "flowchart") {
     url.searchParams.set("view", state.view);
   } else {
     url.searchParams.delete("view");
