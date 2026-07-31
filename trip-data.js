@@ -50,39 +50,38 @@ window.TRIP_DATA = {
         {
           id: "busan-d3",
           label: "Day 3 · 8/3",
-          theme: "Greetvi → 踏石 / 東釜山樂天 · 藍線 → 西面／田浦",
+          theme: "Greetvi → 踏石 / 東釜山樂天 · 藍線 → 田浦晚餐",
           defaultPlan: "a",
           plans: {
             a: {
               id: "a",
               name: { zh: "Plan A · 直奔踏石", en: "Plan A · Straight to Observatory" },
               theme: {
-                zh: "Greetvi → 踏石 → 藍線 → 西面",
-                en: "Greetvi → Observatory → Blueline → Seomyeon",
+                zh: "Greetvi → 踏石 → 藍線 → 田浦晚餐",
+                en: "Greetvi → Observatory → Blueline → Jeonpo dinner",
               },
               blurb: {
-                zh: "不去購物中途站 · 更鬆趕 18:00 藍線 · 晚間西面超市",
-                en: "Skip mid-day mall · easier buffer for 18:00 Blueline · Seomyeon mart at night",
+                zh: "不去購物中途站 · 更鬆趕 18:00 藍線 · 晚間田浦吃飯逛街",
+                en: "Skip mid-day mall · easier buffer for 18:00 Blueline · Jeonpo dinner at night",
               },
               stops: [
                 { id: "b3-1", name: "Greetvi 西生店", nameKo: "그릿비 서생점", time: "10:00–13:00", desc: "海景咖啡早午餐", transport: "🚕×2 約50–60分", lat: 35.3594, lng: 129.2972, cid: "14923122734873620011" },
                 { id: "b3-3", name: "青沙浦踏石觀景台", nameKo: "청사포다릿돌전망대", time: "14:30–16:30", desc: "海上天空步道（免費）", transport: "🚕×2 約40–55分", lat: 35.16104, lng: 129.20659, cid: "16474630453593542182" },
                 { id: "b3-4", name: "海雲台藍線公園 青沙浦站", nameKo: "청사포역", time: "17:40–18:00", desc: "已訂海邊列車 18:00 第19回 · 單程×5 · 建議提早到", transport: "🚶 步行", lat: 35.1589, lng: 129.2226, cid: "5330431299439421123", bookingId: "blueline-train" },
                 { id: "b3-5", name: "海雲台藍線公園 尾浦站", nameKo: "미포역", time: "18:00–18:30", desc: "海邊列車下車 · 海景 · 訂單號見「預訂」頁", transport: "🚡 藍線列車", lat: 35.158083, lng: 129.158611, cid: "5191000921095413519", bookingId: "blueline-train" },
-                { id: "b3-6", name: "Olive Young 西面站店", nameKo: "올리브영 서면역", time: "19:00–20:00", desc: "K-Beauty 美妝伴手禮", transport: "🚇 地鐵2號線", lat: 35.1578, lng: 129.0592, cid: "3223248251072921833" },
-                { id: "b3-7", name: "Lotte Mart", nameKo: "롯데마트", time: "20:00–21:00", desc: "零食、日用品", transport: "🚶 西面商圈", lat: 35.1536, lng: 129.0591, cid: "14448902928581330220" },
+                { id: "b3-9", name: "田浦晚餐／咖啡街", nameKo: "전포카페거리", time: "19:15–21:30", desc: "地鐵到西面後步行 · 烤肉／韓食／甜品 · 西前路·東川路 · HASH TABLE 偏早午餐可略過", transport: "🚇→🚶 約30–40分", lat: 35.1565, lng: 129.0635 },
               ],
             },
             b: {
               id: "b",
-              name: { zh: "Plan B · 東釜山樂天＋田浦", en: "Plan B · Lotte Dong + Jeonpo" },
+              name: { zh: "Plan B · 東釜山樂天", en: "Plan B · Lotte Dong Busan" },
               theme: {
                 zh: "Greetvi → Lotte MAISON → 踏石 → 藍線 → 田浦晚餐",
                 en: "Greetvi → Lotte MAISON → Observatory → Blueline → Jeonpo dinner",
               },
               blurb: {
-                zh: "白天東釜山購物 · 晚上改田浦吃飯逛街（不需再去西面 Lotte Mart）",
-                en: "Shop Lotte Dong by day · Jeonpo dinner at night (skip Seomyeon Lotte Mart)",
+                zh: "白天東釜山購物 · 晚上同樣田浦吃飯逛街（零食已在樂天解決）",
+                en: "Shop Lotte Dong by day · same Jeonpo dinner at night (snacks covered at the mall)",
               },
               stops: [
                 { id: "b3-1", name: "Greetvi 西生店", nameKo: "그릿비 서생점", time: "10:00–12:30", desc: "海景咖啡早午餐", transport: "🚕×2 約50–60分", lat: 35.3594, lng: 129.2972, cid: "14923122734873620011" },
@@ -90,8 +89,7 @@ window.TRIP_DATA = {
                 { id: "b3-3", name: "青沙浦踏石觀景台", nameKo: "청사포다릿돌전망대", time: "16:00–16:50", desc: "海上天空步道（免費）· 短停後趕藍線", transport: "🚕×2 約25–35分", lat: 35.16104, lng: 129.20659, cid: "16474630453593542182" },
                 { id: "b3-4", name: "海雲台藍線公園 青沙浦站", nameKo: "청사포역", time: "17:40–18:00", desc: "已訂海邊列車 18:00 第19回 · 單程×5 · 建議提早到", transport: "🚶 步行", lat: 35.1589, lng: 129.2226, cid: "5330431299439421123", bookingId: "blueline-train" },
                 { id: "b3-5", name: "海雲台藍線公園 尾浦站", nameKo: "미포역", time: "18:00–18:30", desc: "海邊列車下車 · 海景 · 訂單號見「預訂」頁", transport: "🚡 藍線列車", lat: 35.158083, lng: 129.158611, cid: "5191000921095413519", bookingId: "blueline-train" },
-                { id: "b3-6", name: "Olive Young 西面站店", nameKo: "올리브영 서면역", time: "19:00–19:40", desc: "K-Beauty 短停 · 距田浦步行約 10–15 分", transport: "🚇 地鐵2號線", lat: 35.1578, lng: 129.0592, cid: "3223248251072921833" },
-                { id: "b3-9", name: "田浦晚餐／咖啡街", nameKo: "전포카페거리", time: "19:45–21:30", desc: "西面前路·東川路一帶 · 烤肉／韓食／甜品選擇多 · HASH TABLE 偏早午餐可略過", transport: "🚶 約10–15分", lat: 35.1565, lng: 129.0635 },
+                { id: "b3-9", name: "田浦晚餐／咖啡街", nameKo: "전포카페거리", time: "19:15–21:30", desc: "地鐵到西面後步行 · 烤肉／韓食／甜品 · 西前路·東川路 · HASH TABLE 偏早午餐可略過", transport: "🚇→🚶 約30–40分", lat: 35.1565, lng: 129.0635 },
               ],
             },
           },
