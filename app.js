@@ -1,4 +1,4 @@
-/* global TRIP_DATA, MYMAPS_CONFIG, I18N, FLIGHT_DATA, BOOKING_DATA, FOOD_DATA, PACKING_DATA */
+/* global TRIP_DATA, MYMAPS_CONFIG, I18N, FLIGHT_DATA, BOOKING_DATA, FOOD_DATA, PACKING_DATA, WEATHER_DATA */
 
 const state = {
   regionId: "busan",
@@ -854,6 +854,7 @@ function placeEmbedUrl(stop) {
 }
 
 function stopMapsUrl(stop) {
+  if (stop.mapsUrl) return stop.mapsUrl;
   if (stop.cid) return `https://maps.google.com/?cid=${stop.cid}`;
   return `https://www.google.com/maps/search/?api=1&query=${stop.lat},${stop.lng}`;
 }
@@ -981,6 +982,24 @@ function renderSidebar() {
 
   const dayHint = document.getElementById("day-hint");
   const rawDay = getDayRaw();
+
+  const weatherEl = document.getElementById("sidebar-weather");
+  const weatherTipEl = document.getElementById("sidebar-weather-tip");
+  const wx = window.WEATHER_DATA?.days?.[rawDay.id || day.id];
+  if (weatherEl && weatherTipEl) {
+    if (wx && !isFlightsView() && !isBookingsView() && !isFoodView() && !isPackView()) {
+      weatherEl.hidden = false;
+      weatherTipEl.hidden = false;
+      weatherEl.textContent = `${ui("weatherLabel")} ${locField(wx.summary)}`;
+      weatherTipEl.textContent = locField(wx.tip);
+    } else {
+      weatherEl.hidden = true;
+      weatherTipEl.hidden = true;
+      weatherEl.textContent = "";
+      weatherTipEl.textContent = "";
+    }
+  }
+
   if (isFlightsView()) {
     dayHint.textContent = ui("flightsHint");
   } else if (isBookingsView()) {
@@ -1197,9 +1216,14 @@ function renderHeader() {
   const meta = getMeta();
   document.getElementById("page-title").textContent = meta.title;
   document.getElementById("page-subtitle").textContent = meta.subtitle;
-  document.getElementById("flights-bar").innerHTML = meta.flights
+  const flightsHtml = meta.flights
     .map((f) => `<span><span class="flight-code">${f.code}</span> ${f.date} · ${f.route}</span>`)
     .join("");
+  const alert = window.WEATHER_DATA?.alert;
+  const alertHtml = alert
+    ? `<span class="weather-alert" title="${escapeHtml(locField(alert.detail))}"><strong>${ui("weatherAlertLabel")}</strong> ${escapeHtml(locField(alert.title))}</span>`
+    : "";
+  document.getElementById("flights-bar").innerHTML = `${flightsHtml}${alertHtml}`;
 }
 
 function renderSetupPanel() {
