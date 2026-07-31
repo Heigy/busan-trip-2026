@@ -23,55 +23,18 @@ window.TRIP_DATA = {
         {
           id: "busan-d1",
           label: "Day 1 · 8/1",
-          theme: "抵達 · 海雲台 / 田浦兩方案 · 入住",
-          defaultPlan: "a",
-          plans: {
-            a: {
-              id: "a",
-              name: { zh: "Plan A · 海雲台輕鬆", en: "Plan A · Easy Haeundae" },
-              theme: {
-                zh: "放行李 · 輕食咖啡 · Olive Young · 湯飯 · 海灘 · 入住 · 市場",
-                en: "Drop bags · snack & café · Olive Young · pork soup · beach · check-in · market",
-              },
-              blurb: {
-                zh: "少跑車 · 紅眼落地後更輕鬆",
-                en: "Less travel · easier after a red-eye",
-              },
-              stops: [
-                { id: "b1-1", name: "金海國際機場", nameKo: "김해공항", time: "07:00", desc: "UO604 抵達、入境取行李", transport: "✈️ UO604", lat: 35.179528, lng: 128.938222, cid: "1559275999526138604" },
-                { id: "b1-5a", name: "Raviens 酒店（寄行李）", nameKo: "라비앙즈 해운대 에비뉴", time: "08:30–09:00", desc: "先寄放行李（正式入住 16:00）", transport: "🚕×2 約40–50分", lat: 35.16161, lng: 129.15833, bookingId: "busan-hotel" },
-                { id: "b1-8", name: "海雲台站周邊輕食", nameKo: "해운대역 아침", time: "09:00–10:00", desc: "下機後先找吃的 · 站前商圈任選", transport: "🚶 步行", lat: 35.1634, lng: 129.1589 },
-                { id: "b1-9", name: "海雲台咖啡休息", nameKo: "해운대 카페", time: "10:00–11:00", desc: "喝咖啡、補眠休息", transport: "🚶 步行", lat: 35.1628, lng: 129.1602 },
-                { id: "b1-7", name: "Olive Young 海雲台站店", nameKo: "올리브영 해운대역", time: "11:00–12:00", desc: "距酒店步行約 5 分 · 美妝伴手禮", transport: "🚶 約5分", lat: 35.1632, lng: 129.1596 },
-                { id: "b1-2", name: "巨大豬肉湯飯", nameKo: "거대돼지국밥", time: "12:15–13:30", desc: "湯飯 ₩13,000 / 拌麵 ₩11,000", transport: "🚕×2 約10–15分", lat: 35.163, lng: 129.178, cid: "17410649710382375846" },
-                { id: "b1-3", name: "海雲台浴場", nameKo: "해운대해수욕장", time: "14:00–16:00", desc: "海水浴場散步、拍照", transport: "🚶/🚕", lat: 35.158698, lng: 129.160384, cid: "8123395504340323431", infoUrl: "guides/busan-ideas.html" },
-                { id: "b1-5", name: "Raviens 酒店（正式入住）", nameKo: "라비앙즈 해운대 에비뉴", time: "16:00+", desc: "正式 Check-in · 確認號見「預訂」頁", transport: "🚶 步行", lat: 35.16161, lng: 129.15833, bookingId: "busan-hotel" },
-                { id: "b1-4", name: "海雲臺傳統市場", nameKo: "해운대전통시장", time: "16:45–18:30", desc: "小吃、海鮮、伴手禮", transport: "🚶 步行", lat: 35.1592, lng: 129.1615, cid: "15417742290736329149" },
-              ],
-            },
-            b: {
-              id: "b",
-              name: { zh: "Plan B · 田浦逛街", en: "Plan B · Jeonpo stroll" },
-              theme: {
-                zh: "放行李 · HASH TABLE · 田浦咖啡街 · 海灘 · 入住 · Olive Young · 市場",
-                en: "Drop bags · HASH TABLE · Jeonpo cafés · beach · check-in · Olive Young · market",
-              },
-              blurb: {
-                zh: "去 HASH TABLE / AVIVERE 等 · 來回多約 1 小時車程",
-                en: "HASH TABLE / AVIVERE etc. · ~1 hr extra transit",
-              },
-              stops: [
-                { id: "b1-1", name: "金海國際機場", nameKo: "김해공항", time: "07:00", desc: "UO604 抵達、入境取行李", transport: "✈️ UO604", lat: 35.179528, lng: 128.938222, cid: "1559275999526138604" },
-                { id: "b1-5a", name: "Raviens 酒店（寄行李）", nameKo: "라비앙즈 해운대 에비뉴", time: "08:30–09:00", desc: "先寄放行李（正式入住 16:00）", transport: "🚕×2 約40–50分", lat: 35.16161, lng: 129.15833, bookingId: "busan-hotel" },
-                { id: "b1-10", name: "HASH TABLE 早午餐", nameKo: "해쉬테이블", time: "10:00–11:30", desc: "田浦人氣 brunch · 座位少 · 西前路 74", transport: "🚕×2 約25–35分", lat: 35.1577, lng: 129.0677 },
-                { id: "b1-11", name: "田浦咖啡街逛街", nameKo: "전포카페거리", time: "11:30–14:00", desc: "AVIVERE / 雜貨小店 / 拍貼 · 西前路·東川路一帶", transport: "🚶 步行", lat: 35.1565, lng: 129.0635 },
-                { id: "b1-3", name: "海雲台浴場", nameKo: "해운대해수욕장", time: "14:45–16:00", desc: "海水浴場散步、拍照", transport: "🚕×2 約25–35分", lat: 35.158698, lng: 129.160384, cid: "8123395504340323431", infoUrl: "guides/busan-ideas.html" },
-                { id: "b1-5", name: "Raviens 酒店（正式入住）", nameKo: "라비앙즈 해운대 에비뉴", time: "16:00+", desc: "正式 Check-in · 確認號見「預訂」頁", transport: "🚶 步行", lat: 35.16161, lng: 129.15833, bookingId: "busan-hotel" },
-                { id: "b1-7", name: "Olive Young 海雲台站店", nameKo: "올리브영 해운대역", time: "16:45–17:30", desc: "距酒店步行約 5 分 · 美妝伴手禮", transport: "🚶 約5分", lat: 35.1632, lng: 129.1596 },
-                { id: "b1-4", name: "海雲臺傳統市場", nameKo: "해운대전통시장", time: "17:30–19:00", desc: "小吃、海鮮、伴手禮", transport: "🚶 步行", lat: 35.1592, lng: 129.1615, cid: "15417742290736329149" },
-              ],
-            },
-          },
+          theme: "抵達 · 海雲台輕鬆 · 入住（田浦改到 Day3 晚）",
+          stops: [
+            { id: "b1-1", name: "金海國際機場", nameKo: "김해공항", time: "07:00", desc: "UO604 抵達、入境取行李", transport: "✈️ UO604", lat: 35.179528, lng: 128.938222, cid: "1559275999526138604" },
+            { id: "b1-5a", name: "Raviens 酒店（寄行李）", nameKo: "라비앙즈 해운대 에비뉴", time: "08:30–09:00", desc: "先寄放行李（正式入住 16:00）", transport: "🚕×2 約40–50分", lat: 35.16161, lng: 129.15833, bookingId: "busan-hotel" },
+            { id: "b1-8", name: "海雲台站周邊輕食", nameKo: "해운대역 아침", time: "09:00–10:00", desc: "下機後先找吃的 · 站前商圈任選", transport: "🚶 步行", lat: 35.1634, lng: 129.1589 },
+            { id: "b1-9", name: "海雲台咖啡休息", nameKo: "해운대 카페", time: "10:00–11:00", desc: "喝咖啡、補眠休息", transport: "🚶 步行", lat: 35.1628, lng: 129.1602 },
+            { id: "b1-7", name: "Olive Young 海雲台站店", nameKo: "올리브영 해운대역", time: "11:00–12:00", desc: "距酒店步行約 5 分 · 美妝伴手禮", transport: "🚶 約5分", lat: 35.1632, lng: 129.1596 },
+            { id: "b1-2", name: "巨大豬肉湯飯", nameKo: "거대돼지국밥", time: "12:15–13:30", desc: "湯飯 ₩13,000 / 拌麵 ₩11,000", transport: "🚕×2 約10–15分", lat: 35.163, lng: 129.178, cid: "17410649710382375846" },
+            { id: "b1-3", name: "海雲台浴場", nameKo: "해운대해수욕장", time: "14:00–16:00", desc: "海水浴場散步、拍照", transport: "🚶/🚕", lat: 35.158698, lng: 129.160384, cid: "8123395504340323431", infoUrl: "guides/busan-ideas.html" },
+            { id: "b1-5", name: "Raviens 酒店（正式入住）", nameKo: "라비앙즈 해운대 에비뉴", time: "16:00+", desc: "正式 Check-in · 確認號見「預訂」頁", transport: "🚶 步行", lat: 35.16161, lng: 129.15833, bookingId: "busan-hotel" },
+            { id: "b1-4", name: "海雲臺傳統市場", nameKo: "해운대전통시장", time: "16:45–18:30", desc: "小吃、海鮮、伴手禮", transport: "🚶 步行", lat: 35.1592, lng: 129.1615, cid: "15417742290736329149" },
+          ],
         },
         {
           id: "busan-d2",
@@ -87,7 +50,7 @@ window.TRIP_DATA = {
         {
           id: "busan-d3",
           label: "Day 3 · 8/3",
-          theme: "Greetvi → 踏石 / 東釜山樂天 · 藍線 → 西面",
+          theme: "Greetvi → 踏石 / 東釜山樂天 · 藍線 → 西面／田浦",
           defaultPlan: "a",
           plans: {
             a: {
@@ -98,8 +61,8 @@ window.TRIP_DATA = {
                 en: "Greetvi → Observatory → Blueline → Seomyeon",
               },
               blurb: {
-                zh: "不去購物中途站 · 更鬆趕 18:00 藍線",
-                en: "Skip mid-day mall · easier buffer for 18:00 Blueline",
+                zh: "不去購物中途站 · 更鬆趕 18:00 藍線 · 晚間西面超市",
+                en: "Skip mid-day mall · easier buffer for 18:00 Blueline · Seomyeon mart at night",
               },
               stops: [
                 { id: "b3-1", name: "Greetvi 西生店", nameKo: "그릿비 서생점", time: "10:00–13:00", desc: "海景咖啡早午餐", transport: "🚕×2 約50–60分", lat: 35.3594, lng: 129.2972, cid: "14923122734873620011" },
@@ -112,14 +75,14 @@ window.TRIP_DATA = {
             },
             b: {
               id: "b",
-              name: { zh: "Plan B · 東釜山樂天", en: "Plan B · Lotte Dong Busan" },
+              name: { zh: "Plan B · 東釜山樂天＋田浦", en: "Plan B · Lotte Dong + Jeonpo" },
               theme: {
-                zh: "Greetvi → Lotte MAISON → 踏石 → 藍線 → 西面",
-                en: "Greetvi → Lotte MAISON → Observatory → Blueline → Seomyeon",
+                zh: "Greetvi → Lotte MAISON → 踏石 → 藍線 → 田浦晚餐",
+                en: "Greetvi → Lotte MAISON → Observatory → Blueline → Jeonpo dinner",
               },
               blurb: {
-                zh: "Osiria 樂天 MAISON 逛街購物 · 記得留時間趕藍線",
-                en: "Shop Lotte MAISON at Osiria · keep buffer for Blueline",
+                zh: "白天東釜山購物 · 晚上改田浦吃飯逛街（不需再去西面 Lotte Mart）",
+                en: "Shop Lotte Dong by day · Jeonpo dinner at night (skip Seomyeon Lotte Mart)",
               },
               stops: [
                 { id: "b3-1", name: "Greetvi 西生店", nameKo: "그릿비 서생점", time: "10:00–12:30", desc: "海景咖啡早午餐", transport: "🚕×2 約50–60分", lat: 35.3594, lng: 129.2972, cid: "14923122734873620011" },
@@ -127,8 +90,8 @@ window.TRIP_DATA = {
                 { id: "b3-3", name: "青沙浦踏石觀景台", nameKo: "청사포다릿돌전망대", time: "16:00–16:50", desc: "海上天空步道（免費）· 短停後趕藍線", transport: "🚕×2 約25–35分", lat: 35.16104, lng: 129.20659, cid: "16474630453593542182" },
                 { id: "b3-4", name: "海雲台藍線公園 青沙浦站", nameKo: "청사포역", time: "17:40–18:00", desc: "已訂海邊列車 18:00 第19回 · 單程×5 · 建議提早到", transport: "🚶 步行", lat: 35.1589, lng: 129.2226, cid: "5330431299439421123", bookingId: "blueline-train" },
                 { id: "b3-5", name: "海雲台藍線公園 尾浦站", nameKo: "미포역", time: "18:00–18:30", desc: "海邊列車下車 · 海景 · 訂單號見「預訂」頁", transport: "🚡 藍線列車", lat: 35.158083, lng: 129.158611, cid: "5191000921095413519", bookingId: "blueline-train" },
-                { id: "b3-6", name: "Olive Young 西面站店", nameKo: "올리브영 서면역", time: "19:00–20:00", desc: "K-Beauty 美妝伴手禮", transport: "🚇 地鐵2號線", lat: 35.1578, lng: 129.0592, cid: "3223248251072921833" },
-                { id: "b3-7", name: "Lotte Mart", nameKo: "롯데마트", time: "20:00–21:00", desc: "零食、日用品", transport: "🚶 西面商圈", lat: 35.1536, lng: 129.0591, cid: "14448902928581330220" },
+                { id: "b3-6", name: "Olive Young 西面站店", nameKo: "올리브영 서면역", time: "19:00–19:40", desc: "K-Beauty 短停 · 距田浦步行約 10–15 分", transport: "🚇 地鐵2號線", lat: 35.1578, lng: 129.0592, cid: "3223248251072921833" },
+                { id: "b3-9", name: "田浦晚餐／咖啡街", nameKo: "전포카페거리", time: "19:45–21:30", desc: "西面前路·東川路一帶 · 烤肉／韓食／甜品選擇多 · HASH TABLE 偏早午餐可略過", transport: "🚶 約10–15分", lat: 35.1565, lng: 129.0635 },
               ],
             },
           },
