@@ -729,6 +729,11 @@ function renderPackPanel() {
   });
 }
 
+function formatMoneyHkd(n) {
+  if (n == null || Number.isNaN(n)) return "—";
+  return `HK$ ${Number(n).toLocaleString(isEn() ? "en-US" : "zh-HK", { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
+}
+
 function formatMoneyCny(n) {
   if (n == null || Number.isNaN(n)) return "—";
   return `CNY ${Number(n).toLocaleString(isEn() ? "en-US" : "zh-HK", { minimumFractionDigits: 0, maximumFractionDigits: 2 })}`;
@@ -739,9 +744,10 @@ function formatMoneyKrw(n) {
   return `₩${Math.round(Number(n)).toLocaleString(isEn() ? "en-US" : "zh-HK")}`;
 }
 
-function itemToCny(item, fx) {
-  if (item.cny != null) return Number(item.cny);
-  if (item.krw != null && fx?.krwPerCny) return Number(item.krw) / fx.krwPerCny;
+function itemToHkd(item, fx) {
+  if (item.hkd != null) return Number(item.hkd);
+  if (item.cny != null && fx?.cnyToHkd) return Number(item.cny) * fx.cnyToHkd;
+  if (item.krw != null && fx?.krwPerHkd) return Number(item.krw) / fx.krwPerHkd;
   return null;
 }
 
@@ -756,36 +762,34 @@ function renderCostPanel() {
   if (!root || !window.COST_DATA) return;
 
   const data = COST_DATA;
-  const fx = data.fx || { krwPerCny: 190 };
+  const fx = data.fx || { cnyToHkd: 1.08, krwPerHkd: 175 };
   const people = data.people || 5;
   const items = (data.categories || []).flatMap((c) => c.items.map((it) => ({ ...it, catId: c.id })));
 
-  let paidCny = 0;
-  let estimateCny = 0;
+  let paidHkd = 0;
+  let estimateHkd = 0;
   let tbdCount = 0;
   items.forEach((it) => {
-    const cny = itemToCny(it, fx);
-    if (it.status === "paid" && cny != null) paidCny += cny;
-    else if (it.status === "estimate" && cny != null) estimateCny += cny;
+    const hkd = itemToHkd(it, fx);
+    if (it.status === "paid" && hkd != null) paidHkd += hkd;
+    else if (it.status === "estimate" && hkd != null) estimateHkd += hkd;
     else if (it.status === "tbd") tbdCount += 1;
   });
-  const perPaid = paidCny / people;
-  const perEst = (paidCny + estimateCny) / people;
+  const perPaid = paidHkd / people;
+  const perEst = (paidHkd + estimateHkd) / people;
 
   const sections = (data.categories || [])
     .map((cat) => {
       const rows = cat.items
         .map((it) => {
-          const cny = itemToCny(it, fx);
+          const hkd = itemToHkd(it, fx);
           const amountHtml =
             it.status === "tbd"
               ? `<span class="cost-tbd">${ui("costTbd")}</span>`
               : [
-                  it.cny != null ? `<strong>${formatMoneyCny(it.cny)}</strong>` : "",
+                  hkd != null ? `<strong>${formatMoneyHkd(hkd)}</strong>` : "",
+                  it.cny != null ? `<span class="cost-fx">${formatMoneyCny(it.cny)}</span>` : "",
                   it.krw != null ? `<span class="cost-krw">${formatMoneyKrw(it.krw)}</span>` : "",
-                  it.krw != null && it.cny == null && cny != null
-                    ? `<span class="cost-fx">≈ ${formatMoneyCny(cny)}</span>`
-                    : "",
                 ]
                   .filter(Boolean)
                   .join(" ");
@@ -816,13 +820,13 @@ function renderCostPanel() {
     <div class="cost-summary">
       <div class="cost-stat">
         <span class="cost-stat-label">${ui("costPaidTotal")}</span>
-        <strong class="cost-stat-value">${formatMoneyCny(paidCny)}</strong>
-        <span class="cost-stat-sub">${ui("costPerPerson")} ${formatMoneyCny(perPaid)}</span>
+        <strong class="cost-stat-value">${formatMoneyHkd(paidHkd)}</strong>
+        <span class="cost-stat-sub">${ui("costPerPerson")} ${formatMoneyHkd(perPaid)}</span>
       </div>
       <div class="cost-stat estimate">
         <span class="cost-stat-label">${ui("costEstimateTotal")}</span>
-        <strong class="cost-stat-value">${formatMoneyCny(estimateCny)}</strong>
-        <span class="cost-stat-sub">${ui("costPaidPlusEst")} ${formatMoneyCny(paidCny + estimateCny)} · ${ui("costPerPerson")} ${formatMoneyCny(perEst)}</span>
+        <strong class="cost-stat-value">${formatMoneyHkd(estimateHkd)}</strong>
+        <span class="cost-stat-sub">${ui("costPaidPlusEst")} ${formatMoneyHkd(paidHkd + estimateHkd)} · ${ui("costPerPerson")} ${formatMoneyHkd(perEst)}</span>
       </div>
       <div class="cost-stat tbd">
         <span class="cost-stat-label">${ui("costTbdTotal")}</span>

@@ -63,8 +63,8 @@ window.I18N = {
     viewCost: { zh: "費用", en: "Costs" },
     costOverview: { zh: "旅遊費用總結", en: "Trip cost summary" },
     costHint: {
-      zh: "已付來自憑證 · 預估僅供參考 · 機票／松島金額可之後補上",
-      en: "Paid from vouchers · estimates are rough · flights/Songdo can be filled later",
+      zh: "基準貨幣港幣 HKD · 已付來自憑證 · 預估僅供參考 · 機票／松島可之後補上",
+      en: "Base currency HKD · paid from vouchers · estimates are rough · flights/Songdo can be filled later",
     },
     costPaid: { zh: "已付", en: "Paid" },
     costEstimate: { zh: "預估", en: "Estimate" },

@@ -3,11 +3,12 @@ window.COST_DATA = {
   people: 5,
   updated: "2026-07-31",
   fx: {
-    /** Approximate: how many KRW for 1 CNY (for converting ₩ → ¥ display) */
-    krwPerCny: 190,
+    /** Base currency: HKD. Convert original voucher currencies for totals. */
+    cnyToHkd: 1.08,
+    krwPerHkd: 175,
     note: {
-      zh: "匯率約 1 CNY ≈ 190 KRW（估算用 · 以實際刷卡為準）",
-      en: "FX ~1 CNY ≈ 190 KRW (estimate · use card statement as truth)",
+      zh: "基準貨幣 HKD · 約 1 CNY ≈ 1.08 HKD · 1 HKD ≈ 175 KRW（估算 · 以實際刷卡為準）",
+      en: "Base currency HKD · ~1 CNY ≈ 1.08 HKD · 1 HKD ≈ 175 KRW (estimate · use card statement)",
     },
   },
   categories: [
