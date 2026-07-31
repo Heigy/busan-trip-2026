@@ -73,7 +73,7 @@ window.I18N = {
     costEstimateTotal: { zh: "當地預估", en: "On-trip estimate" },
     costPaidPlusEst: { zh: "已付+預估", en: "Paid + estimate" },
     costTbdTotal: { zh: "待補項目", en: "Items TBD" },
-    costTbdHint: { zh: "松島纜車金額等", en: "Songdo cable amount, etc." },
+    costTbdHint: { zh: "暫無待補大項", en: "No major TBD items" },
     costPerPerson: { zh: "人均", en: "Per person" },
     packOverview: { zh: "行李清單", en: "Packing list" },
     packHint: {

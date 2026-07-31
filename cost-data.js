@@ -53,8 +53,9 @@ window.COST_DATA = {
         {
           id: "songdo",
           name: { zh: "松島水晶纜車往返×5", en: "Songdo Crystal Cabin RT×5" },
-          status: "tbd",
-          note: { zh: "Klook 已訂 · 憑證未列金額 · 有收據再補", en: "Booked on Klook · amount not on voucher · add when known" },
+          status: "paid",
+          hkd: 585,
+          note: { zh: "Klook · 訂單 QTR564558 · 8/2", en: "Klook · booking QTR564558 · Aug 2" },
         },
       ],
     },

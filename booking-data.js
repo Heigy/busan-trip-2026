@@ -146,7 +146,7 @@ window.BOOKING_DATA = {
       link: "https://www.klook.com/",
       website: null,
       phone: null,
-      amount: null,
+      amount: "HKD 585",
     },
     {
       id: "blueline-train",
