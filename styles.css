@@ -480,7 +480,8 @@ header .subtitle {
 #flights-panel,
 #bookings-panel,
 #food-panel,
-#pack-panel {
+#pack-panel,
+#cost-panel {
   background: var(--bg);
   flex: 1;
   min-height: 0;
@@ -1079,6 +1080,139 @@ button.flight-pnr.is-masked {
   text-decoration-thickness: 1px;
 }
 
+/* ── Cost panel ── */
+.cost-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.cost-stat {
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: color-mix(in srgb, #2f6f4e 10%, var(--setup-note-bg));
+  border: 1px solid color-mix(in srgb, #2f6f4e 22%, var(--flights-border));
+}
+
+.cost-stat.estimate {
+  background: color-mix(in srgb, #c45c26 10%, var(--setup-note-bg));
+  border-color: color-mix(in srgb, #c45c26 25%, var(--flights-border));
+}
+
+.cost-stat.tbd {
+  background: var(--setup-note-bg);
+  border-color: var(--flights-border);
+}
+
+.cost-stat-label {
+  display: block;
+  font-size: 0.7rem;
+  color: var(--hint);
+  margin-bottom: 4px;
+}
+
+.cost-stat-value {
+  display: block;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.cost-stat-sub {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.68rem;
+  color: var(--hint);
+  line-height: 1.4;
+}
+
+.cost-section {
+  margin-bottom: 18px;
+}
+
+.cost-section-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin: 0 0 8px;
+}
+
+.cost-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cost-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--flights-border);
+  background: var(--flights-chip-bg);
+}
+
+.cost-row-main {
+  display: flex;
+  gap: 10px;
+  min-width: 0;
+}
+
+.cost-status {
+  flex: 0 0 auto;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: color-mix(in srgb, #2f6f4e 16%, transparent);
+  color: #2f6f4e;
+  height: fit-content;
+}
+
+.cost-row.status-estimate .cost-status {
+  background: color-mix(in srgb, #c45c26 16%, transparent);
+  color: #c45c26;
+}
+
+.cost-row.status-tbd .cost-status {
+  background: color-mix(in srgb, var(--hint) 18%, transparent);
+  color: var(--hint);
+}
+
+.cost-name {
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.cost-note {
+  margin-top: 3px;
+  font-size: 0.68rem;
+  color: var(--hint);
+  line-height: 1.4;
+}
+
+.cost-amount {
+  text-align: right;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.cost-amount strong {
+  display: block;
+}
+
+.cost-krw,
+.cost-fx,
+.cost-tbd {
+  display: block;
+  margin-top: 2px;
+  font-size: 0.68rem;
+  color: var(--hint);
+}
+
 @media (max-width: 768px) {
   .flights-scroll { padding: 14px 14px 24px; }
   .flight-route { padding: 12px 10px; }
@@ -1086,6 +1220,7 @@ button.flight-pnr.is-masked {
   .flight-card-top { flex-direction: column; }
   .flight-pnr-box { text-align: left; }
   .booking-card-top { flex-direction: column; }
+  .cost-summary { grid-template-columns: 1fr; }
 }
 
 /* ── Sidebar ── */
@@ -1549,7 +1684,8 @@ button.flight-pnr.is-masked {
   #flights-panel,
   #bookings-panel,
   #food-panel,
-  #pack-panel {
+  #pack-panel,
+  #cost-panel {
     overflow: visible;
     flex: none;
     min-height: auto;
@@ -1577,7 +1713,8 @@ button.flight-pnr.is-masked {
   body.view-flights .sidebar,
   body.view-bookings .sidebar,
   body.view-food .sidebar,
-  body.view-pack .sidebar {
+  body.view-pack .sidebar,
+  body.view-cost .sidebar {
     order: 2;
   }
 

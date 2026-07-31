@@ -1,4 +1,4 @@
-/* global TRIP_DATA, MYMAPS_CONFIG, I18N, FLIGHT_DATA, BOOKING_DATA, FOOD_DATA, PACKING_DATA, WEATHER_DATA */
+/* global TRIP_DATA, MYMAPS_CONFIG, I18N, FLIGHT_DATA, BOOKING_DATA, FOOD_DATA, PACKING_DATA, WEATHER_DATA, COST_DATA */
 
 const state = {
   regionId: "busan",
@@ -35,6 +35,7 @@ else if (urlParams.get("view") === "flights") state.view = "flights";
 else if (urlParams.get("view") === "bookings") state.view = "bookings";
 else if (urlParams.get("view") === "food") state.view = "food";
 else if (urlParams.get("view") === "pack") state.view = "pack";
+else if (urlParams.get("view") === "cost") state.view = "cost";
 else if (urlParams.get("view") === "flowchart") state.view = "flowchart";
 /* else keep default flowchart */
 if (urlParams.get("plan") === "b") state.dayPlan = "b";
@@ -254,12 +255,17 @@ function isPackView() {
   return state.view === "pack";
 }
 
+function isCostView() {
+  return state.view === "cost";
+}
+
 function setView(view) {
   if (view === "flowchart") state.view = "flowchart";
   else if (view === "flights") state.view = "flights";
   else if (view === "bookings") state.view = "bookings";
   else if (view === "food") state.view = "food";
   else if (view === "pack") state.view = "pack";
+  else if (view === "cost") state.view = "cost";
   else state.view = "map";
   if (state.view !== "map") {
     state.mapFocused = false;
@@ -723,6 +729,110 @@ function renderPackPanel() {
   });
 }
 
+function formatMoneyCny(n) {
+  if (n == null || Number.isNaN(n)) return "—";
+  return `CNY ${Number(n).toLocaleString(isEn() ? "en-US" : "zh-HK", { minimumFractionDigits: 0, maximumFractionDigits: 2 })}`;
+}
+
+function formatMoneyKrw(n) {
+  if (n == null || Number.isNaN(n)) return "—";
+  return `₩${Math.round(Number(n)).toLocaleString(isEn() ? "en-US" : "zh-HK")}`;
+}
+
+function itemToCny(item, fx) {
+  if (item.cny != null) return Number(item.cny);
+  if (item.krw != null && fx?.krwPerCny) return Number(item.krw) / fx.krwPerCny;
+  return null;
+}
+
+function costStatusLabel(status) {
+  if (status === "paid") return ui("costPaid");
+  if (status === "estimate") return ui("costEstimate");
+  return ui("costTbd");
+}
+
+function renderCostPanel() {
+  const root = document.getElementById("cost-content");
+  if (!root || !window.COST_DATA) return;
+
+  const data = COST_DATA;
+  const fx = data.fx || { krwPerCny: 190 };
+  const people = data.people || 5;
+  const items = (data.categories || []).flatMap((c) => c.items.map((it) => ({ ...it, catId: c.id })));
+
+  let paidCny = 0;
+  let estimateCny = 0;
+  let tbdCount = 0;
+  items.forEach((it) => {
+    const cny = itemToCny(it, fx);
+    if (it.status === "paid" && cny != null) paidCny += cny;
+    else if (it.status === "estimate" && cny != null) estimateCny += cny;
+    else if (it.status === "tbd") tbdCount += 1;
+  });
+  const perPaid = paidCny / people;
+  const perEst = (paidCny + estimateCny) / people;
+
+  const sections = (data.categories || [])
+    .map((cat) => {
+      const rows = cat.items
+        .map((it) => {
+          const cny = itemToCny(it, fx);
+          const amountHtml =
+            it.status === "tbd"
+              ? `<span class="cost-tbd">${ui("costTbd")}</span>`
+              : [
+                  it.cny != null ? `<strong>${formatMoneyCny(it.cny)}</strong>` : "",
+                  it.krw != null ? `<span class="cost-krw">${formatMoneyKrw(it.krw)}</span>` : "",
+                  it.krw != null && it.cny == null && cny != null
+                    ? `<span class="cost-fx">≈ ${formatMoneyCny(cny)}</span>`
+                    : "",
+                ]
+                  .filter(Boolean)
+                  .join(" ");
+          return `<div class="cost-row status-${escapeHtml(it.status)}">
+            <div class="cost-row-main">
+              <span class="cost-status">${costStatusLabel(it.status)}</span>
+              <div>
+                <div class="cost-name">${escapeHtml(locField(it.name))}</div>
+                ${it.note ? `<div class="cost-note">${escapeHtml(locField(it.note))}</div>` : ""}
+              </div>
+            </div>
+            <div class="cost-amount">${amountHtml}</div>
+          </div>`;
+        })
+        .join("");
+      return `<section class="cost-section">
+        <h3 class="cost-section-title">${escapeHtml(locField(cat.title))}</h3>
+        <div class="cost-rows">${rows}</div>
+      </section>`;
+    })
+    .join("");
+
+  root.innerHTML = `
+    <div class="flights-intro">
+      <h2>${ui("costOverview")}</h2>
+      <p class="flights-pax-label">${ui("costHint")} · ${escapeHtml(locField(fx.note))}</p>
+    </div>
+    <div class="cost-summary">
+      <div class="cost-stat">
+        <span class="cost-stat-label">${ui("costPaidTotal")}</span>
+        <strong class="cost-stat-value">${formatMoneyCny(paidCny)}</strong>
+        <span class="cost-stat-sub">${ui("costPerPerson")} ${formatMoneyCny(perPaid)}</span>
+      </div>
+      <div class="cost-stat estimate">
+        <span class="cost-stat-label">${ui("costEstimateTotal")}</span>
+        <strong class="cost-stat-value">${formatMoneyCny(estimateCny)}</strong>
+        <span class="cost-stat-sub">${ui("costPaidPlusEst")} ${formatMoneyCny(paidCny + estimateCny)} · ${ui("costPerPerson")} ${formatMoneyCny(perEst)}</span>
+      </div>
+      <div class="cost-stat tbd">
+        <span class="cost-stat-label">${ui("costTbdTotal")}</span>
+        <strong class="cost-stat-value">${tbdCount}</strong>
+        <span class="cost-stat-sub">${ui("costTbdHint")}</span>
+      </div>
+    </div>
+    ${sections}`;
+}
+
 function applyView() {
   const mapPanel = document.getElementById("map-panel");
   const flowPanel = document.getElementById("flowchart-panel");
@@ -730,6 +840,7 @@ function applyView() {
   const bookingsPanel = document.getElementById("bookings-panel");
   const foodPanel = document.getElementById("food-panel");
   const packPanel = document.getElementById("pack-panel");
+  const costPanel = document.getElementById("cost-panel");
   const restoreBtn = document.getElementById("map-restore");
   const externalLink = document.getElementById("map-open-external");
   const label = document.getElementById("map-mode-label");
@@ -738,6 +849,7 @@ function applyView() {
   document.body.classList.toggle("view-bookings", isBookingsView());
   document.body.classList.toggle("view-food", isFoodView());
   document.body.classList.toggle("view-pack", isPackView());
+  document.body.classList.toggle("view-cost", isCostView());
   document.body.classList.toggle("view-flowchart", isFlowchartView());
   document.body.classList.toggle("view-map", isMapView());
 
@@ -754,7 +866,9 @@ function applyView() {
               ? "viewFood"
               : btn.dataset.view === "pack"
                 ? "viewPack"
-                : "viewFlights";
+                : btn.dataset.view === "cost"
+                  ? "viewCost"
+                  : "viewFlights";
     btn.textContent = ui(key);
   });
 
@@ -764,6 +878,7 @@ function applyView() {
   bookingsPanel?.classList.toggle("active", isBookingsView());
   foodPanel?.classList.toggle("active", isFoodView());
   packPanel?.classList.toggle("active", isPackView());
+  costPanel?.classList.toggle("active", isCostView());
 
   if (isMapView()) {
     externalLink.hidden = false;
@@ -794,6 +909,11 @@ function applyView() {
     externalLink.hidden = true;
     label.textContent = ui("bookingsOverview");
     renderBookingsPanel();
+  } else if (isCostView()) {
+    restoreBtn.hidden = true;
+    externalLink.hidden = true;
+    label.textContent = ui("costOverview");
+    renderCostPanel();
   } else if (isFoodView()) {
     restoreBtn.hidden = true;
     externalLink.hidden = true;
@@ -988,7 +1108,7 @@ function renderSidebar() {
   const weatherTipEl = document.getElementById("sidebar-weather-tip");
   const wx = window.WEATHER_DATA?.days?.[rawDay.id || day.id];
   if (weatherEl && weatherTipEl) {
-    if (wx && !isFlightsView() && !isBookingsView() && !isFoodView() && !isPackView()) {
+    if (wx && !isFlightsView() && !isBookingsView() && !isFoodView() && !isPackView() && !isCostView()) {
       weatherEl.hidden = false;
       weatherTipEl.hidden = false;
       weatherEl.textContent = `${ui("weatherLabel")} ${locField(wx.summary)}`;
@@ -1009,6 +1129,8 @@ function renderSidebar() {
     dayHint.textContent = ui("foodHint");
   } else if (isPackView()) {
     dayHint.textContent = ui("packHint");
+  } else if (isCostView()) {
+    dayHint.textContent = ui("costHint");
   } else if (isFlowchartView()) {
     dayHint.textContent = ui("flowchartHint");
   } else if (rawDay.plans && day.planBlurb) {
@@ -1249,7 +1371,7 @@ function updateUrl() {
   else url.searchParams.delete("plan");
   if (state.lang === "en") url.searchParams.set("lang", "en");
   else url.searchParams.delete("lang");
-  if (state.view === "map" || state.view === "flights" || state.view === "bookings" || state.view === "food" || state.view === "pack") {
+  if (state.view === "map" || state.view === "flights" || state.view === "bookings" || state.view === "food" || state.view === "pack" || state.view === "cost") {
     url.searchParams.set("view", state.view);
   } else {
     url.searchParams.delete("view");
