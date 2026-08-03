@@ -50,19 +50,19 @@ window.TRIP_DATA = {
         {
           id: "busan-d3",
           label: "Day 3 · 8/3",
-          theme: "Greetvi → 東釜山樂天／踏石 · 藍線 → 田浦晚餐",
+          theme: "Greetvi → 東釜山樂天／踏石 · 藍線 → 極東豬湯飯",
           defaultPlan: "a",
           plans: {
             a: {
               id: "a",
               name: { zh: "Plan A · 東釜山樂天", en: "Plan A · Lotte Dong Busan" },
               theme: {
-                zh: "Greetvi → Lotte MAISON → 踏石 → 藍線 → 田浦晚餐",
-                en: "Greetvi → Lotte MAISON → Observatory → Blueline → Jeonpo dinner",
+                zh: "Greetvi → Lotte MAISON → 踏石 → 藍線 → 極東豬湯飯",
+                en: "Greetvi → Lotte MAISON → Observatory → Blueline → Geukdong soup",
               },
               blurb: {
-                zh: "預設方案 · 白天東釜山購物 · 晚間田浦吃飯逛街",
-                en: "Default · shop Lotte Dong by day · Jeonpo dinner at night",
+                zh: "預設方案 · 白天東釜山購物 · 晚間海雲台極東豬肉湯飯",
+                en: "Default · shop Lotte Dong by day · Geukdong pork soup at night",
               },
               stops: [
                 { id: "b3-1", name: "Greetvi 西生店", nameKo: "그릿비 서생점", time: "10:00–12:30", desc: "海景咖啡早午餐", transport: "🚕×2 約50–60分", lat: 35.3594, lng: 129.2972, cid: "14923122734873620011" },
@@ -70,26 +70,26 @@ window.TRIP_DATA = {
                 { id: "b3-3", name: "青沙浦踏石觀景台", nameKo: "청사포다릿돌전망대", time: "16:00–16:50", desc: "海上天空步道（免費）· 短停後趕藍線", transport: "🚕×2 約25–35分", lat: 35.16104, lng: 129.20659, cid: "16474630453593542182" },
                 { id: "b3-4", name: "海雲台藍線公園 青沙浦站", nameKo: "청사포역", time: "17:40–18:00", desc: "已訂海邊列車 18:00 第19回 · 單程×5 · 建議提早到", transport: "🚶 步行", lat: 35.1589, lng: 129.2226, cid: "5330431299439421123", bookingId: "blueline-train" },
                 { id: "b3-5", name: "海雲台藍線公園 尾浦站", nameKo: "미포역", time: "18:00–18:30", desc: "海邊列車下車 · 海景 · 訂單號見「預訂」頁", transport: "🚡 藍線列車", lat: 35.158083, lng: 129.158611, cid: "5191000921095413519", bookingId: "blueline-train" },
-                { id: "b3-9", name: "田浦晚餐／咖啡街", nameKo: "전포카페거리", time: "19:15–21:30", desc: "地鐵到西面後步行 · 烤肉／韓食／甜品 · 西前路·東川路 · HASH TABLE 偏早午餐可略過", transport: "🚇→🚶 約30–40分", lat: 35.1565, lng: 129.0635 },
+                { id: "b3-9", name: "極東豬肉湯飯", nameKo: "극동돼지국밥", time: "19:00–20:30", desc: "海雲台中洞 · 清湯豬國飯 · 08:00–21:00（LO 20:30）· 可 Tableing 排隊", transport: "🚕 約10–15分（自尾浦）", lat: 35.1618, lng: 129.1715, mapsUrl: "https://www.google.com/maps/search/?api=1&query=극동돼지국밥+달맞이길62번길+17" },
               ],
             },
             b: {
               id: "b",
               name: { zh: "Plan B · 直奔踏石", en: "Plan B · Straight to Observatory" },
               theme: {
-                zh: "Greetvi → 踏石 → 藍線 → 田浦晚餐",
-                en: "Greetvi → Observatory → Blueline → Jeonpo dinner",
+                zh: "Greetvi → 踏石 → 藍線 → 極東豬湯飯",
+                en: "Greetvi → Observatory → Blueline → Geukdong soup",
               },
               blurb: {
-                zh: "備選 · 不去購物中途站 · 更鬆趕 18:00 藍線",
-                en: "Alt · skip mid-day mall · easier buffer for 18:00 Blueline",
+                zh: "備選 · 不去購物中途站 · 更鬆趕 18:00 藍線 · 晚間同樣極東豬湯飯",
+                en: "Alt · skip mid-day mall · easier buffer for 18:00 Blueline · same Geukdong dinner",
               },
               stops: [
                 { id: "b3-1", name: "Greetvi 西生店", nameKo: "그릿비 서생점", time: "10:00–13:00", desc: "海景咖啡早午餐", transport: "🚕×2 約50–60分", lat: 35.3594, lng: 129.2972, cid: "14923122734873620011" },
                 { id: "b3-3", name: "青沙浦踏石觀景台", nameKo: "청사포다릿돌전망대", time: "14:30–16:30", desc: "海上天空步道（免費）", transport: "🚕×2 約40–55分", lat: 35.16104, lng: 129.20659, cid: "16474630453593542182" },
                 { id: "b3-4", name: "海雲台藍線公園 青沙浦站", nameKo: "청사포역", time: "17:40–18:00", desc: "已訂海邊列車 18:00 第19回 · 單程×5 · 建議提早到", transport: "🚶 步行", lat: 35.1589, lng: 129.2226, cid: "5330431299439421123", bookingId: "blueline-train" },
                 { id: "b3-5", name: "海雲台藍線公園 尾浦站", nameKo: "미포역", time: "18:00–18:30", desc: "海邊列車下車 · 海景 · 訂單號見「預訂」頁", transport: "🚡 藍線列車", lat: 35.158083, lng: 129.158611, cid: "5191000921095413519", bookingId: "blueline-train" },
-                { id: "b3-9", name: "田浦晚餐／咖啡街", nameKo: "전포카페거리", time: "19:15–21:30", desc: "地鐵到西面後步行 · 烤肉／韓食／甜品 · 西前路·東川路 · HASH TABLE 偏早午餐可略過", transport: "🚇→🚶 約30–40分", lat: 35.1565, lng: 129.0635 },
+                { id: "b3-9", name: "極東豬肉湯飯", nameKo: "극동돼지국밥", time: "19:00–20:30", desc: "海雲台中洞 · 清湯豬國飯 · 08:00–21:00（LO 20:30）· 可 Tableing 排隊", transport: "🚕 約10–15分（自尾浦）", lat: 35.1618, lng: 129.1715, mapsUrl: "https://www.google.com/maps/search/?api=1&query=극동돼지국밥+달맞이길62번길+17" },
               ],
             },
           },
@@ -139,15 +139,14 @@ window.TRIP_DATA = {
         {
           id: "jeju-d3",
           label: "Day 3 · 8/6",
-          theme: "北線咖啡 · 涯月 · 七星街 · 購物",
+          theme: "北線咖啡 · 涯月 · 七星街 · 伴手禮",
           stops: [
             { id: "j3-1", name: "倫敦貝果博物館", nameKo: "런던베이글뮤지엄", time: "08:00–09:30", desc: "排隊貝果早午餐", transport: "🚐/🚕", lat: 33.5422, lng: 126.8618 },
             { id: "j3-2", name: "Cafe Layered 小狗咖啡", nameKo: "카페 레이어드", time: "09:30–10:30", desc: "貝果旁 · 小狗主題", transport: "🚶 同區", lat: 33.54225, lng: 126.86185, skipMarker: true },
             { id: "j3-3", name: "Mou Moon 海景咖啡", nameKo: "머문카페", time: "10:30–12:00", desc: "月汀里海景", transport: "🚐 約15分", lat: 33.548, lng: 126.867 },
             { id: "j3-4", name: "涯月邑 漢潭海岸", nameKo: "애월읍", time: "15:00–17:00", desc: "海岸散步、咖啡", transport: "🚐 約40分", lat: 33.462, lng: 126.308 },
             { id: "j3-5", name: "七星街", nameKo: "칠성로", time: "17:30–19:00", desc: "逛街購物", transport: "🚐 回市區", lat: 33.4998, lng: 126.5235 },
-            { id: "j3-6", name: "Olive Young 濟州", nameKo: "올리브영", time: "19:00–20:00", desc: "K-Beauty · MALTESE", transport: "🚶/🚕", lat: 33.487, lng: 126.489 },
-            { id: "j3-7", name: "Hi Jeju / Butter / Jejustar", nameKo: "伴手禮", time: "20:00–21:00", desc: "노연商圈伴手禮", transport: "🚶 步行", lat: 33.4893, lng: 126.4885 },
+            { id: "j3-7", name: "伴手禮一條街（含線條小狗）", nameKo: "노연로 伴手禮", time: "19:00–21:00", desc: "Hi Jeju · Butter · Jejustar · Onni · 順找 MALTESE／線條小狗文創", transport: "🚕/🚶", lat: 33.4893, lng: 126.4885 },
             { id: "j3-8", name: "樂天免稅店 濟州", nameKo: "롯데면세점", time: "21:00–22:00", desc: "機場提貨", transport: "🚕", lat: 33.511, lng: 126.492 },
           ],
         },

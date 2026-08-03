@@ -33,8 +33,8 @@ window.WEATHER_DATA = {
     "busan-d3": {
       summary: { zh: "晴熱 · 約 33–34°C · 東北風轉強趨勢", en: "Sunny hot · ~33–34°C · NE wind picking up" },
       tip: {
-        zh: "Greetvi 戶外暴晒 · 預設 Plan A 含樂天購物稍緊；藍線月台仍熱 · 晚間田浦備遮陽",
-        en: "Greetvi is exposed · default Plan A with Lotte is tighter · Blueline platforms stay hot · shade for Jeonpo night",
+        zh: "Greetvi 戶外暴晒 · 預設 Plan A 含樂天購物稍緊；藍線月台仍熱 · 晚間極東湯飯 LO 20:30 別太晚",
+        en: "Greetvi is exposed · default Plan A with Lotte is tighter · Blueline platforms stay hot · Geukdong LO 20:30 — don’t run late",
       },
     },
     "busan-d4": {
