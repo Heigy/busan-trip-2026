@@ -139,14 +139,14 @@ window.TRIP_DATA = {
         {
           id: "jeju-d3",
           label: "Day 3 · 8/6",
-          theme: "北線咖啡 · 涯月 · 七星街 · 伴手禮",
+          theme: "北線咖啡 · Haejigae · 9.81 · 伴手禮",
           stops: [
             { id: "j3-1", name: "倫敦貝果博物館", nameKo: "런던베이글뮤지엄", time: "08:00–09:30", desc: "排隊貝果早午餐", transport: "🚐/🚕", lat: 33.5422, lng: 126.8618 },
             { id: "j3-2", name: "Cafe Layered 小狗咖啡", nameKo: "카페 레이어드", time: "09:30–10:30", desc: "貝果旁 · 小狗主題", transport: "🚶 同區", lat: 33.54225, lng: 126.86185, skipMarker: true },
             { id: "j3-3", name: "Mou Moon 海景咖啡", nameKo: "머문카페", time: "10:30–12:00", desc: "月汀里海景", transport: "🚐 約15分", lat: 33.548, lng: 126.867 },
-            { id: "j3-4", name: "涯月邑 漢潭海岸", nameKo: "애월읍", time: "15:00–17:00", desc: "海岸散步、咖啡", transport: "🚐 約40分", lat: 33.462, lng: 126.308 },
-            { id: "j3-5", name: "七星街", nameKo: "칠성로", time: "17:30–19:00", desc: "逛街購物", transport: "🚐 回市區", lat: 33.4998, lng: 126.5235 },
-            { id: "j3-7", name: "伴手禮一條街（含線條小狗）", nameKo: "노연로 伴手禮", time: "19:00–21:00", desc: "Hi Jeju · Butter · Jejustar · Onni · 順找 MALTESE／線條小狗文創", transport: "🚕/🚶", lat: 33.4893, lng: 126.4885 },
+            { id: "j3-4", name: "Haejigae Cafe（涯月漢潭）", nameKo: "해지개", time: "13:30–15:00", desc: "涯月邑 · 漢潭海邊海景烘焙 · 애월북서길 52 · 09:00–21:00 · 可順海岸散步", transport: "🚐 約40–50分", lat: 33.4632, lng: 126.3108, mapsUrl: "https://www.google.com/maps/search/?api=1&query=해지개+카페+애월북서길+52" },
+            { id: "j3-5", name: "濟州 9.81 公園", nameKo: "9.81 파크", time: "15:15–17:30", desc: "涯月邑內 · 重力賽車 · 平日約 09:00–18:20 · 穿運動鞋 · 建議先訂票", transport: "🚕×2 約15–20分", lat: 33.390037, lng: 126.366509, mapsUrl: "https://www.google.com/maps/search/?api=1&query=9.81+파크+제주+천덕로+880-24" },
+            { id: "j3-7", name: "伴手禮一條街（含線條小狗）", nameKo: "노연로 伴手禮", time: "18:30–20:30", desc: "Hi Jeju · Butter · Jejustar · Onni · 順找 MALTESE／線條小狗文創", transport: "🚕×2 約30–35分", lat: 33.4893, lng: 126.4885 },
             { id: "j3-8", name: "樂天免稅店 濟州", nameKo: "롯데면세점", time: "21:00–22:00", desc: "機場提貨", transport: "🚕", lat: 33.511, lng: 126.492 },
           ],
         },

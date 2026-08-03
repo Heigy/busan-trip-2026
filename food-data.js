@@ -105,6 +105,18 @@ window.FOOD_DATA = {
       dayHint: { zh: "適合 Day 3 涯月線", en: "Fits Day 3 Aewol leg" },
     },
     {
+      id: "haejigae",
+      name: { zh: "Haejigae Cafe（海止開）", en: "Haejigae Café" },
+      nameKo: "해지개",
+      category: { zh: "海景烘焙咖啡", en: "Ocean bakery café" },
+      area: { zh: "涯月 · 漢潭", en: "Aewol · Handam" },
+      address: "제주 제주시 애월읍 애월북서길 52",
+      note: { zh: "漢潭海景通窗 · 烘焙 · 可順散步路", en: "Handam ocean windows · bakery · coast walk nearby" },
+      maps: "애월북서길 52, Aewol-eup, Jeju-si",
+      dayHint: { zh: "★ 已排 Day 3 涯月", en: "★ Already on Day 3 Aewol" },
+      onItinerary: true,
+    },
+    {
       id: "mou-moon",
       name: { zh: "mou moon", en: "mou moon" },
       nameKo: "머문카페",

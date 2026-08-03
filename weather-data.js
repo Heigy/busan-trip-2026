@@ -61,8 +61,8 @@ window.WEATHER_DATA = {
     "jeju-d3": {
       summary: { zh: "熱 · 約 30–31°C · 風偏東北略強 · 短暫雨可能", en: "Hot · ~30–31°C · stronger NE breeze · patchy rain possible" },
       tip: {
-        zh: "涯月海岸風大浪高時勿靠近防波堤 · 貝果排隊備遮陽",
-        en: "Avoid breakwaters if swell warnings · shade while queuing for bagels",
+        zh: "涯月海岸風大勿近防波堤 · 9.81 穿運動鞋 · 平日末班賽車約 17:40 前",
+        en: "Avoid Aewol breakwaters if swell · sneakers for 9.81 · weekday last race ~before 17:40",
       },
     },
     "jeju-d4": {
