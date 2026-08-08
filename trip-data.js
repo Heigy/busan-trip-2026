@@ -38,12 +38,15 @@ window.TRIP_DATA = {
         {
           id: "busan-d2",
           label: "Day 2 · 8/2",
-          theme: "西線：甘川 → 札嘎其 → 松島 → 白淺灘",
+          theme: "甘川咖啡午餐 · 松島 · BIFF · 南浦晚餐",
           stops: [
-            { id: "b2-1", name: "甘川文化村", nameKo: "감천문화마을", time: "09:00–11:30", desc: "壁畫、小王子打卡", transport: "🚕×2 約35–45分", lat: 35.097493, lng: 129.010678, cid: "10916164570297726627" },
-            { id: "b2-2", name: "札嘎其市場", nameKo: "자갈치시장", time: "12:00–13:30", desc: "活海鮮午餐", transport: "🚕×2 約15–20分", lat: 35.096878, lng: 129.030478, cid: "5166631765211852909" },
-            { id: "b2-3", name: "松島海上水晶纜車", nameKo: "송도해상케이블카", time: "14:00–16:00", desc: "已訂 Klook 水晶艙往返 ×5 · 松島灣站換票", transport: "🚕×2 約15–20分", lat: 35.076389, lng: 129.018056, cid: "10851715231874527315", bookingId: "songdo-cable" },
-            { id: "b2-4", name: "白淺灘文化村", nameKo: "흰여울문화마을", time: "16:45–19:00", desc: "彩色階梯、黃昏咖啡", transport: "🚕×2 約20–25分", lat: 35.078611, lng: 129.045278, cid: "3504597675723064970" },
+            { id: "b2-1", name: "甘川文化村", nameKo: "감천문화마을", time: "09:00–11:00", desc: "★ 實況 · 壁畫、小王子打卡", transport: "🚕×2 約35–45分", lat: 35.097493, lng: 129.010678, cid: "10916164570297726627" },
+            { id: "b2-5", name: "甘川咖啡店（檸檬汁）", nameKo: "감천 카페", time: "11:00–11:40", desc: "★ 實況 · 村內咖啡店喝檸檬汁 · 店名待補", transport: "🚶 村內", lat: 35.0975, lng: 129.0105, skipMarker: true },
+            { id: "b2-2", name: "甘川樓下 Cafe 午餐", nameKo: "감천 카페 점심", time: "11:45–13:00", desc: "★ 實況 · 上述咖啡店樓下 cafe 吃午飯 · 店名待補 · 未去札嘎其", transport: "🚶 樓下", lat: 35.0974, lng: 129.0106 },
+            { id: "b2-3", name: "松島海上水晶纜車", nameKo: "송도해상케이블카", time: "13:45–15:45", desc: "★ 實況 · 甘川直接過來 · 已訂 Klook 水晶艙往返 ×5 · 松島灣站換票", transport: "🚕×2 約20–25分", lat: 35.076389, lng: 129.018056, cid: "10851715231874527315", bookingId: "songdo-cable" },
+            { id: "b2-6", name: "BIFF 廣場", nameKo: "BIFF광장", time: "16:15–17:00", desc: "★ 實況 · 南浦電影街／手印大道", transport: "🚕×2 約20–25分", lat: 35.0989, lng: 129.0305, mapsUrl: "https://www.google.com/maps/search/?api=1&query=BIFF광장+남포동" },
+            { id: "b2-7", name: "Olive Young（BIFF 廣場）", nameKo: "올리브영 BIFF", time: "17:00–17:45", desc: "★ 實況 · 廣場內逛 Olive Young", transport: "🚶 廣場內", lat: 35.0987, lng: 129.0303, mapsUrl: "https://www.google.com/maps/search/?api=1&query=올리브영+BIFF광장+남포", skipMarker: true },
+            { id: "b2-8", name: "南浦老式韓餐廳（晚餐）", nameKo: "남포 분식/한식", time: "18:00–19:30", desc: "★ 實況 · 隨便找的老式韓餐廳 · 炸雞／拉麵／紫菜包飯 · 整體一般 · 店名待補", transport: "🚶 附近", lat: 35.0990, lng: 129.0310, mapsUrl: "https://www.google.com/maps/search/?api=1&query=남포동+분식" },
           ],
         },
         {

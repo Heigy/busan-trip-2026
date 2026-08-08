@@ -26,8 +26,8 @@ window.WEATHER_DATA = {
     "busan-d2": {
       summary: { zh: "晴熱 · 約 34–35°C · 偶有短暫陣雨可能", en: "Sunny hot · ~34–35°C · brief showers possible" },
       tip: {
-        zh: "甘川／白淺灘多坡暴晒 · 松島纜車遇雷雨／強風或停運 · 備水與遮陽",
-        en: "Gamcheon/Huinnyeoul are exposed · Songdo cable may suspend in storms · water + shade",
+        zh: "甘川多坡暴晒 · 松島纜車遇雷雨／強風或停運 · 備水與遮陽",
+        en: "Gamcheon hills are exposed · Songdo cable may pause for storms/wind · water + shade",
       },
     },
     "busan-d3": {
