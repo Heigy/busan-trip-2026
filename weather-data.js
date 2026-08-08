@@ -19,8 +19,8 @@ window.WEATHER_DATA = {
     "busan-d1": {
       summary: { zh: "晴熱 · 約 33–35°C / 夜 25°C · 高濕", en: "Sunny hot · ~33–35°C / night 25°C · humid" },
       tip: {
-        zh: "紅眼落地易中暑 · 優先 Plan A、多喝水、海灘避開正午暴晒",
-        en: "Red-eye + heat · prefer Plan A, hydrate, avoid peak sun on the beach",
+        zh: "紅眼落地易中暑 · 上午海洋館室內避暑 · 多喝水",
+        en: "Red-eye + heat · morning aquarium indoors · hydrate",
       },
     },
     "busan-d2": {

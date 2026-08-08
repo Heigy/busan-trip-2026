@@ -151,7 +151,7 @@ window.I18N = {
   meta: {
     en: {
       title: "Busan + Jeju · 7 Days 6 Nights",
-      subtitle: "Aug 1–7, 2026 · 5 people · No self-drive",
+      subtitle: "Aug 1–7, 2026 · 5 people · Actual trip log",
       flights: [
         { date: "8/1", code: "UO604", route: "HKG 02:35 → PUS 07:00" },
         { date: "8/4", code: "7C0503", route: "PUS 08:50 → CJU 09:55" },
@@ -164,7 +164,7 @@ window.I18N = {
     jeju: { en: { name: "Jeju" } },
   },
   days: {
-    "busan-d1": { en: { theme: "Arrival · easy Haeundae · check-in" } },
+    "busan-d1": { en: { theme: "Arrival · aquarium · BBQ · snack street" } },
     "busan-d2": { en: { theme: "West: Gamcheon → Jagalchi → Songdo → Huinnyeoul" } },
     "busan-d3": { en: { theme: "Greetvi → Lotte Dong / Observatory · Blueline → Geukdong pork soup" } },
     "busan-d4": { en: { theme: "Fly to Jeju" } },
@@ -176,13 +176,12 @@ window.I18N = {
   stops: {
     "b1-1": { en: { name: "Gimhae Int'l Airport", desc: "UO604 arrival, immigration & bags", transport: "✈️ UO604" } },
     "b1-5a": { en: { name: "Raviens (drop bags)", desc: "Leave luggage first (check-in from 16:00)", transport: "🚕×2 ~40–50 min" } },
-    "b1-8": { en: { name: "Haeundae Station snack", desc: "Quick bite after landing · pick near the station", transport: "🚶 Walk" } },
-    "b1-9": { en: { name: "Haeundae café break", desc: "Coffee & rest", transport: "🚶 Walk" } },
-    "b1-7": { en: { name: "Olive Young Haeundae Station", desc: "~5 min walk from hotel · K-Beauty & gifts", transport: "🚶 ~5 min" } },
-    "b1-2": { en: { name: "Geodae Pork Soup", desc: "Soup ₩13,000 / noodles ₩11,000", transport: "🚕×2 ~10–15 min" } },
-    "b1-3": { en: { name: "Haeundae Beach", desc: "Beach walk & photos", transport: "🚶/🚕" } },
+    "b1-8": { en: { name: "Haeundae Station snack", desc: "Light bite after landing · near the station", transport: "🚶 Walk" } },
+    "b1-10": { en: { name: "SEA LIFE Busan Aquarium", desc: "★ Actual · before lunch · by Haeundae Beach · tunnel & exhibits", transport: "🚶 ~10 min" } },
+    "b1-2": { en: { name: "Yukjang Galbi", desc: "★ Actual · surprisingly good · 2F · 11 Haeundaehaebyeon-ro 265beon-gil · by aquarium", transport: "🚶 Walk" } },
+    "b1-3": { en: { name: "Haeundae Beach", desc: "Walk & photos after lunch", transport: "🚶 Walk" } },
     "b1-5": { en: { name: "Raviens (check-in)", desc: "Official check-in · see Bookings for conf. no.", transport: "🚶 Walk" } },
-    "b1-4": { en: { name: "Haeundae Traditional Market", desc: "Snacks, seafood, souvenirs", transport: "🚶 Walk" } },
+    "b1-4": { en: { name: "Haeundae snack street (dinner)", desc: "★ Actual · market snacks as dinner", transport: "🚶 Walk" } },
     "b2-1": { en: { name: "Gamcheon Culture Village", desc: "Murals, Little Prince photo spot", transport: "🚕×2 ~35–45 min" } },
     "b2-2": { en: { name: "Jagalchi Market", desc: "Live seafood lunch", transport: "🚕×2 ~15–20 min" } },
     "b2-3": { en: { name: "Songdo Marine Cable Car", desc: "Booked Klook Crystal Cabin RT ×5 · exchange at Songdo Bay Station", transport: "🚕×2 ~15–20 min" } },

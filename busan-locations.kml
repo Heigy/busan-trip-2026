@@ -12,9 +12,14 @@
         <Point><coordinates>128.938222,35.179528,0</coordinates></Point>
       </Placemark>
       <Placemark>
-        <name>巨大豬肉湯飯</name>
-        <description>午餐 https://maps.google.com/?cid=17410649710382375846</description>
-        <Point><coordinates>129.178000,35.163000,0</coordinates></Point>
+        <name>SEA LIFE 釜山海洋館</name>
+        <description>★ 實況 · 午飯前 · 씨라이프 부산 아쿠아리움</description>
+        <Point><coordinates>129.160550,35.159350,0</coordinates></Point>
+      </Placemark>
+      <Placemark>
+        <name>육장갈비</name>
+        <description>★ 實況午餐 · 부산 해운대구 해운대해변로265번길 11, 2층 · 11 Haeundae Beach-ro 265beon-gil, 2F</description>
+        <Point><coordinates>129.160400,35.159200,0</coordinates></Point>
       </Placemark>
       <Placemark>
         <name>海雲台浴場</name>
@@ -22,8 +27,8 @@
         <Point><coordinates>129.160384,35.158698,0</coordinates></Point>
       </Placemark>
       <Placemark>
-        <name>海雲臺傳統市場</name>
-        <description>https://maps.google.com/?cid=15417742290736329149</description>
+        <name>海雲台小吃街（晚餐）</name>
+        <description>★ 實況 · 小吃當晚餐 https://maps.google.com/?cid=15417742290736329149</description>
         <Point><coordinates>129.161500,35.159200,0</coordinates></Point>
       </Placemark>
     </Folder>

@@ -1,7 +1,7 @@
 window.TRIP_DATA = {
   meta: {
     title: "釜山 + 濟州島 7日6夜",
-    subtitle: "2026年8月1–7日 · 5人 · 無自駕",
+    subtitle: "2026年8月1–7日 · 5人 · 實況行程紀錄",
     flights: [
       { date: "8/1", code: "UO604", route: "香港 02:35 → 釜山 07:00" },
       { date: "8/4", code: "7C0503", route: "釜山 08:50 → 濟州 09:55" },
@@ -23,17 +23,16 @@ window.TRIP_DATA = {
         {
           id: "busan-d1",
           label: "Day 1 · 8/1",
-          theme: "抵達 · 海雲台輕鬆 · 入住",
+          theme: "抵達 · 海洋館 · 烤肉 · 小吃街",
           stops: [
             { id: "b1-1", name: "金海國際機場", nameKo: "김해공항", time: "07:00", desc: "UO604 抵達、入境取行李", transport: "✈️ UO604", lat: 35.179528, lng: 128.938222, cid: "1559275999526138604" },
             { id: "b1-5a", name: "Raviens 酒店（寄行李）", nameKo: "라비앙즈 해운대 에비뉴", time: "08:30–09:00", desc: "先寄放行李（正式入住 16:00）", transport: "🚕×2 約40–50分", lat: 35.16161, lng: 129.15833, bookingId: "busan-hotel" },
-            { id: "b1-8", name: "海雲台站周邊輕食", nameKo: "해운대역 아침", time: "09:00–10:00", desc: "下機後先找吃的 · 站前商圈任選", transport: "🚶 步行", lat: 35.1634, lng: 129.1589 },
-            { id: "b1-9", name: "海雲台咖啡休息", nameKo: "해운대 카페", time: "10:00–11:00", desc: "喝咖啡、補眠休息", transport: "🚶 步行", lat: 35.1628, lng: 129.1602 },
-            { id: "b1-7", name: "Olive Young 海雲台站店", nameKo: "올리브영 해운대역", time: "11:00–12:00", desc: "距酒店步行約 5 分 · 美妝伴手禮", transport: "🚶 約5分", lat: 35.1632, lng: 129.1596 },
-            { id: "b1-2", name: "巨大豬肉湯飯", nameKo: "거대돼지국밥", time: "12:15–13:30", desc: "湯飯 ₩13,000 / 拌麵 ₩11,000", transport: "🚕×2 約10–15分", lat: 35.163, lng: 129.178, cid: "17410649710382375846" },
-            { id: "b1-3", name: "海雲台浴場", nameKo: "해운대해수욕장", time: "14:00–16:00", desc: "海水浴場散步、拍照", transport: "🚶/🚕", lat: 35.158698, lng: 129.160384, cid: "8123395504340323431", infoUrl: "guides/busan-ideas.html" },
+            { id: "b1-8", name: "海雲台站周邊輕食", nameKo: "해운대역 아침", time: "09:00–09:45", desc: "下機後先墊肚子 · 站前商圈", transport: "🚶 步行", lat: 35.1634, lng: 129.1589 },
+            { id: "b1-10", name: "SEA LIFE 釜山海洋館", nameKo: "씨라이프 부산 아쿠아리움", time: "10:00–12:00", desc: "★ 實況 · 午飯前到訪 · 海雲台浴場旁 · 海底隧道／主題展", transport: "🚶 約10分", lat: 35.15935, lng: 129.16055, mapsUrl: "https://www.google.com/maps/search/?api=1&query=씨라이프+부산+아쿠아리움" },
+            { id: "b1-2", name: "육장갈비（肉場排骨）", nameKo: "육장갈비", time: "12:15–14:00", desc: "★ 實況 · 意外很好吃 · 2樓 · 해운대해변로265번길 11 · 海洋館旁", transport: "🚶 步行", lat: 35.1592, lng: 129.1604, mapsUrl: "https://www.google.com/maps/search/?api=1&query=육장갈비+해운대해변로265번길+11", address: "부산광역시 해운대구 해운대해변로265번길 11, 2층" },
+            { id: "b1-3", name: "海雲台浴場", nameKo: "해운대해수욕장", time: "14:00–15:30", desc: "午餐後海邊散步、拍照", transport: "🚶 步行", lat: 35.158698, lng: 129.160384, cid: "8123395504340323431", infoUrl: "guides/busan-ideas.html" },
             { id: "b1-5", name: "Raviens 酒店（正式入住）", nameKo: "라비앙즈 해운대 에비뉴", time: "16:00+", desc: "正式 Check-in · 確認號見「預訂」頁", transport: "🚶 步行", lat: 35.16161, lng: 129.15833, bookingId: "busan-hotel" },
-            { id: "b1-4", name: "海雲臺傳統市場", nameKo: "해운대전통시장", time: "16:45–18:30", desc: "小吃、海鮮、伴手禮", transport: "🚶 步行", lat: 35.1592, lng: 129.1615, cid: "15417742290736329149" },
+            { id: "b1-4", name: "海雲台小吃街（晚餐）", nameKo: "해운대전통시장", time: "17:30–19:30", desc: "★ 實況 · 傳統市場／小吃街買小吃當晚餐", transport: "🚶 步行", lat: 35.1592, lng: 129.1615, cid: "15417742290736329149" },
           ],
         },
         {
