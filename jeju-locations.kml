@@ -2,29 +2,31 @@
 <kml xmlns="http://www.opengis.net/kml/2.2">
   <Document>
     <name>济州岛 4日 2026年8月 · 全部地点</name>
-    <description>8/4-8/7 · 含牛岛、伴手礼、美食</description>
+    <description>8/4-8/7 · 实况行程纪录</description>
     <Folder>
-      <name>Day 1 · 8/4 抵达+Nexon+Hello Kitty</name>
+      <name>Day 1 · 8/4 实况 Nexon+石锅拌饭+Hello Kitty</name>
       <Placemark><name>济州机场 CJU</name><Point><coordinates>126.492778,33.506806,0</coordinates></Point></Placemark>
-      <Placemark><name>돔베돈 Dombedon 烤黑猪</name><description>08/4 午餐</description><Point><coordinates>126.512800,33.489200,0</coordinates></Point></Placemark>
-      <Placemark><name>Nexon 电脑博物馆</name><description>넥슨컴퓨터박물관 · 13:30–14:30 · 周一休</description><Point><coordinates>126.486000,33.472100,0</coordinates></Point></Placemark>
-      <Placemark><name>Hello Kitty Island</name><description>09:00-18:00</description><Point><coordinates>126.361800,33.296500,0</coordinates></Point></Placemark>
-      <Placemark><name>BHC炸鸡 莲洞店</name><Point><coordinates>126.492500,33.486800,0</coordinates></Point></Placemark>
+      <Placemark><name>Nexon 电脑博物馆</name><description>★ 实况 · 参观游戏 · 馆内咖啡</description><Point><coordinates>126.486000,33.472100,0</coordinates></Point></Placemark>
+      <Placemark><name>Nexon 附近石锅拌饭</name><description>★ 实况午餐 · 未去烤黑猪 · 店名待补</description><Point><coordinates>126.487500,33.473000,0</coordinates></Point></Placemark>
+      <Placemark><name>Hello Kitty Island</name><description>★ 实况</description><Point><coordinates>126.361800,33.296500,0</coordinates></Point></Placemark>
+      <Placemark><name>BHC炸鸡 莲洞店</name><description>★ 实况晚餐</description><Point><coordinates>126.492500,33.486800,0</coordinates></Point></Placemark>
     </Folder>
     <Folder>
-      <name>Day 2 · 8/5 东线</name>
-      <Placemark><name>城山日出峰</name><Point><coordinates>126.941600,33.458400,0</coordinates></Point></Placemark>
-      <Placemark><name>城山港 牛岛渡轮</name><description>带护照</description><Point><coordinates>126.922000,33.506000,0</coordinates></Point></Placemark>
+      <name>Day 2 · 8/5 实况 Hugely+牛岛</name>
+      <Placemark><name>Hugely Jeju</name><description>★ 实况 · 橙子雪糕 · 흥운길 83</description><Point><coordinates>126.512000,33.516300,0</coordinates></Point></Placemark>
+      <Placemark><name>城山港→牛岛</name><description>★ 实况 · 电动车 · 约18:30离岛</description><Point><coordinates>126.922000,33.506000,0</coordinates></Point></Placemark>
+      <Placemark><name>牛岛黑沙滩炸酱面</name><description>★ 实况午餐 · 隔壁咖啡</description><Point><coordinates>126.967500,33.493500,0</coordinates></Point></Placemark>
+      <Placemark><name>城山附近黑猪烤肉</name><description>★ 实况晚餐 · 店名待补</description><Point><coordinates>126.934000,33.462000,0</coordinates></Point></Placemark>
     </Folder>
     <Folder>
-      <name>Day 3 · 8/6 北海岸+涯月+9.81+伴手礼</name>
-      <Placemark><name>伦敦贝果博物馆</name><Point><coordinates>126.861800,33.542200,0</coordinates></Point></Placemark>
-      <Placemark><name>Cafe Layered 小狗咖啡</name><Point><coordinates>126.861800,33.542200,0</coordinates></Point></Placemark>
-      <Placemark><name>Mou Moon</name><Point><coordinates>126.867000,33.548000,0</coordinates></Point></Placemark>
-      <Placemark><name>Haejigae Cafe（涯月漢潭）</name><description>13:30–14:30 · 14:30 離開</description><Point><coordinates>126.310800,33.463200,0</coordinates></Point></Placemark>
-      <Placemark><name>濟州 9.81 公園</name><description>15:00 抵達 · 천덕로 880-24 · 重力赛车</description><Point><coordinates>126.366509,33.390037,0</coordinates></Point></Placemark>
-      <Placemark><name>伴手礼一条街（含线条小狗）</name><description>Hi Jeju · Butter · Jejustar · Onni · MALTESE</description><Point><coordinates>126.488800,33.489200,0</coordinates></Point></Placemark>
-      <Placemark><name>乐天免税店 济州</name><Point><coordinates>126.492000,33.511000,0</coordinates></Point></Placemark>
+      <name>Day 3 · 8/6 实况 9.81+Haejigae+七星街</name>
+      <Placemark><name>酒店自助早餐</name><description>★ 实况</description><Point><coordinates>126.519072,33.510836,0</coordinates></Point></Placemark>
+      <Placemark><name>濟州 9.81 公園</name><description>★ 实况 · 早餐后直奔 · 천덕로 880-24</description><Point><coordinates>126.366509,33.390037,0</coordinates></Point></Placemark>
+      <Placemark><name>Haejigae Cafe（涯月漢潭）</name><description>★ 实况 · 9.81 后再到</description><Point><coordinates>126.310800,33.463200,0</coordinates></Point></Placemark>
+      <Placemark><name>七星街</name><description>★ 实况 · 칠성로</description><Point><coordinates>126.526500,33.514500,0</coordinates></Point></Placemark>
+      <Placemark><name>Olive Young（二次扫货）</name><description>★ 实况</description><Point><coordinates>126.491500,33.489500,0</coordinates></Point></Placemark>
+      <Placemark><name>24小时土豆脊骨汤</name><description>★ 实况晚餐 · 店名待补</description><Point><coordinates>126.490500,33.489700,0</coordinates></Point></Placemark>
+      <Placemark><name>附近手信店扫货</name><description>★ 实况 · 晚餐后 · 回酒店</description><Point><coordinates>126.488500,33.489300,0</coordinates></Point></Placemark>
     </Folder>
     <Folder>
       <name>Day 4 · 8/7 返程</name>

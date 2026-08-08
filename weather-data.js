@@ -47,22 +47,22 @@ window.WEATHER_DATA = {
     "jeju-d1": {
       summary: { zh: "晴熱 · 約 31–32°C · 局部短暫雨可能", en: "Sunny hot · ~31–32°C · patchy rain possible" },
       tip: {
-        zh: "中文線戶外館熱 · 中午少久站 · 回市區晚餐較涼",
-        en: "Jungmun outdoor sites are hot · limit noon standing · dinner in town feels cooler",
+        zh: "上午 Nexon 室內避暑 · Hello Kitty 戶外仍熱 · 多喝水",
+        en: "Nexon is indoor shade in the morning · Hello Kitty still hot outdoors · hydrate",
       },
     },
     "jeju-d2": {
       summary: { zh: "熱 · 約 31°C · 局部雷陣雨可能 · 風轉東北", en: "Hot · ~31°C · possible thunder showers · NE wind" },
       tip: {
-        zh: "最關鍵日：城山＋牛島 · 熱浪＋渡輪風浪；颱風動向一變可能停航 · 出發前必查渡輪／天氣",
-        en: "Key day: Seongsan + Udo · heat + ferry waves; typhoon shift may cancel ferries · check before leaving",
+        zh: "牛島電動車熱 · 約 18:30 離島 · 黑沙灘備防曬和水",
+        en: "Udo e-bike heat · leave island ~18:30 · shade/water at black sand",
       },
     },
     "jeju-d3": {
       summary: { zh: "熱 · 約 30–31°C · 風偏東北略強 · 短暫雨可能", en: "Hot · ~30–31°C · stronger NE breeze · patchy rain possible" },
       tip: {
-        zh: "涯月海岸風大勿近防波堤 · 9.81 穿運動鞋 · 平日末班賽車約 17:40 前",
-        en: "Avoid Aewol breakwaters if swell · sneakers for 9.81 · weekday last race ~before 17:40",
+        zh: "★ 實況日 · 9.81 穿運動鞋 · Haejigae 海邊注意風 · 市區掃貨補水",
+        en: "★ Actual day · sneakers for 9.81 · wind at Haejigae coast · hydrate while city shopping",
       },
     },
     "jeju-d4": {

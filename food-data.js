@@ -113,7 +113,7 @@ window.FOOD_DATA = {
       address: "제주 제주시 애월읍 애월북서길 52",
       note: { zh: "漢潭海景通窗 · 烘焙 · 可順散步路", en: "Handam ocean windows · bakery · coast walk nearby" },
       maps: "애월북서길 52, Aewol-eup, Jeju-si",
-      dayHint: { zh: "★ 已排 Day 3 涯月", en: "★ Already on Day 3 Aewol" },
+      dayHint: { zh: "★ 實況 Day 3（9.81 後）", en: "★ Actual Day 3 (after 9.81)" },
       onItinerary: true,
     },
     {
@@ -125,8 +125,7 @@ window.FOOD_DATA = {
       address: "제주 제주시 구좌읍 해맞이해안로 460 2층",
       note: { zh: "風景很美 · 簡約時尚", en: "Great views · simple stylish interior" },
       maps: "해맞이해안로 460, Gujwa-eup, Jeju-si",
-      dayHint: { zh: "★ 已排 Day 3", en: "★ Already on Day 3" },
-      onItinerary: true,
+      dayHint: { zh: "Day 3 未去", en: "Not visited Day 3" },
     },
     {
       id: "rest-cafe",
@@ -148,8 +147,7 @@ window.FOOD_DATA = {
       address: "제주 제주시 구좌읍 동복로 85 주1동 1층",
       note: { zh: "Ins 風 · 小狗周邊很多", en: "IG vibe · lots of puppy merch" },
       maps: "동복로 85, Gujwa-eup, Jeju-si",
-      dayHint: { zh: "★ 已排 Day 3（貝果旁）", en: "★ Already on Day 3 (by bagels)" },
-      onItinerary: true,
+      dayHint: { zh: "Day 3 未去", en: "Not visited Day 3" },
     },
     {
       id: "moalboal-gujwa",
@@ -237,8 +235,7 @@ window.FOOD_DATA = {
       address: "Dongbok-ro, Gujwa-eup, Jeju-si",
       note: { zh: "建議早去排隊", en: "Go early for the queue" },
       maps: "London Bagel Museum Jeju Dongbok",
-      dayHint: { zh: "★ 已排 Day 3", en: "★ Already on Day 3" },
-      onItinerary: true,
+      dayHint: { zh: "Day 3 未去", en: "Not visited Day 3" },
     },
     {
       id: "corn-ice-hallim",
